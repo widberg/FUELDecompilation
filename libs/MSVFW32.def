@@ -1,0 +1,3 @@
+LIBRARY MSVFW32
+EXPORTS
+VideoForWindowsVersion @2 NONAME

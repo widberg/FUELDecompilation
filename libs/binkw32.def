@@ -1,0 +1,17 @@
+LIBRARY BINKW32
+EXPORTS
+_BinkOpen@8
+_BinkGetError@0
+_BinkSetVolume@12
+_BinkClose@4
+_BinkSetSoundTrack@8
+_BinkOpenDirectSound@4
+_BinkCopyToBufferRect@44
+_BinkGoto@12
+_BinkWait@4
+_BinkDoFrame@4
+_BinkSetMemory@8
+_BinkNextFrame@4
+_BinkPause@8
+_BinkSetSoundSystem@8
+_BinkShouldSkip@4
