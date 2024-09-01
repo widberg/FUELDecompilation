@@ -287,31 +287,14 @@ target_link_options(FUEL BEFORE PRIVATE
 )
 
 target_link_libraries(FUEL PRIVATE
-	AdvAPI32.Lib
-	COMCTL32.lib
-	GDI32.lib
-	Kernel32.lib
-	KERNEL32.lib
-	libcmt.lib
-	ODBC32.lib
-	ole32.lib
-	OLEAUT32.lib
-	SHELL32.lib
-	SHLWAPI.lib
-	USER32.lib
-	WINMM.lib
-	WS2_32.lib
-	AVIFIL32
-	binkw32
-	MSVFW32
-	xlive
 	libfuel
 	Engine
 	EngineConfig
-	DXSDK
+	LIBPC_Common
+	LIBPC_TNL
 )
 
-add_dependencies(FUEL AVIFIL32_generate binkw32_generate MSVFW32_generate xlive_generate libfuel_generate)
+add_dependencies(FUEL libfuel_generate)
 
 function(create_delink_library basename)
 	add_custom_command(
@@ -376,8 +359,6 @@ add_library(Engine STATIC
 	Engine/ComServer_Z.cpp
 	Engine/ConsoleCommand_Z.cpp
 	Engine/Console_Z.cpp
-	Engine/D3DTnL_RendererAvi_Z.cpp
-	Engine/D3D_RendererHelpers_Z.cpp
 	Engine/DecorBushes.cpp
 	Engine/DecorGrass.cpp
 	Engine/DecorMesh.cpp
@@ -440,7 +421,6 @@ add_library(Engine STATIC
 	Engine/Includes/DynString_Z.h
 	Engine/Includes/Emiter_Z.h
 	Engine/Includes/FIFO_Z.h
-	Engine/Includes/FlarePc_Z.h
 	Engine/Includes/Floating2dCache.h
 	Engine/Includes/Fonts_Z.h
 	Engine/Includes/GameObj_Z.h
@@ -450,12 +430,10 @@ add_library(Engine STATIC
 	Engine/Includes/Graph_Z.h
 	Engine/Includes/GwRoad_Z.h
 	Engine/Includes/HashTable_Z.h
-	Engine/Includes/HFieldPc_Z.h
 	Engine/Includes/HFog_Z.h
 	Engine/Includes/HugeDynArray_Z.h
 	Engine/Includes/InGameDatas_Z.h
 	Engine/Includes/InGameObjectsManipulator_Z.h
-	Engine/Includes/InGameObjectsPc_Z.h
 	Engine/Includes/LightData_Z.h
 	Engine/Includes/Light_Z.h
 	Engine/Includes/List_Z.h
@@ -468,7 +446,6 @@ add_library(Engine STATIC
 	Engine/Includes/MaterialObj_Z.h
 	Engine/Includes/Material_Z.h
 	Engine/Includes/MemList_Z.h
-	Engine/Includes/MeshPc_Z.h
 	Engine/Includes/MovingAgent_Z.h
 	Engine/Includes/Node_Z.h
 	Engine/Includes/ObjectCache_Z.h
@@ -479,7 +456,6 @@ add_library(Engine STATIC
 	Engine/Includes/Occluder_Z.h
 	Engine/Includes/Omni_Z.h
 	Engine/Includes/ParticlesAgent_Z.h
-	Engine/Includes/ParticlesPc_Z.h
 	Engine/Includes/Particles_Z.h
 	Engine/Includes/Perlin3D_Z.h
 	Engine/Includes/PhysicAgt_Z.h
@@ -493,7 +469,6 @@ add_library(Engine STATIC
 	Engine/Includes/ResIDDef.h
 	Engine/Includes/ResIDGlobalInGameDef.h
 	Engine/Includes/Road_Z.h
-	Engine/Includes/RotShapePc_Z.h
 	Engine/Includes/RtcAgent_Z.h
 	Engine/Includes/RtcPlayer_Z.h
 	Engine/Includes/Rtc_Z.h
@@ -501,9 +476,7 @@ add_library(Engine STATIC
 	Engine/Includes/Sead2D_Z.h
 	Engine/Includes/SequenceAnim_Z.h
 	Engine/Includes/SequenceMixAnim_Z.h
-	Engine/Includes/SkelPc_Z.h
 	Engine/Includes/SkinAgent_Z.h
-	Engine/Includes/SkinPc_Z.h
 	Engine/Includes/Sound_Symbol_Engine.h
 	Engine/Includes/Sound_Z.h
 	Engine/Includes/SplineGraph_Z.h
@@ -514,7 +487,6 @@ add_library(Engine STATIC
 	Engine/Includes/SubLevelVolumeAgent_Z.h
 	Engine/Includes/SubWorld_Z.h
 	Engine/Includes/SuperSpray_Z.h
-	Engine/Includes/SurfacePc_Z.h
 	Engine/Includes/Surface_Z.h
 	Engine/Includes/Throwable_Z.h
 	Engine/Includes/Tree_Z.h
@@ -524,7 +496,6 @@ add_library(Engine STATIC
 	Engine/Includes/VisibleObjectContainer.h
 	Engine/Includes/VisibleObjectMgr.h
 	Engine/Includes/VolumeAgent_Z.h
-	Engine/Includes/WarpPc_Z.h
 	Engine/Includes/WaterHeightMap_Z.h
 	Engine/Includes/WinLiveNetManager_Z.h
 	Engine/Includes/WinMovieManipulator_Z.h
@@ -556,7 +527,6 @@ add_library(Engine STATIC
 	Engine/Private/SoundLoad_Z.cpp
 	Engine/Private/SurfaceLoad_Z.cpp
 	Engine/Private/SystemObject_Z.cpp
-	Engine/SaveGamePc_Z.cpp
 	Engine/Skel_Z.cpp
 	Engine/SubAlloc.cpp
 	Engine/UnPack_Z.cpp
@@ -575,6 +545,54 @@ add_library(Engine STATIC
 )
 target_include_directories(Engine INTERFACE
 	Engine/Includes
+)
+
+add_library(LIBPC_Common STATIC
+	LIBPC_Common/D3D_RendererHelpers_Z.cpp
+	LIBPC_Common/Includes/FlarePc_Z.h
+	LIBPC_Common/Includes/HFieldPc_Z.h
+	LIBPC_Common/Includes/InGameObjectsPc_Z.h
+	LIBPC_Common/Includes/MeshPc_Z.h
+	LIBPC_Common/Includes/ParticlesPc_Z.h
+	LIBPC_Common/Includes/RotShapePc_Z.h
+	LIBPC_Common/Includes/SkelPc_Z.h
+	LIBPC_Common/Includes/SkinPc_Z.h
+	LIBPC_Common/Includes/SurfacePc_Z.h
+	LIBPC_Common/Includes/WarpPc_Z.h
+	LIBPC_Common/SaveGamePc_Z.cpp
+)
+target_include_directories(LIBPC_Common INTERFACE
+	LIBPC_Common/Includes
+)
+target_link_libraries(LIBPC_Common INTERFACE
+	AdvAPI32.Lib
+	COMCTL32.lib
+	GDI32.lib
+	Kernel32.lib
+	KERNEL32.lib
+	libcmt.lib
+	ODBC32.lib
+	ole32.lib
+	OLEAUT32.lib
+	SHELL32.lib
+	SHLWAPI.lib
+	USER32.lib
+	WINMM.lib
+	WS2_32.lib
+	AVIFIL32
+	binkw32
+	MSVFW32
+	xlive
+	DXSDK
+)
+add_dependencies(LIBPC_Common AVIFIL32_generate binkw32_generate MSVFW32_generate xlive_generate)
+
+
+add_library(LIBPC_TNL STATIC
+	LIBPC_TNL/D3DTnL_RendererAvi_Z.cpp
+)
+target_include_directories(LIBPC_TNL INTERFACE
+	LIBPC_TNL/Includes
 )
 
 add_library(DXSDK INTERFACE)
