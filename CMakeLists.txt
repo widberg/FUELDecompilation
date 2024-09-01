@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 
+set(CMAKE_BUILD_TYPE RelWithDebInfo)
+
 project(FUEL C CXX)
 
 set(GHIDRA_ANALYZER_HEADLESS_PATH "$ENV{GHIDRA_INSTALL_DIR}/support/analyzeHeadless.bat")
