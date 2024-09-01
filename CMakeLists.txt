@@ -11,6 +11,8 @@ set(FUEL_ARGS "-W")
 
 option(USE_SECUROM OFF)
 
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/GR> /GS- /fp:fast)
+
 add_executable(FUEL WIN32
 	Resources/FUEL.rc
 	OffRoad/BaseInGameDatas_G.cpp
