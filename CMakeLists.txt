@@ -10,9 +10,17 @@ set(FUEL_INSTALL_DIR "D:/SteamLibrary/steamapps/common/FUEL")
 set(FUEL_ARGS "-W")
 set(DXSDK_DIR "C:/Program Files (x86)/Microsoft DirectX SDK (August 2008)")
 
+option(USE_SECUROM OFF)
+
 add_executable(FUEL
 	res/FUEL.rc
 	src/xcu.c
+)
+
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/includes/config.h.in" "${CMAKE_CURRENT_BINARY_DIR}/config.h")
+target_include_directories(FUEL PRIVATE
+	"${CMAKE_CURRENT_BINARY_DIR}/src/includes"
+	"${CMAKE_CURRENT_BINARY_DIR}"
 )
 
 add_custom_command(TARGET FUEL POST_BUILD
