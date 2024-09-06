@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
-set(CMAKE_BUILD_TYPE RelWithDebInfo)
+set(CMAKE_BUILD_TYPE RelWithDebInfo) # Override build type for correct optimization flags
 
 project(FUEL C CXX)
 
@@ -8,7 +8,6 @@ set(GHIDRA_ANALYZER_HEADLESS_PATH "$ENV{GHIDRA_INSTALL_DIR}/support/analyzeHeadl
 set(GHIDRA_PROJECT_DIR "FUEL")
 set(GHIDRA_PROJECT_NAME "FUEL")
 set(GHIDRA_PROJECT_FILE_NAME "FUEL.exe")
-set(FUEL_INSTALL_DIR "D:/SteamLibrary/steamapps/common/FUEL")
 set(FUEL_ARGS "-W")
 
 option(USE_SECUROM OFF)
@@ -268,8 +267,11 @@ target_include_directories(FUEL PRIVATE
 )
 
 add_custom_command(TARGET FUEL POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cfg" "$<TARGET_FILE_DIR:FUEL>/FUEL.exe.cfg"
-	COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cdf" "$<TARGET_FILE_DIR:FUEL>/FUEL.exe.cdf"
+	# The FUEL executable needs to be copied to the install directory to run properly since GetModuleFileName is used to
+	# get the path of some game files instead of using the current working directory
+	COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_FILE:FUEL>" "$ENV{FUEL_INSTALL_DIR}/FUELDecompilation.exe"
+	COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cfg" "$<TARGET_FILE_DIR:FUEL>/FUEL.exe.cfg"
+	COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cdf" "$<TARGET_FILE_DIR:FUEL>/FUEL.exe.cdf"
 	COMMAND makecat "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cdf" -o "$<TARGET_FILE_DIR:FUEL>/FUEL.exe.cat"
 	DEPENDS FUEL "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cfg" "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cdf"
 	WORKING_DIRECTORY "$<TARGET_FILE_DIR:FUEL>"
@@ -287,11 +289,11 @@ target_link_options(FUEL BEFORE PRIVATE
 )
 
 target_link_libraries(FUEL PRIVATE
-	libfuel
 	Engine
 	EngineConfig
 	LIBPC_Common
 	LIBPC_TNL
+	libfuel
 )
 
 add_dependencies(FUEL libfuel_generate)
@@ -330,9 +332,15 @@ create_import_library("MSVFW32")
 create_import_library("xlive")
 
 add_custom_target(run
-	COMMAND $<TARGET_FILE:FUEL> ${FUEL_ARGS}
+	COMMAND "$ENV{FUEL_INSTALL_DIR}/FUELDecompilation.exe" ${FUEL_ARGS}
 	DEPENDS FUEL
-	WORKING_DIRECTORY ${FUEL_INSTALL_DIR}
+	WORKING_DIRECTORY "$ENV{FUEL_INSTALL_DIR}"
+)
+
+add_custom_target(debug
+	COMMAND "$ENV{X64DBG_INSTALL_DIR}/release/x32/x32dbg.exe" "$ENV{FUEL_INSTALL_DIR}/FUELDecompilation.exe" "${FUEL_ARGS}" "$ENV{FUEL_INSTALL_DIR}"
+	DEPENDS FUEL
+	WORKING_DIRECTORY "$ENV{FUEL_INSTALL_DIR}"
 )
 
 add_library(EngineConfig INTERFACE)
@@ -560,6 +568,7 @@ add_library(LIBPC_Common STATIC
 	LIBPC_Common/Includes/SurfacePc_Z.h
 	LIBPC_Common/Includes/WarpPc_Z.h
 	LIBPC_Common/SaveGamePc_Z.cpp
+	LIBPC_Common/WinMain_Z.cpp
 )
 target_include_directories(LIBPC_Common INTERFACE
 	LIBPC_Common/Includes

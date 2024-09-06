@@ -79,5 +79,15 @@
 		"first": "0xffdff000",
 		"last": "0xffdfffff",
 		"comment": "bullshit"
+	},
+	{
+		"action": "exclude",
+		"type": "function_extended",
+		"address": "0x008443c0"
+	},
+	{
+		"action": "exclude",
+		"type": "function_extended",
+		"address": "0x00843df0"
 	}
 ]
