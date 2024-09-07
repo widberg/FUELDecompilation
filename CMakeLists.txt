@@ -29,16 +29,18 @@ if(USE_GHIDRA_SERVER)
 	set(GHIDRA_PROJECT "ghidra://${GHIDRA_SERVER_ADDRESS}$<$<BOOL:${GHIDRA_SERVER_PORT}>:\:${GHIDRA_SERVER_PORT}>/${GHIDRA_SERVER_REPOSITORY_NAME}/${GHIDRA_SERVER_FOLDER_PATH}" "$<$<BOOL:${GHIDRA_SERVER_USER}>:-connect \"${GHIDRA_SERVER_USER}\">" "$<$<BOOL:${GHIDRA_SERVER_KEYSTORE}>:-keystore \"${GHIDRA_SERVER_KEYSTORE}\">")
 	set(GHIDRA_PROJECT_FILE "${GHIDRA_SERVER_PROJECT_FILE}")
 	set(GHIDRA_GPR_FILE "")
+	set(GHIDRA_FAKE_OUTPUT "__GHIDRA_FAKE_OUTPUT__")
 else()
 	set(GHIDRA_PROJECT "${GHIDRA_LOCAL_PROJECT_DIR}" "${GHIDRA_LOCAL_PROJECT_NAME}/${GHIDRA_LOCAL_FOLDER_PATH}")
 	set(GHIDRA_PROJECT_FILE "${GHIDRA_LOCAL_PROJECT_FILE}")
 	set(GHIDRA_GPR_FILE "${GHIDRA_LOCAL_PROJECT_DIR}/${GHIDRA_LOCAL_PROJECT_NAME}.gpr")
+	set(GHIDRA_FAKE_OUTPUT "")
 endif()
 
 set(FUEL_ARGS "-W" CACHE STRING "Arguments to pass FUEL in the run and debug targets.")
 
 option(USE_SECUROM "Use original SecuROM copy protection." OFF)
-option(USE_GAME_RUNNING_CHECK "Use original game already running check." OFF)
+option(USE_RUNNING_CHECK "Use original game already running check." OFF)
 
 set(FUEL_INSTALL_DIR "$ENV{FUEL_INSTALL_DIR}" CACHE STRING "Path to FUEL install directory.")
 set(X64DBG_INSTALL_DIR "$ENV{X64DBG_INSTALL_DIR}" CACHE STRING "Path to x64dbg install directory.")
@@ -335,7 +337,7 @@ function(create_delink_library basename)
 		COMMAND ${GHIDRA_ANALYZE_HEADLESS} ${GHIDRA_PROJECT} -process "${GHIDRA_PROJECT_FILE}" -readOnly -noanalysis -scriptPath "ghidra_scripts" -preScript "delink.py" "${basename}.json" "${CMAKE_CURRENT_BINARY_DIR}/${basename}.obj"
 		COMMAND lib "/OUT:${CMAKE_CURRENT_BINARY_DIR}/${basename}.lib" "${CMAKE_CURRENT_BINARY_DIR}/${basename}.obj"
 		DEPENDS ghidra_scripts/delink.py "${basename}.json" "${GHIDRA_GPR_FILE}"
-		OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${basename}.lib"
+		OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${basename}.lib" "${GHIDRA_FAKE_OUTPUT}"
 		BYPRODUCTS "${CMAKE_CURRENT_BINARY_DIR}/${basename}.obj"
 		WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 	)

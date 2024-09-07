@@ -4,6 +4,6 @@
 #define CONFIG_H
 
 #cmakedefine01 USE_SECUROM
-#cmakedefine01 USE_GAME_RUNNING_CHECK
+#cmakedefine01 USE_RUNNING_CHECK
 
 #endif // CONFIG_H
