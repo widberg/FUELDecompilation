@@ -4,10 +4,12 @@ set(CMAKE_BUILD_TYPE RelWithDebInfo) # Override build type for correct optimizat
 
 project(FUEL C CXX)
 
+set(GHIDRA_INSTALL_DIR "$ENV{GHIDRA_INSTALL_DIR}" CACHE STRING "Path to Ghidra install directory.")
+
 if(CMAKE_HOST_WIN32)
-	set(GHIDRA_ANALYZE_HEADLESS cmd /c "$ENV{GHIDRA_INSTALL_DIR}/support/analyzeHeadless.bat")
+	set(GHIDRA_ANALYZE_HEADLESS cmd /c "${GHIDRA_INSTALL_DIR}/support/analyzeHeadless.bat")
 else()
-	set(GHIDRA_ANALYZE_HEADLESS "$ENV{GHIDRA_INSTALL_DIR}/support/analyzeHeadless")
+	set(GHIDRA_ANALYZE_HEADLESS "${GHIDRA_INSTALL_DIR}/support/analyzeHeadless")
 endif()
 
 set(GHIDRA_SERVER_ADDRESS "cs.widberg.me" CACHE STRING "Address of the Ghidra server.")
