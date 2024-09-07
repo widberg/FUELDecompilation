@@ -4,13 +4,45 @@ set(CMAKE_BUILD_TYPE RelWithDebInfo) # Override build type for correct optimizat
 
 project(FUEL C CXX)
 
-set(GHIDRA_ANALYZER_HEADLESS_PATH "$ENV{GHIDRA_INSTALL_DIR}/support/analyzeHeadless.bat")
-set(GHIDRA_PROJECT_DIR "FUEL")
-set(GHIDRA_PROJECT_NAME "FUEL")
-set(GHIDRA_PROJECT_FILE_NAME "FUEL.exe")
-set(FUEL_ARGS "-W")
+if(CMAKE_HOST_WIN32)
+	set(GHIDRA_ANALYZE_HEADLESS cmd /c "$ENV{GHIDRA_INSTALL_DIR}/support/analyzeHeadless.bat")
+else()
+	set(GHIDRA_ANALYZE_HEADLESS "$ENV{GHIDRA_INSTALL_DIR}/support/analyzeHeadless")
+endif()
 
-option(USE_SECUROM OFF)
+set(GHIDRA_SERVER_ADDRESS "cs.widberg.me" CACHE STRING "Address of the Ghidra server.")
+set(GHIDRA_SERVER_PORT "13100" CACHE STRING "Port of the Ghidra server.")
+set(GHIDRA_SERVER_REPOSITORY_NAME "zouna" CACHE STRING "Repository on the Ghidra server.")
+set(GHIDRA_SERVER_FOLDER_PATH "FUEL" CACHE STRING "Root folder path on the Ghidra server.")
+set(GHIDRA_SERVER_PROJECT_FILE "FUEL.exe" CACHE STRING "Project file on the Ghidra server.")
+set(GHIDRA_SERVER_USER "" CACHE STRING "Username for the Ghidra server, leave empty for anonymous.")
+set(GHIDRA_SERVER_KEYSTORE "" CACHE STRING "Path to keystore file for the Ghidra server, leave empty for anonymous.")
+
+set(GHIDRA_LOCAL_PROJECT_DIR "zouna" CACHE STRING "Directory containing local Ghidra project.")
+set(GHIDRA_LOCAL_PROJECT_NAME "zouna" CACHE STRING "Local ghidra project name.")
+set(GHIDRA_LOCAL_FOLDER_PATH "FUEL" CACHE STRING "Root folder path in the local project.")
+set(GHIDRA_LOCAL_PROJECT_FILE "FUEL.exe" CACHE STRING "Project file in the local project.")
+
+option(USE_GHIDRA_SERVER "If on, use the Ghidra server (very slow). If off, use the local project." OFF)
+
+if(USE_GHIDRA_SERVER)
+	set(GHIDRA_PROJECT "ghidra://${GHIDRA_SERVER_ADDRESS}$<$<BOOL:${GHIDRA_SERVER_PORT}>:\:${GHIDRA_SERVER_PORT}>/${GHIDRA_SERVER_REPOSITORY_NAME}/${GHIDRA_SERVER_FOLDER_PATH}" "$<$<BOOL:${GHIDRA_SERVER_USER}>:-connect \"${GHIDRA_SERVER_USER}\">" "$<$<BOOL:${GHIDRA_SERVER_KEYSTORE}>:-keystore \"${GHIDRA_SERVER_KEYSTORE}\">")
+	set(GHIDRA_PROJECT_FILE "${GHIDRA_SERVER_PROJECT_FILE}")
+	set(GHIDRA_GPR_FILE "")
+else()
+	set(GHIDRA_PROJECT "${GHIDRA_LOCAL_PROJECT_DIR}" "${GHIDRA_LOCAL_PROJECT_NAME}/${GHIDRA_LOCAL_FOLDER_PATH}")
+	set(GHIDRA_PROJECT_FILE "${GHIDRA_LOCAL_PROJECT_FILE}")
+	set(GHIDRA_GPR_FILE "${GHIDRA_LOCAL_PROJECT_DIR}/${GHIDRA_LOCAL_PROJECT_NAME}.gpr")
+endif()
+
+set(FUEL_ARGS "-W" CACHE STRING "Arguments to pass FUEL in the run and debug targets.")
+
+option(USE_SECUROM "Use original SecuROM copy protection." OFF)
+option(USE_GAME_RUNNING_CHECK "Use original game already running check." OFF)
+
+set(FUEL_INSTALL_DIR "$ENV{FUEL_INSTALL_DIR}" CACHE STRING "Path to FUEL install directory.")
+set(X64DBG_INSTALL_DIR "$ENV{X64DBG_INSTALL_DIR}" CACHE STRING "Path to x64dbg install directory.")
+set(DXSDK_DIR "$ENV{DXSDK_DIR}" CACHE STRING "Path to Microsoft DirectX SDK (August 2008) install directory.")
 
 add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/GR> /GS- /fp:fast)
 
@@ -269,7 +301,7 @@ target_include_directories(FUEL PRIVATE
 add_custom_command(TARGET FUEL POST_BUILD
 	# The FUEL executable needs to be copied to the install directory to run properly since GetModuleFileName is used to
 	# get the path of some game files instead of using the current working directory
-	COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_FILE:FUEL>" "$ENV{FUEL_INSTALL_DIR}/FUELDecompilation.exe"
+	COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_FILE:FUEL>" "${FUEL_INSTALL_DIR}/FUELDecompilation.exe"
 	COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cfg" "$<TARGET_FILE_DIR:FUEL>/FUEL.exe.cfg"
 	COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cdf" "$<TARGET_FILE_DIR:FUEL>/FUEL.exe.cdf"
 	COMMAND makecat "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cdf" -o "$<TARGET_FILE_DIR:FUEL>/FUEL.exe.cat"
@@ -300,12 +332,12 @@ add_dependencies(FUEL libfuel_generate)
 
 function(create_delink_library basename)
 	add_custom_command(
-		COMMAND cmd /c "${GHIDRA_ANALYZER_HEADLESS_PATH}" "${GHIDRA_PROJECT_DIR}" "${GHIDRA_PROJECT_NAME}" -process "${GHIDRA_PROJECT_FILE_NAME}" -readOnly -noanalysis -scriptPath "ghidra_scripts" -preScript "delink.py" "${basename}.json" "${CMAKE_CURRENT_BINARY_DIR}/${basename}.obj"
+		COMMAND ${GHIDRA_ANALYZE_HEADLESS} ${GHIDRA_PROJECT} -process "${GHIDRA_PROJECT_FILE}" -readOnly -noanalysis -scriptPath "ghidra_scripts" -preScript "delink.py" "${basename}.json" "${CMAKE_CURRENT_BINARY_DIR}/${basename}.obj"
 		COMMAND lib "/OUT:${CMAKE_CURRENT_BINARY_DIR}/${basename}.lib" "${CMAKE_CURRENT_BINARY_DIR}/${basename}.obj"
-		DEPENDS ghidra_scripts/delink.py "${basename}.json" "${GHIDRA_PROJECT_DIR}/${GHIDRA_PROJECT_NAME}.gpr"
+		DEPENDS ghidra_scripts/delink.py "${basename}.json" "${GHIDRA_GPR_FILE}"
 		OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${basename}.lib"
 		BYPRODUCTS "${CMAKE_CURRENT_BINARY_DIR}/${basename}.obj"
-		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+		WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 	)
 	add_custom_target(${basename}_generate DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/${basename}.lib")
 	add_library(${basename} STATIC IMPORTED GLOBAL)
@@ -319,7 +351,7 @@ function(create_import_library basename)
 		COMMAND lib "/MACHINE:X86" "/DEF:libs/${basename}.def" "/OUT:${CMAKE_CURRENT_BINARY_DIR}/${basename}.lib"
 		DEPENDS "libs/${basename}.def"
 		OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${basename}.lib"
-		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+		WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 	)
 	add_custom_target(${basename}_generate DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/${basename}.lib")
 	add_library(${basename} STATIC IMPORTED GLOBAL)
@@ -332,15 +364,15 @@ create_import_library("MSVFW32")
 create_import_library("xlive")
 
 add_custom_target(run
-	COMMAND "$ENV{FUEL_INSTALL_DIR}/FUELDecompilation.exe" ${FUEL_ARGS}
+	COMMAND "${FUEL_INSTALL_DIR}/FUELDecompilation.exe" ${FUEL_ARGS}
 	DEPENDS FUEL
-	WORKING_DIRECTORY "$ENV{FUEL_INSTALL_DIR}"
+	WORKING_DIRECTORY "${FUEL_INSTALL_DIR}"
 )
 
 add_custom_target(debug
-	COMMAND "$ENV{X64DBG_INSTALL_DIR}/release/x32/x32dbg.exe" "$ENV{FUEL_INSTALL_DIR}/FUELDecompilation.exe" "${FUEL_ARGS}" "$ENV{FUEL_INSTALL_DIR}"
+	COMMAND "${X64DBG_INSTALL_DIR}/release/x32/x32dbg.exe" "${FUEL_INSTALL_DIR}/FUELDecompilation.exe" "${FUEL_ARGS}" "${FUEL_INSTALL_DIR}"
 	DEPENDS FUEL
-	WORKING_DIRECTORY "$ENV{FUEL_INSTALL_DIR}"
+	WORKING_DIRECTORY "${FUEL_INSTALL_DIR}"
 )
 
 add_library(EngineConfig INTERFACE)
@@ -606,14 +638,14 @@ target_include_directories(LIBPC_TNL INTERFACE
 
 add_library(DXSDK INTERFACE)
 target_include_directories(DXSDK INTERFACE
-	"$ENV{DXSDK_DIR}/Include"
+	"${DXSDK_DIR}/Include"
 )
 target_link_libraries(DXSDK INTERFACE
-	"$ENV{DXSDK_DIR}/Lib/x86/d3d9.lib"
-	"$ENV{DXSDK_DIR}/Lib/x86/d3dx9.lib"
-	"$ENV{DXSDK_DIR}/Lib/x86/DINPUT8.lib"
-	"$ENV{DXSDK_DIR}/Lib/x86/DSOUND.lib"
-	"$ENV{DXSDK_DIR}/Lib/x86/DxErr9.lib"
-	"$ENV{DXSDK_DIR}/Lib/x86/Dxguid.lib"
-	"$ENV{DXSDK_DIR}/Lib/x86/XINPUT.lib"
+	"${DXSDK_DIR}/Lib/x86/d3d9.lib"
+	"${DXSDK_DIR}/Lib/x86/d3dx9.lib"
+	"${DXSDK_DIR}/Lib/x86/DINPUT8.lib"
+	"${DXSDK_DIR}/Lib/x86/DSOUND.lib"
+	"${DXSDK_DIR}/Lib/x86/DxErr9.lib"
+	"${DXSDK_DIR}/Lib/x86/Dxguid.lib"
+	"${DXSDK_DIR}/Lib/x86/XINPUT.lib"
 )
