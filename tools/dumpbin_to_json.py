@@ -37,7 +37,7 @@ def main():
         sys.exit(1)
 
     args.output.seek(0)
-    contents = args.output.read()
+    contents = json.load(args.output)
     symbols = process_output(process.stdout)
     result = []
     for symbol in symbols:
