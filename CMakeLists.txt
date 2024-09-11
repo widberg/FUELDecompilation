@@ -386,11 +386,13 @@ add_custom_target(run
 	WORKING_DIRECTORY "${FUEL_INSTALL_DIR}"
 )
 
-add_custom_target(debug
-	COMMAND "${X64DBG_INSTALL_DIR}/release/x32/x32dbg.exe" "${FUEL_INSTALL_DIR}/FUELDecompilation.exe" "${FUEL_ARGS}" "${FUEL_INSTALL_DIR}"
-	DEPENDS FUEL
-	WORKING_DIRECTORY "${FUEL_INSTALL_DIR}"
-)
+if(NOT X64DBG_INSTALL_DIR STREQUAL "")
+	add_custom_target(debug
+		COMMAND "${X64DBG_INSTALL_DIR}/release/x32/x32dbg.exe" "${FUEL_INSTALL_DIR}/FUELDecompilation.exe" "${FUEL_ARGS}" "${FUEL_INSTALL_DIR}"
+		DEPENDS FUEL
+		WORKING_DIRECTORY "${FUEL_INSTALL_DIR}"
+	)
+endif()
 
 add_library(EngineConfig INTERFACE)
 target_include_directories(EngineConfig INTERFACE
