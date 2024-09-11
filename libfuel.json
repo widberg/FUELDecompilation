@@ -5,89 +5,79 @@
 	},
 	{
 		"action": "exclude",
-		"type": "range_inclusive",
+		"type": "range",
 		"first": "0x00400000",
 		"last": "0x00400fff",
 		"comment": "Old PE header"
 	},
 	{
 		"action": "exclude",
-		"type": "range_inclusive",
+		"type": "range",
 		"first": "0x00885a44",
 		"last": "0x008b256f",
 		"comment": "msvcrt and imports"
 	},
 	{
 		"action": "exclude",
-		"type": "range_inclusive",
+		"type": "range",
 		"first": "0x008b2575",
 		"last": "0x008e468f",
 		"comment": "typeinfo, and dxguid"
 	},
 	{
 		"action": "exclude",
-		"type": "range_inclusive",
+		"type": "range",
 		"first": "0x008e9000",
 		"last": "0x0093138f",
 		"comment": "imports, global initializers, and static lib data"
 	},
 	{
 		"action": "exclude",
-		"type": "range_inclusive",
+		"type": "range",
 		"first": "0x0093BA58",
 		"last": "0x009553B3",
 		"comment": "static lib strings"
 	},
 	{
 		"action": "exclude",
-		"type": "range_inclusive",
+		"type": "range",
 		"first": "0x009DD5A0",
 		"last": "0x009E41A7",
 		"comment": "static lib data"
 	},
 	{
 		"action": "exclude",
-		"type": "range_inclusive",
+		"type": "range",
 		"first": "0x009F4198",
 		"last": "0x009f4adf",
 		"comment": "static lib data"
 	},
 	{
 		"action": "exclude",
-		"type": "range_inclusive",
+		"type": "range",
 		"first": "0x009f4af8",
 		"last": "0x009f86bf",
 		"comment": "imports and static lib data"
 	},
 	{
 		"action": "exclude",
-		"type": "range_inclusive",
+		"type": "range",
 		"first": "0x00A2DA90",
 		"last": "0x00a2e7ff",
 		"comment": "static lib data"
 	},
 	{
 		"action": "exclude",
-		"type": "range_inclusive",
+		"type": "range",
 		"first": "0x00A7EA50",
 		"last": "0x00B25FFF",
 		"comment": "static lib data and res dir"
 	},
 	{
 		"action": "exclude",
-		"type": "range_inclusive",
+		"type": "range",
 		"first": "0xffdff000",
 		"last": "0xffdfffff",
 		"comment": "bullshit"
-	},
-	{
-		"action": "exclude",
-		"type": "function_extended",
-		"address": "0x008443c0"
-	},
-	{
-		"action": "exclude",
-		"type": "function_extended",
-		"address": "0x00843df0"
 	}
 ]

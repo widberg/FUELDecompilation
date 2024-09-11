@@ -4,6 +4,8 @@ set(CMAKE_BUILD_TYPE RelWithDebInfo) # Override build type for correct optimizat
 
 project(FUEL C CXX)
 
+find_package (Python3 COMPONENTS Interpreter REQUIRED)
+
 set(GHIDRA_INSTALL_DIR "$ENV{GHIDRA_INSTALL_DIR}" CACHE STRING "Path to Ghidra install directory.")
 
 if(CMAKE_HOST_WIN32)
@@ -52,6 +54,39 @@ add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/GR> /GS- /fp:fast)
 
 add_executable(FUEL WIN32
 	Resources/FUEL.rc
+	OffRoad/xcu.c
+)
+
+set_target_properties(FUEL PROPERTIES
+	INTERPROCEDURAL_OPTIMIZATION TRUE
+)
+
+target_link_options(FUEL BEFORE PRIVATE
+	"/BASE:0x01000000"
+	"/SUBSYSTEM:WINDOWS,4.0"
+	"/NODEFAULTLIB"
+	"/MANIFEST:NO"
+)
+
+target_link_libraries(FUEL PRIVATE
+	defuel
+	libfuel
+)
+
+add_dependencies(FUEL libfuel_generate)
+
+add_custom_command(TARGET FUEL POST_BUILD
+	# The FUEL executable needs to be copied to the install directory to run properly since GetModuleFileName is used to
+	# get the path of some game files instead of using the current working directory
+	COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_FILE:FUEL>" "${FUEL_INSTALL_DIR}/FUELDecompilation.exe"
+	COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cfg" "$<TARGET_FILE_DIR:FUEL>/FUEL.exe.cfg"
+	COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cdf" "$<TARGET_FILE_DIR:FUEL>/FUEL.exe.cdf"
+	COMMAND makecat "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cdf" -o "$<TARGET_FILE_DIR:FUEL>/FUEL.exe.cat"
+	DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cfg" "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cdf"
+	WORKING_DIRECTORY "$<TARGET_FILE_DIR:FUEL>"
+)
+
+add_library(defuel STATIC
 	OffRoad/BaseInGameDatas_G.cpp
 	OffRoad/BufferPack_G.cpp
 	OffRoad/CheatCodeHUD.cpp
@@ -296,59 +331,37 @@ add_executable(FUEL WIN32
 	OffRoad/ViewportHUD.cpp
 	OffRoad/VisibleObjectMgr.cpp
 	OffRoad/WeatherManagerEffects.cpp
-	OffRoad/xcu.c
 )
-target_include_directories(FUEL PRIVATE
+
+target_include_directories(defuel PRIVATE
 	OffRoad/Includes
 )
 
-add_custom_command(TARGET FUEL POST_BUILD
-	# The FUEL executable needs to be copied to the install directory to run properly since GetModuleFileName is used to
-	# get the path of some game files instead of using the current working directory
-	COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_FILE:FUEL>" "${FUEL_INSTALL_DIR}/FUELDecompilation.exe"
-	COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cfg" "$<TARGET_FILE_DIR:FUEL>/FUEL.exe.cfg"
-	COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cdf" "$<TARGET_FILE_DIR:FUEL>/FUEL.exe.cdf"
-	COMMAND makecat "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cdf" -o "$<TARGET_FILE_DIR:FUEL>/FUEL.exe.cat"
-	DEPENDS FUEL "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cfg" "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cdf"
-	WORKING_DIRECTORY "$<TARGET_FILE_DIR:FUEL>"
-)
-
-set_target_properties(FUEL PROPERTIES
-	INTERPROCEDURAL_OPTIMIZATION TRUE
-)
-
-target_link_options(FUEL BEFORE PRIVATE
-	"/BASE:0x01000000"
-	"/SUBSYSTEM:WINDOWS,4.0"
-	"/NODEFAULTLIB"
-	"/MANIFEST:NO"
-)
-
-target_link_libraries(FUEL PRIVATE
+target_link_libraries(defuel PRIVATE
 	Engine
 	EngineConfig
 	LIBPC_Common
 	LIBPC_TNL
-	libfuel
 )
 
-add_dependencies(FUEL libfuel_generate)
+add_custom_command(
+	COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/dumpbin_to_json.py" --dumpbin dumpbin --output "${CMAKE_CURRENT_BINARY_DIR}/defuel.json" "$<TARGET_FILE:defuel>" "$<TARGET_FILE:Engine>" "$<TARGET_FILE:LIBPC_Common>" "$<TARGET_FILE:LIBPC_TNL>"
+	DEPENDS defuel Engine LIBPC_Common LIBPC_TNL "${CMAKE_CURRENT_SOURCE_DIR}/tools/dumpbin_to_json.py"
+	OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/defuel.json"
+	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+)
 
-function(create_delink_library basename)
-	add_custom_command(
-		COMMAND ${GHIDRA_ANALYZE_HEADLESS} ${GHIDRA_PROJECT} -process "${GHIDRA_PROJECT_FILE}" -readOnly -noanalysis -scriptPath "ghidra_scripts" -preScript "delink.py" "${basename}.json" "${CMAKE_CURRENT_BINARY_DIR}/${basename}.obj"
-		COMMAND lib "/OUT:${CMAKE_CURRENT_BINARY_DIR}/${basename}.lib" "${CMAKE_CURRENT_BINARY_DIR}/${basename}.obj"
-		DEPENDS ghidra_scripts/delink.py "${basename}.json" "${GHIDRA_GPR_FILE}"
-		OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${basename}.lib" "${GHIDRA_FAKE_OUTPUT}"
-		BYPRODUCTS "${CMAKE_CURRENT_BINARY_DIR}/${basename}.obj"
-		WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-	)
-	add_custom_target(${basename}_generate DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/${basename}.lib")
-	add_library(${basename} STATIC IMPORTED GLOBAL)
-	set_target_properties(${basename} PROPERTIES IMPORTED_LOCATION "${CMAKE_CURRENT_BINARY_DIR}/${basename}.lib")
-endfunction(create_delink_library)
-
-create_delink_library("libfuel")
+add_custom_command(
+	COMMAND ${GHIDRA_ANALYZE_HEADLESS} ${GHIDRA_PROJECT} -process "${GHIDRA_PROJECT_FILE}" -readOnly -noanalysis -scriptPath "ghidra_scripts" -preScript "delink.py" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj" "${CMAKE_CURRENT_SOURCE_DIR}/libfuel.json" "${CMAKE_CURRENT_BINARY_DIR}/defuel.json"
+	COMMAND lib "/OUT:${CMAKE_CURRENT_BINARY_DIR}/libfuel.lib" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj"
+	DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/ghidra_scripts/delink.py" "${CMAKE_CURRENT_SOURCE_DIR}/libfuel.json" "${CMAKE_CURRENT_BINARY_DIR}/defuel.json" "${GHIDRA_GPR_FILE}"
+	OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/libfuel.lib" ${GHIDRA_FAKE_OUTPUT}
+	BYPRODUCTS "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj"
+	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+)
+add_custom_target(libfuel_generate DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/libfuel.lib")
+add_library(libfuel STATIC IMPORTED GLOBAL)
+set_target_properties(libfuel PROPERTIES IMPORTED_LOCATION "${CMAKE_CURRENT_BINARY_DIR}/libfuel.lib")
 
 function(create_import_library basename)
 	add_custom_command(
@@ -384,6 +397,7 @@ target_include_directories(EngineConfig INTERFACE
 	EngineConfig
 	"${CMAKE_CURRENT_BINARY_DIR}/EngineConfig"
 )
+
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/EngineConfig/EngineConfig.h.in" "${CMAKE_CURRENT_BINARY_DIR}/EngineConfig/EngineConfig.h")
 
 add_library(Engine STATIC
@@ -587,6 +601,7 @@ add_library(Engine STATIC
 	Engine/WinTrophyManager_Z.cpp
 	Engine/WinXRamManager_Z.cpp
 )
+
 target_include_directories(Engine INTERFACE
 	Engine/Includes
 )
@@ -606,9 +621,11 @@ add_library(LIBPC_Common STATIC
 	LIBPC_Common/SaveGamePc_Z.cpp
 	LIBPC_Common/WinMain_Z.cpp
 )
+
 target_include_directories(LIBPC_Common INTERFACE
 	LIBPC_Common/Includes
 )
+
 target_link_libraries(LIBPC_Common INTERFACE
 	AdvAPI32.Lib
 	COMCTL32.lib
@@ -630,20 +647,23 @@ target_link_libraries(LIBPC_Common INTERFACE
 	xlive
 	DXSDK
 )
-add_dependencies(LIBPC_Common AVIFIL32_generate binkw32_generate MSVFW32_generate xlive_generate)
 
+add_dependencies(LIBPC_Common AVIFIL32_generate binkw32_generate MSVFW32_generate xlive_generate)
 
 add_library(LIBPC_TNL STATIC
 	LIBPC_TNL/D3DTnL_RendererAvi_Z.cpp
 )
+
 target_include_directories(LIBPC_TNL INTERFACE
 	LIBPC_TNL/Includes
 )
 
 add_library(DXSDK INTERFACE)
+
 target_include_directories(DXSDK INTERFACE
 	"${DXSDK_DIR}/Include"
 )
+
 target_link_libraries(DXSDK INTERFACE
 	"${DXSDK_DIR}/Lib/x86/d3d9.lib"
 	"${DXSDK_DIR}/Lib/x86/d3dx9.lib"
