@@ -339,14 +339,17 @@ target_include_directories(defuel PRIVATE
 
 target_link_libraries(defuel PRIVATE
 	Engine
-	EngineConfig
 	LIBPC_Common
 	LIBPC_TNL
 )
 
+target_link_libraries(defuel PUBLIC
+	EngineConfig
+)
+
 add_custom_command(
-	COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/dumpbin_to_json.py" --dumpbin dumpbin --output "${CMAKE_CURRENT_BINARY_DIR}/defuel.json" "$<TARGET_FILE:defuel>" "$<TARGET_FILE:Engine>" "$<TARGET_FILE:LIBPC_Common>" "$<TARGET_FILE:LIBPC_TNL>"
-	DEPENDS defuel Engine LIBPC_Common LIBPC_TNL "${CMAKE_CURRENT_SOURCE_DIR}/tools/dumpbin_to_json.py"
+	COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/comments_to_json.py" --output "${CMAKE_CURRENT_BINARY_DIR}/defuel.json" "$<TARGET_FILE:defuel>" "$<TARGET_FILE:Engine>" "$<TARGET_FILE:LIBPC_Common>" "$<TARGET_FILE:LIBPC_TNL>"
+	DEPENDS defuel Engine LIBPC_Common LIBPC_TNL "${CMAKE_CURRENT_SOURCE_DIR}/tools/comments_to_json.py"
 	OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/defuel.json"
 	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 )
@@ -396,11 +399,14 @@ endif()
 
 add_library(EngineConfig INTERFACE)
 target_include_directories(EngineConfig INTERFACE
-	EngineConfig
 	"${CMAKE_CURRENT_BINARY_DIR}/EngineConfig"
 )
 
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/EngineConfig/EngineConfig.h.in" "${CMAKE_CURRENT_BINARY_DIR}/EngineConfig/EngineConfig.h")
+
+target_compile_options(EngineConfig INTERFACE
+	"/FI${CMAKE_CURRENT_BINARY_DIR}/EngineConfig/EngineConfig.h"
+)
 
 add_library(Engine STATIC
 	Engine/ABC_Behavior.cpp
@@ -608,6 +614,10 @@ target_include_directories(Engine INTERFACE
 	Engine/Includes
 )
 
+target_link_libraries(Engine PUBLIC
+	EngineConfig
+)
+
 add_library(LIBPC_Common STATIC
 	LIBPC_Common/D3D_RendererHelpers_Z.cpp
 	LIBPC_Common/Includes/FlarePc_Z.h
@@ -650,6 +660,10 @@ target_link_libraries(LIBPC_Common INTERFACE
 	DXSDK
 )
 
+target_link_libraries(LIBPC_Common PUBLIC
+	EngineConfig
+)
+
 add_dependencies(LIBPC_Common AVIFIL32_generate binkw32_generate MSVFW32_generate xlive_generate)
 
 add_library(LIBPC_TNL STATIC
@@ -658,6 +672,14 @@ add_library(LIBPC_TNL STATIC
 
 target_include_directories(LIBPC_TNL INTERFACE
 	LIBPC_TNL/Includes
+)
+
+target_link_libraries(LIBPC_TNL INTERFACE
+	LIBPC_Common
+)
+
+target_link_libraries(LIBPC_TNL PUBLIC
+	EngineConfig
 )
 
 add_library(DXSDK INTERFACE)

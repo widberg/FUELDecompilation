@@ -6,4 +6,6 @@
 #cmakedefine01 USE_SECUROM
 #cmakedefine01 USE_RUNNING_CHECK
 
+#define DELINKFUNCTION(address, ...) __pragma(comment(user, "delink;" __FUNCSIG__ ";" __FUNCDNAME__ ";" #address ";" #__VA_ARGS__))
+
 #endif // CONFIG_H
