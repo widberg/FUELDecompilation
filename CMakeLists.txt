@@ -398,6 +398,14 @@ if(NOT X64DBG_INSTALL_DIR STREQUAL "")
 	)
 endif()
 
+add_executable(dibs tools/dibs.c)
+
+add_custom_target(run-dibs
+	COMMAND "$<TARGET_FILE:dibs>" 0x400000 0x800000 "FUELDecompilation.exe ${FUEL_ARGS}"
+	DEPENDS dibs FUEL
+	WORKING_DIRECTORY "${FUEL_INSTALL_DIR}"
+)
+
 add_library(EngineConfig INTERFACE)
 target_include_directories(EngineConfig INTERFACE
 	"${CMAKE_CURRENT_BINARY_DIR}/EngineConfig"
