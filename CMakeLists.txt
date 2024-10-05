@@ -605,15 +605,6 @@ add_library(Engine STATIC
 	Engine/UserDefineCmd_Z.cpp
 	Engine/VoiceManager_Z.cpp
 	Engine/VolatileMem_Z.cpp
-	Engine/WinConsole_Z.cpp
-	Engine/WinInputConnect_Z.cpp
-	Engine/WinIntState_Z.cpp
-	Engine/WinLiveNetPlayManager_Z.cpp
-	Engine/WinMain_Z.cpp
-	Engine/WinMutex_Z.cpp
-	Engine/WinThread_Z.cpp
-	Engine/WinTrophyManager_Z.cpp
-	Engine/WinXRamManager_Z.cpp
 )
 
 target_include_directories(Engine INTERFACE
@@ -637,7 +628,15 @@ add_library(LIBPC_Common STATIC
 	LIBPC_Common/Includes/SurfacePc_Z.h
 	LIBPC_Common/Includes/WarpPc_Z.h
 	LIBPC_Common/SaveGamePc_Z.cpp
+	LIBPC_Common/WinConsole_Z.cpp
+	LIBPC_Common/WinInputConnect_Z.cpp
+	LIBPC_Common/WinIntState_Z.cpp
+	LIBPC_Common/WinLiveNetPlayManager_Z.cpp
 	LIBPC_Common/WinMain_Z.cpp
+	LIBPC_Common/WinMutex_Z.cpp
+	LIBPC_Common/WinThread_Z.cpp
+	LIBPC_Common/WinTrophyManager_Z.cpp
+	LIBPC_Common/WinXRamManager_Z.cpp
 )
 
 target_include_directories(LIBPC_Common INTERFACE
