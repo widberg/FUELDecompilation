@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 3.14)
 
 set(CMAKE_BUILD_TYPE RelWithDebInfo) # Override build type for correct optimization flags
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # Generate compile_commands.json for clangd
+set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON) # Enable LTO
+cmake_policy(SET CMP0091 NEW) # Enable MSVC runtime library selection
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>") # Use static runtime libraries
+add_compile_options("/MT$<$<CONFIG:Debug>:d>") # Use static runtime libraries
+add_link_options("/MANIFEST:NO") # Disable manifest generation
 
 project(FUEL C CXX)
 
@@ -60,16 +65,10 @@ add_executable(FUEL WIN32
 	OffRoad/xcu.c
 )
 
-# FIXME(widberg): Disable incremental linking until comments_to_json.py can handle it
-# set_target_properties(FUEL PROPERTIES
-#        INTERPROCEDURAL_OPTIMIZATION TRUE
-# )
-
 target_link_options(FUEL BEFORE PRIVATE
 	"/BASE:0x01000000"
 	"/SUBSYSTEM:WINDOWS,4.0"
 	"/NODEFAULTLIB"
-	"/MANIFEST:NO"
 )
 
 target_link_libraries(FUEL PRIVATE
