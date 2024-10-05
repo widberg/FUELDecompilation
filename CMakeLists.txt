@@ -42,6 +42,8 @@ else()
 	set(GHIDRA_FAKE_OUTPUT "")
 endif()
 
+set(FUEL_DECOMPILATION_NAME "FUELDecompilation" CACHE STRING "Name to use for the FUEL decompilation executable.")
+set(FUEL_DECOMPILATION_BASENAME "${FUEL_DECOMPILATION_BASENAME}${CMAKE_EXECUTABLE_SUFFIX}")
 set(FUEL_ARGS "-W" CACHE STRING "Arguments to pass FUEL in the run and debug targets.")
 
 option(USE_SECUROM "Use original SecuROM copy protection." OFF)
@@ -58,9 +60,10 @@ add_executable(FUEL WIN32
 	OffRoad/xcu.c
 )
 
-set_target_properties(FUEL PROPERTIES
-	INTERPROCEDURAL_OPTIMIZATION TRUE
-)
+# FIXME(widberg): Disable incremental linking until comments_to_json.py can handle it
+# set_target_properties(FUEL PROPERTIES
+#        INTERPROCEDURAL_OPTIMIZATION TRUE
+# )
 
 target_link_options(FUEL BEFORE PRIVATE
 	"/BASE:0x01000000"
@@ -79,12 +82,7 @@ add_dependencies(FUEL libfuel_generate)
 add_custom_command(TARGET FUEL POST_BUILD
 	# The FUEL executable needs to be copied to the install directory to run properly since GetModuleFileName is used to
 	# get the path of some game files instead of using the current working directory
-	COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_FILE:FUEL>" "${FUEL_INSTALL_DIR}/FUELDecompilation.exe"
-	COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cfg" "$<TARGET_FILE_DIR:FUEL>/FUEL.exe.cfg"
-	COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cdf" "$<TARGET_FILE_DIR:FUEL>/FUEL.exe.cdf"
-	COMMAND makecat "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cdf" -o "$<TARGET_FILE_DIR:FUEL>/FUEL.exe.cat"
-	DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cfg" "${CMAKE_CURRENT_SOURCE_DIR}/FUEL.exe.cdf"
-	WORKING_DIRECTORY "$<TARGET_FILE_DIR:FUEL>"
+	COMMAND "${CMAKE_COMMAND}" -E copy "$<TARGET_FILE:FUEL>" "${FUEL_INSTALL_DIR}/${FUEL_DECOMPILATION_BASENAME}"
 )
 
 add_library(defuel STATIC
@@ -385,14 +383,14 @@ create_import_library("MSVFW32")
 create_import_library("xlive")
 
 add_custom_target(run
-	COMMAND "${FUEL_INSTALL_DIR}/FUELDecompilation.exe" ${FUEL_ARGS}
+	COMMAND "${FUEL_INSTALL_DIR}/${FUEL_DECOMPILATION_BASENAME}" ${FUEL_ARGS}
 	DEPENDS FUEL
 	WORKING_DIRECTORY "${FUEL_INSTALL_DIR}"
 )
 
 if(NOT X64DBG_INSTALL_DIR STREQUAL "")
 	add_custom_target(debug
-		COMMAND "${X64DBG_INSTALL_DIR}/release/x32/x32dbg.exe" "${FUEL_INSTALL_DIR}/FUELDecompilation.exe" "${FUEL_ARGS}" "${FUEL_INSTALL_DIR}"
+		COMMAND "${X64DBG_INSTALL_DIR}/release/x32/x32dbg.exe" "${FUEL_INSTALL_DIR}/${FUEL_DECOMPILATION_BASENAME}" "${FUEL_ARGS}" "${FUEL_INSTALL_DIR}"
 		DEPENDS FUEL
 		WORKING_DIRECTORY "${FUEL_INSTALL_DIR}"
 	)
@@ -401,7 +399,7 @@ endif()
 add_executable(dibs tools/dibs.c)
 
 add_custom_target(run-dibs
-	COMMAND "$<TARGET_FILE:dibs>" 0x400000 0x800000 "FUELDecompilation.exe ${FUEL_ARGS}"
+	COMMAND "$<TARGET_FILE:dibs>" 0x400000 0x800000 "${FUEL_DECOMPILATION_BASENAME} ${FUEL_ARGS}"
 	DEPENDS dibs FUEL
 	WORKING_DIRECTORY "${FUEL_INSTALL_DIR}"
 )
