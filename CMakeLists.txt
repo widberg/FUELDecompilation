@@ -4,7 +4,7 @@ set(CMAKE_BUILD_TYPE RelWithDebInfo) # Override build type for correct optimizat
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # Generate compile_commands.json for clangd
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON) # Enable LTO
 cmake_policy(SET CMP0091 NEW) # Enable MSVC runtime library selection
-set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>") # Use static runtime libraries
+set(CMAKE_MSVC_RUNTIME_LIBRARY "") # Manually set runtime library to avoid warning
 add_compile_options("/MT$<$<CONFIG:Debug>:d>") # Use static runtime libraries
 add_link_options("/MANIFEST:NO") # Disable manifest generation
 
@@ -48,7 +48,7 @@ else()
 endif()
 
 set(FUEL_DECOMPILATION_NAME "FUELDecompilation" CACHE STRING "Name to use for the FUEL decompilation executable.")
-set(FUEL_DECOMPILATION_BASENAME "${FUEL_DECOMPILATION_BASENAME}${CMAKE_EXECUTABLE_SUFFIX}")
+set(FUEL_DECOMPILATION_BASENAME "${FUEL_DECOMPILATION_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
 set(FUEL_ARGS "-W" CACHE STRING "Arguments to pass FUEL in the run and debug targets.")
 
 option(USE_SECUROM "Use original SecuROM copy protection." OFF)
