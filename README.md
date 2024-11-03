@@ -49,7 +49,7 @@ See the CMakeLists.txt file for more options.
 An example configuration and build is shown below:
 
 ```sh
-cmake -B build -S . -G Ninja -DFUEL_INSTALL_DIR="C:\Program Files (x86)\Steam\steamapps\common\FUEL" -DDXSDK_DIR="C:\Program Files (x86)\Microsoft DirectX SDK (August 2008)"
+cmake -B build -G Ninja -DFUEL_INSTALL_DIR="C:\Program Files (x86)\Steam\steamapps\common\FUEL" -DDXSDK_DIR="C:\Program Files (x86)\Microsoft DirectX SDK (August 2008)"
 cmake --build build
 ```
 

@@ -69,6 +69,7 @@ target_link_options(FUEL BEFORE PRIVATE
 	"/BASE:0x01000000"
 	"/SUBSYSTEM:WINDOWS,4.0"
 	"/NODEFAULTLIB"
+	"/RELEASE"
 )
 
 target_link_libraries(FUEL PRIVATE
