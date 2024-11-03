@@ -79,11 +79,13 @@ target_link_libraries(FUEL PRIVATE
 
 add_dependencies(FUEL libfuel_generate)
 
-add_custom_command(TARGET FUEL POST_BUILD
-	# The FUEL executable needs to be copied to the install directory to run properly since GetModuleFileName is used to
-	# get the path of some game files instead of using the current working directory
-	COMMAND "${CMAKE_COMMAND}" -E copy "$<TARGET_FILE:FUEL>" "${FUEL_INSTALL_DIR}/${FUEL_DECOMPILATION_BASENAME}"
-)
+if(FUEL_INSTALL_DIR)
+    add_custom_command(TARGET FUEL POST_BUILD
+        # The FUEL executable needs to be copied to the install directory to run properly since GetModuleFileName is used to
+        # get the path of some game files instead of using the current working directory
+        COMMAND "${CMAKE_COMMAND}" -E copy "$<TARGET_FILE:FUEL>" "${FUEL_INSTALL_DIR}/${FUEL_DECOMPILATION_BASENAME}"
+    )
+endif()
 
 add_library(defuel STATIC
 	OffRoad/BaseInGameDatas_G.cpp
@@ -382,27 +384,29 @@ create_import_library("binkw32")
 create_import_library("MSVFW32")
 create_import_library("xlive")
 
-add_custom_target(run
-	COMMAND "${FUEL_INSTALL_DIR}/${FUEL_DECOMPILATION_BASENAME}" ${FUEL_ARGS}
-	DEPENDS FUEL
-	WORKING_DIRECTORY "${FUEL_INSTALL_DIR}"
-)
+if(FUEL_INSTALL_DIR)
+    add_custom_target(run
+        COMMAND "${FUEL_INSTALL_DIR}/${FUEL_DECOMPILATION_BASENAME}" ${FUEL_ARGS}
+        DEPENDS FUEL
+        WORKING_DIRECTORY "${FUEL_INSTALL_DIR}"
+    )
 
-if(NOT X64DBG_INSTALL_DIR STREQUAL "")
-	add_custom_target(debug
-		COMMAND "${X64DBG_INSTALL_DIR}/release/x32/x32dbg.exe" "${FUEL_INSTALL_DIR}/${FUEL_DECOMPILATION_BASENAME}" "${FUEL_ARGS}" "${FUEL_INSTALL_DIR}"
-		DEPENDS FUEL
-		WORKING_DIRECTORY "${FUEL_INSTALL_DIR}"
-	)
+    if(NOT X64DBG_INSTALL_DIR STREQUAL "")
+        add_custom_target(debug
+            COMMAND "${X64DBG_INSTALL_DIR}/release/x32/x32dbg.exe" "${FUEL_INSTALL_DIR}/${FUEL_DECOMPILATION_BASENAME}" "${FUEL_ARGS}" "${FUEL_INSTALL_DIR}"
+            DEPENDS FUEL
+            WORKING_DIRECTORY "${FUEL_INSTALL_DIR}"
+        )
+    endif()
+
+    add_executable(dibs tools/dibs.c)
+
+    add_custom_target(run-dibs
+        COMMAND "$<TARGET_FILE:dibs>" 0x400000 0x800000 "${FUEL_DECOMPILATION_BASENAME} ${FUEL_ARGS}"
+        DEPENDS dibs FUEL
+        WORKING_DIRECTORY "${FUEL_INSTALL_DIR}"
+    )
 endif()
-
-add_executable(dibs tools/dibs.c)
-
-add_custom_target(run-dibs
-	COMMAND "$<TARGET_FILE:dibs>" 0x400000 0x800000 "${FUEL_DECOMPILATION_BASENAME} ${FUEL_ARGS}"
-	DEPENDS dibs FUEL
-	WORKING_DIRECTORY "${FUEL_INSTALL_DIR}"
-)
 
 add_library(EngineConfig INTERFACE)
 target_include_directories(EngineConfig INTERFACE

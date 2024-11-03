@@ -1,0 +1,46 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cache Tools
+        id: cache-tools
+        uses: actions/cache@v3
+        with:
+          path: C:\Tools
+          key: tools-${{ runner.os }}-${{ hashFiles('.github\workflows\build.yml') }}
+          restore-keys: tools-${{ runner.os }}-
+
+      - if: ${{ steps.cache-tools.outputs.cache-hit != 'true' }}
+        name: Setup Tools
+        run: |
+          curl.exe --location --create-dirs -oC:\TEMP\msvc8.0.zip https://github.com/widberg/msvc8.0/archive/refs/heads/main.zip
+          7z.exe x C:\TEMP\msvc8.0.zip -oC:\Tools\msvc8.0
+          curl.exe --location --create-dirs -oC:\TEMP\DXSDK_Aug08.exe https://archive.org/download/dxsdk_aug08/DXSDK_Aug08.exe
+          7z.exe x C:\TEMP\DXSDK_Aug08.exe -oC:\Tools\DXSDK_Aug08 DXSDK/Include DXSDK/Lib
+          curl.exe --location --create-dirs -oC:\TEMP\ghidra.zip https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_11.2_build/ghidra_11.2_PUBLIC_20240926.zip
+          7z.exe x C:\TEMP\ghidra.zip -oC:\Tools\ghidra
+          curl.exe --location --create-dirs -oC:\TEMP\ghidra-delinker-extension.zip https://github.com/boricj/ghidra-delinker-extension/releases/download/v0.5.0/ghidra_11.1_PUBLIC_20240817_ghidra-delinker-extension.zip
+          7z.exe x C:\TEMP\ghidra-delinker-extension.zip -oC:\Tools\ghidra\ghidra_11.2_PUBLIC\Ghidra\Extensions
+          curl.exe --location --create-dirs -oC:\TEMP\ninja.zip https://github.com/ninja-build/ninja/releases/download/v1.12.1/ninja-win.zip
+          7z.exe x C:\TEMP\ninja.zip -oC:\Tools\ninja
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: "microsoft"
+          java-version: "21"
+
+      - name: Build
+        shell: cmd
+        run: |
+          call C:\Tools\msvc8.0\msvc8.0-main\bin\vcvars32.bat
+          cmake -B build -G Ninja -DCMAKE_MAKE_PROGRAM=C:\Tools\ninja\ninja.exe -DDXSDK_DIR=C:\Tools\DXSDK_Aug08\DXSDK -DGHIDRA_INSTALL_DIR=C:\Tools\ghidra\ghidra_11.2_PUBLIC -DUSE_GHIDRA_SERVER=ON
+          cmake --build build
