@@ -71,7 +71,7 @@ cmake --build build --target debug
 
 ## License
 
-The `stdint.h` and `inttypes.h` headers in the `objconv` directory are licensed under the following terms:
+The `stdint.h` and `inttypes.h` headers in the `tools/objconv` directory are licensed under the following terms:
 
 ```c
 //  Copyright (c) 2006-2013 Alexander Chemeris
@@ -102,7 +102,7 @@ The `stdint.h` and `inttypes.h` headers in the `objconv` directory are licensed 
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-The remaining files in the `objconv` directory are licensed under the following terms:
+The remaining files in the `tools/objconv` directory are licensed under the following terms:
 
 Objconv is an open source program published under the conditions of the GNU General
 Public License v. 3, as defined in www.gnu.org/licenses/. The program is provided without

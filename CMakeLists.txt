@@ -319,32 +319,32 @@ add_custom_command(
 )
 
 add_executable(objconv
-    objconv/cmdline.cpp
-    objconv/cof2asm.cpp
-    objconv/cof2cof.cpp
-    objconv/cof2elf.cpp
-    objconv/cof2omf.cpp
-    objconv/coff.cpp
-    objconv/containers.cpp
-    objconv/disasm1.cpp
-    objconv/disasm2.cpp
-    objconv/elf.cpp
-    objconv/elf2asm.cpp
-    objconv/elf2cof.cpp
-    objconv/elf2elf.cpp
-    objconv/elf2mac.cpp
-    objconv/error.cpp
-    objconv/library.cpp
-    objconv/mac2asm.cpp
-    objconv/mac2elf.cpp
-    objconv/mac2mac.cpp
-    objconv/macho.cpp
-    objconv/main.cpp
-    objconv/omf.cpp
-    objconv/omf2asm.cpp
-    objconv/omf2cof.cpp
-    objconv/omfhash.cpp
-    objconv/opcodes.cpp
+    tools/objconv/cmdline.cpp
+    tools/objconv/cof2asm.cpp
+    tools/objconv/cof2cof.cpp
+    tools/objconv/cof2elf.cpp
+    tools/objconv/cof2omf.cpp
+    tools/objconv/coff.cpp
+    tools/objconv/containers.cpp
+    tools/objconv/disasm1.cpp
+    tools/objconv/disasm2.cpp
+    tools/objconv/elf.cpp
+    tools/objconv/elf2asm.cpp
+    tools/objconv/elf2cof.cpp
+    tools/objconv/elf2elf.cpp
+    tools/objconv/elf2mac.cpp
+    tools/objconv/error.cpp
+    tools/objconv/library.cpp
+    tools/objconv/mac2asm.cpp
+    tools/objconv/mac2elf.cpp
+    tools/objconv/mac2mac.cpp
+    tools/objconv/macho.cpp
+    tools/objconv/main.cpp
+    tools/objconv/omf.cpp
+    tools/objconv/omf2asm.cpp
+    tools/objconv/omf2cof.cpp
+    tools/objconv/omfhash.cpp
+    tools/objconv/opcodes.cpp
 )
 
 add_custom_command(
