@@ -96,6 +96,7 @@
 #define SYMA_NOCHANGE                0     // Do nothing
 #define SYMA_MAKE_WEAK               1     // Make symbol weak
 #define SYMA_MAKE_LOCAL              2     // Make symbol local
+#define SYMA_MAKE_UNDEF              3     // Make symbol undef and external
 #define SYMA_CHANGE_NAME          0x10     // Change name of symbol
 #define SYMA_CHANGE_PREFIX        0x11     // Change beginning of symbol name
 #define SYMA_CHANGE_SUFFIX        0x12     // Change end of symbol name
@@ -178,6 +179,7 @@ protected:
    int CountSymbolNameAliases;               // Count number of times symbol names are aliased at specific command or underscore command
    int CountSymbolsWeakened;                 // Count number of times symbol names are made weak at specific command
    int CountSymbolsMadeLocal;                // Count number of times symbol names are made local at specific command
+   int CountSymbolsMadeExternal;             // Count number of times symbol names are made external at specific command
    int CountUnusedSymbolsHidden;             // Count number of times unused symbols are hidden
    int CountDebugSectionsRemoved;            // Count number of debug sections removed
    int CountExceptionSectionsRemoved;        // Count number of exception handler sections removed

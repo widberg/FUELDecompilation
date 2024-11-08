@@ -18,7 +18,7 @@
 
 // Integer type definitions with platform-independent sizes:
 #include <limits.h>
-#include <inttypes.h>
+#include "inttypes.h"
 
 // Get high part of a 64-bit integer
 static inline uint32_t HighDWord (uint64_t x) {

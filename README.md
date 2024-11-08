@@ -17,8 +17,6 @@ This is a decompilation of the game FUEL (PC, US Retail), which was released in 
 * Python 3
 * [msvc8.0](https://github.com/widberg/msvc8.0)
 * [Microsoft DirectX SDK (August 2008)](https://archive.org/details/dxsdk_aug08)
-* Ghidra >= 11.1.1
-* [ghidra-delinker-extension](https://github.com/boricj/ghidra-delinker-extension)
 * FUEL (PC, US Retail)
 
 #### Optional
@@ -33,7 +31,7 @@ git clone https://github.com/widberg/FUELDecompilation.git
 
 ### Ghidra Project
 
-A Ghidra server with the FUEL project is available at `cs.widberg.me:13100` with anonymous read-only access enabled. If you would like an account with write access, please ask in the [Discord](https://discord.gg/CQgMNbYeUR). I recommend creating a `zouna` directory in the repository and saving your local copy of the Ghidra project there. If you choose to save it somewhere else, you can edit the CMake configuration to point to the correct location.
+A Ghidra server with the FUEL project is available at `cs.widberg.me:13100` with anonymous read-only access enabled. If you would like an account with write access, please ask in the [Discord](https://discord.gg/CQgMNbYeUR).
 
 ### Build
 
@@ -43,7 +41,6 @@ All commands should be run from the `Visual Studio 2005 Command Prompt`, which c
 * `DXSDK_DIR` - The path to the Microsoft DirectX SDK (August 2008) installation directory. Defaults to the environment variable of the same name.
 * `X64DBG_INSTALL_DIR` - The path to the x64dbg installation directory (Optional). Defaults to the environment variable of the same name.
 * `FUEL_ARGS` - The command line arguments to pass to the game when running it from the `run` and `debug` targets. Defaults to `-W`.
-* `GHIDRA_LOCAL_PROJECT_DIR` - The path to the local Ghidra project directory. Defaults to `zouna` in the repository root.
 
 See the CMakeLists.txt file for more options.
 
@@ -65,3 +62,66 @@ If `X64DBG_INSTALL_DIR` is defined, the `debug` target will launch the built rec
 ```sh
 cmake --build build --target debug
 ```
+
+## Acknowledgements
+
+* [boricj](https://github.com/boricj) and his amazing [ghidra-delinker-extension](https://github.com/boricj/ghidra-delinker-extension) without which the black magic surrounding `libfuel.obj` would not have been possible.
+* [Agner Fog](https://www.agner.org/) and his incredible [objconv](https://www.agner.org/optimize/#objconv) tool which was used speed up build times dramatically.
+* [chemeris](https://github.com/chemeris) and his useful [msinttypes](https://github.com/chemeris/msinttypes) library which was used to provide `stdint.h` and `inttypes.h` compatibility for MSVC 8.0.
+
+## License
+
+The `stdint.h` and `inttypes.h` headers in the `objconv` directory are licensed under the following terms:
+
+```c
+//  Copyright (c) 2006-2013 Alexander Chemeris
+// 
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are met:
+// 
+//   1. Redistributions of source code must retain the above copyright notice,
+//      this list of conditions and the following disclaimer.
+// 
+//   2. Redistributions in binary form must reproduce the above copyright
+//      notice, this list of conditions and the following disclaimer in the
+//      documentation and/or other materials provided with the distribution.
+// 
+//   3. Neither the name of the product nor the names of its contributors may
+//      be used to endorse or promote products derived from this software
+//      without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
+// WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+// MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+// EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+// OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+// OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+// ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+```
+
+The remaining files in the `objconv` directory are licensed under the following terms:
+
+Objconv is an open source program published under the conditions of the GNU General
+Public License v. 3, as defined in www.gnu.org/licenses/. The program is provided without
+any warranty or support.
+
+It may in some cases be illegal to modify, convert or disassemble copyright protected
+software files without permission from the copyright owner. It is an open question whether it
+is legal to modify or convert a copyright protected function library and use it for other
+purposes than presupposed in the license conditions. It is recommended to ask the vendor
+for permission before developing and publishing any software that is built with the use of a
+converted copyright protected function library.
+
+Copyright law does not generally permit disassembly of copyright protected software for the
+purpose of circumventing a copy protection mechanism, for using part of the code in other
+contexts, or for extracting the algorithms behind the code.
+
+European, Australian, and US copyright law does, however, under certain conditions permit
+reverse engineering of copyright protected software when the purpose is to extract the
+information necessary for establishing interoperability with other software, and only to the
+extent necessary for this purpose. However, I am not a legal expert. The user should seek
+legal advice before deciding whether it is legal to use objconv on copyrighted software for a
+specific purpose.

@@ -40,6 +40,7 @@ SErrorText ErrorTexts[] = {
    {1022, 1, "Non-public symbol %s cannot get an alias"},
    {1023, 1, "External symbol %s made local. Access to this symbol will cause error"},
    {1024, 1, "Cannot change prefix on name %s, not a symbol"},
+   {1025, 1, "Non-local symbol %s cannot be made undef and external"},
    {1029, 1, "Debug information may be incompatible"},
    {1030, 1, "Exception information may be incompatible"},
    {1031, 1, "Windows resource information not translated"},   

@@ -741,6 +741,15 @@ void CCommandLineInterpreter::InterpretSymbolNameChangeOption(char * string) {
         SymbolList.Push(&sym, sizeof(sym));  SymbolChangeEntries++;
         break;
 
+    case 'e': case 'E':  // Make symbol undef and external
+        if (name1 == 0 || *name1 == 0 || name2) {
+            err.submit(2009, string); return;
+        }
+        sym.Name1 = name1;
+        sym.Action  = SYMA_MAKE_UNDEF;
+        SymbolList.Push(&sym, sizeof(sym));  SymbolChangeEntries++;
+        break;
+
     default:
         err.submit(2004, string);  // Unknown option
     }
@@ -936,6 +945,16 @@ int CCommandLineInterpreter::SymbolChange(char const * oldname, char const ** ne
             }
             else { // only public and external symbols can be made local
                 err.submit(1021, oldname); // cannot make local
+                action = SYMA_NOCHANGE;
+            }
+            break;
+
+        case SYMA_MAKE_UNDEF: // Make local or public symbol undef and external
+            if (symtype == SYMT_LOCAL || symtype == SYMT_PUBLIC) {
+                CountSymbolsMadeExternal++;  psym->Done++;
+            }
+            else { // only public and external symbols can be made local
+                err.submit(1025, oldname); // cannot make local
                 action = SYMA_NOCHANGE;
             }
             break;
@@ -1179,7 +1198,10 @@ void CCommandLineInterpreter::ReportStatistics() {
         if (CountSymbolsMadeLocal) {
             printf ("\n%3i Public or external symbol names made local", CountSymbolsMadeLocal);
         }
-        if (SymbolChangeEntries && !CountSymbolNameChanges && !CountSymbolNameAliases && !CountSymbolsWeakened && !CountSymbolsMadeLocal) {
+        if (CountSymbolsMadeExternal) {
+            printf ("\n%3i Local symbol names made external", CountSymbolsMadeExternal);
+        }
+        if (SymbolChangeEntries && !CountSymbolNameChanges && !CountSymbolNameAliases && !CountSymbolsWeakened && !CountSymbolsMadeLocal && !CountSymbolsMadeExternal) {
             printf ("\n    No symbols to change were found");
         }
     }
@@ -1212,6 +1234,7 @@ void CCommandLineInterpreter::Help() {
     printf("\n-as:N1:N2  Replace symbol Suffix and keep old name as alias.");
     printf("\n-nw:N1     make public symbol Name N1 Weak (ELF and MAC64 only).");
     printf("\n-nl:N1     make public symbol Name N1 Local (invisible).\n");
+    printf("\n-ne:N1     make local symbol Name N1 external.\n");
     //printf("\n-ds        Strip Debug info.");    // default if input and output are different formats
     //printf("\n-dp        Preserve Debug info, even if it is incompatible.");
     printf("\n-xs        Strip exception handling info and other incompatible info.");  // default if input and output are different formats. Hides unused symbols

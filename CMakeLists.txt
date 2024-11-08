@@ -12,41 +12,6 @@ project(FUEL C CXX)
 
 find_package (Python3 COMPONENTS Interpreter REQUIRED)
 
-set(GHIDRA_INSTALL_DIR "$ENV{GHIDRA_INSTALL_DIR}" CACHE STRING "Path to Ghidra install directory.")
-
-if(CMAKE_HOST_WIN32)
-	set(GHIDRA_ANALYZE_HEADLESS cmd /c "${GHIDRA_INSTALL_DIR}/support/analyzeHeadless.bat")
-else()
-	set(GHIDRA_ANALYZE_HEADLESS "${GHIDRA_INSTALL_DIR}/support/analyzeHeadless")
-endif()
-
-set(GHIDRA_SERVER_ADDRESS "cs.widberg.me" CACHE STRING "Address of the Ghidra server.")
-set(GHIDRA_SERVER_PORT "13100" CACHE STRING "Port of the Ghidra server.")
-set(GHIDRA_SERVER_REPOSITORY_NAME "zouna" CACHE STRING "Repository on the Ghidra server.")
-set(GHIDRA_SERVER_FOLDER_PATH "FUEL" CACHE STRING "Root folder path on the Ghidra server.")
-set(GHIDRA_SERVER_PROJECT_FILE "FUEL.exe" CACHE STRING "Project file on the Ghidra server.")
-set(GHIDRA_SERVER_USER "" CACHE STRING "Username for the Ghidra server, leave empty for anonymous.")
-set(GHIDRA_SERVER_KEYSTORE "" CACHE STRING "Path to keystore file for the Ghidra server, leave empty for anonymous.")
-
-set(GHIDRA_LOCAL_PROJECT_DIR "zouna" CACHE STRING "Directory containing local Ghidra project.")
-set(GHIDRA_LOCAL_PROJECT_NAME "zouna" CACHE STRING "Local ghidra project name.")
-set(GHIDRA_LOCAL_FOLDER_PATH "FUEL" CACHE STRING "Root folder path in the local project.")
-set(GHIDRA_LOCAL_PROJECT_FILE "FUEL.exe" CACHE STRING "Project file in the local project.")
-
-option(USE_GHIDRA_SERVER "If on, use the Ghidra server (very slow). If off, use the local project." OFF)
-
-if(USE_GHIDRA_SERVER)
-	set(GHIDRA_PROJECT "ghidra://${GHIDRA_SERVER_ADDRESS}$<$<BOOL:${GHIDRA_SERVER_PORT}>:\:${GHIDRA_SERVER_PORT}>/${GHIDRA_SERVER_REPOSITORY_NAME}/${GHIDRA_SERVER_FOLDER_PATH}" "$<$<BOOL:${GHIDRA_SERVER_USER}>:-connect \"${GHIDRA_SERVER_USER}\">" "$<$<BOOL:${GHIDRA_SERVER_KEYSTORE}>:-keystore \"${GHIDRA_SERVER_KEYSTORE}\">")
-	set(GHIDRA_PROJECT_FILE "${GHIDRA_SERVER_PROJECT_FILE}")
-	set(GHIDRA_GPR_FILE "")
-	set(GHIDRA_FAKE_OUTPUT "__GHIDRA_FAKE_OUTPUT__")
-else()
-	set(GHIDRA_PROJECT "${GHIDRA_LOCAL_PROJECT_DIR}" "${GHIDRA_LOCAL_PROJECT_NAME}/${GHIDRA_LOCAL_FOLDER_PATH}")
-	set(GHIDRA_PROJECT_FILE "${GHIDRA_LOCAL_PROJECT_FILE}")
-	set(GHIDRA_GPR_FILE "${GHIDRA_LOCAL_PROJECT_DIR}/${GHIDRA_LOCAL_PROJECT_NAME}.gpr")
-	set(GHIDRA_FAKE_OUTPUT "")
-endif()
-
 set(FUEL_DECOMPILATION_NAME "FUELDecompilation" CACHE STRING "Name to use for the FUEL decompilation executable.")
 set(FUEL_DECOMPILATION_BASENAME "${FUEL_DECOMPILATION_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
 set(FUEL_ARGS "-W" CACHE STRING "Arguments to pass FUEL in the run and debug targets.")
@@ -76,8 +41,6 @@ target_link_libraries(FUEL PRIVATE
 	defuel
 	libfuel
 )
-
-add_dependencies(FUEL libfuel_generate)
 
 if(FUEL_INSTALL_DIR)
     add_custom_command(TARGET FUEL POST_BUILD
@@ -349,22 +312,53 @@ target_link_libraries(defuel PUBLIC
 )
 
 add_custom_command(
-	COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/comments_to_json.py" --output "${CMAKE_CURRENT_BINARY_DIR}/defuel.json" "$<TARGET_FILE:defuel>" "$<TARGET_FILE:Engine>" "$<TARGET_FILE:LIBPC_Common>" "$<TARGET_FILE:LIBPC_TNL>"
-	DEPENDS defuel Engine LIBPC_Common LIBPC_TNL "${CMAKE_CURRENT_SOURCE_DIR}/tools/comments_to_json.py"
-	OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/defuel.json"
+	COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/comments2objconv.py" --rename "${CMAKE_CURRENT_BINARY_DIR}/libfuelrename.txt" --undef "${CMAKE_CURRENT_BINARY_DIR}/libfuelundef.txt" "$<TARGET_FILE:defuel>" "$<TARGET_FILE:Engine>" "$<TARGET_FILE:LIBPC_Common>" "$<TARGET_FILE:LIBPC_TNL>"
+	DEPENDS defuel Engine LIBPC_Common LIBPC_TNL "${CMAKE_CURRENT_SOURCE_DIR}/tools/comments2objconv.py"
+	OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/libfuelundef.txt" "${CMAKE_CURRENT_BINARY_DIR}/libfuelrename.txt"
 	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
+add_executable(objconv
+    objconv/cmdline.cpp
+    objconv/cof2asm.cpp
+    objconv/cof2cof.cpp
+    objconv/cof2elf.cpp
+    objconv/cof2omf.cpp
+    objconv/coff.cpp
+    objconv/containers.cpp
+    objconv/disasm1.cpp
+    objconv/disasm2.cpp
+    objconv/elf.cpp
+    objconv/elf2asm.cpp
+    objconv/elf2cof.cpp
+    objconv/elf2elf.cpp
+    objconv/elf2mac.cpp
+    objconv/error.cpp
+    objconv/library.cpp
+    objconv/mac2asm.cpp
+    objconv/mac2elf.cpp
+    objconv/mac2mac.cpp
+    objconv/macho.cpp
+    objconv/main.cpp
+    objconv/omf.cpp
+    objconv/omf2asm.cpp
+    objconv/omf2cof.cpp
+    objconv/omfhash.cpp
+    objconv/opcodes.cpp
+)
+
 add_custom_command(
-	COMMAND ${GHIDRA_ANALYZE_HEADLESS} ${GHIDRA_PROJECT} -process "${GHIDRA_PROJECT_FILE}" -readOnly -noanalysis -scriptPath "ghidra_scripts" -preScript "delink.py" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj" "${CMAKE_CURRENT_SOURCE_DIR}/libfuel.json" "${CMAKE_CURRENT_BINARY_DIR}/defuel.json"
-	COMMAND lib "/OUT:${CMAKE_CURRENT_BINARY_DIR}/libfuel.lib" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj"
-	DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/ghidra_scripts/delink.py" "${CMAKE_CURRENT_SOURCE_DIR}/libfuel.json" "${CMAKE_CURRENT_BINARY_DIR}/defuel.json" "${GHIDRA_GPR_FILE}"
-	OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/libfuel.lib" ${GHIDRA_FAKE_OUTPUT}
-	BYPRODUCTS "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj"
-	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+    COMMAND "$<TARGET_FILE:objconv>" -wex "@${CMAKE_CURRENT_BINARY_DIR}/libfuelundef.txt" "${CMAKE_CURRENT_SOURCE_DIR}/libs/libfuel.obj" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.intermediate.obj"
+    COMMAND "$<TARGET_FILE:objconv>" -wex "@${CMAKE_CURRENT_BINARY_DIR}/libfuelrename.txt" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.intermediate.obj" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj"
+    COMMAND lib "/OUT:${CMAKE_CURRENT_BINARY_DIR}/libfuel.lib" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj"
+    DEPENDS objconv "${CMAKE_CURRENT_BINARY_DIR}/libfuelundef.txt" "${CMAKE_CURRENT_BINARY_DIR}/libfuelrename.txt"
+    BYPRODUCTS "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj"
+    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/libfuel.lib"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 add_custom_target(libfuel_generate DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/libfuel.lib")
 add_library(libfuel STATIC IMPORTED GLOBAL)
+add_dependencies(libfuel libfuel_generate)
 set_target_properties(libfuel PROPERTIES IMPORTED_LOCATION "${CMAKE_CURRENT_BINARY_DIR}/libfuel.lib")
 
 function(create_import_library basename)

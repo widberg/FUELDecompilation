@@ -178,6 +178,16 @@ void CELF2ELF<ELFSTRUCTURES>::MakeSymbolTable() {
                sym.st_type = type ;
                break;
 
+            case SYMA_MAKE_UNDEF:
+               // Make local or public symbol undef and external
+               // FIXME: Does this work?
+               binding = STB_GLOBAL;  SymbolType = SYMT_EXTERNAL;
+               sym.st_bind = binding;
+               sym.st_type = type ;
+               sym.st_value = 0;
+               sym.st_shndx = SHN_UNDEF;
+               break;
+
             case SYMA_CHANGE_NAME:
                // Change name of symbol
                name1 = name2;  name2 = 0;

@@ -119,6 +119,13 @@ void CCOF2COF::MakeSymbolTable() {
          OldSymtab.p->s.StorageClass = COFF_CLASS_STATIC;
          break;
 
+      case SYMA_MAKE_UNDEF:
+         // Make local or public symbol undef and external
+         OldSymtab.p->s.Value = 0;
+         OldSymtab.p->s.StorageClass = COFF_CLASS_EXTERNAL;
+         OldSymtab.p->s.SectionNumber = COFF_SECTION_UNDEF;
+         break;
+
       case SYMA_CHANGE_NAME:
          // Change name of symbol
          if (OldSymtab.p->s.StorageClass == COFF_CLASS_FILE) {

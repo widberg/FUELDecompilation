@@ -44,6 +44,7 @@ void CMAC2MAC<MACSTRUCTURES>::MakeSymbolTable() {
    int action;                         // Action to take on symbol
    int SymType;                        // Symbol type
    int SymDesc;                        // Symbol descriptor
+   unsigned int Value;                 // Symbol descriptor
    uint8_t Section;                      // Symbol section
 
    // pointer to symbol table
@@ -72,6 +73,7 @@ void CMAC2MAC<MACSTRUCTURES>::MakeSymbolTable() {
       SymType = symp->n_type;          // Symbol type
       SymDesc = symp->n_desc;          // Symbol descriptor
       Section = symp->n_sect;          // Symbol section
+      Value   = symp->n_value;         // Symbol value
 
       // Check if any change required for this symbol
       action = cmd.SymbolChange(Name1, &Name2, SYMT_LOCAL + OldScope);
@@ -113,6 +115,18 @@ void CMAC2MAC<MACSTRUCTURES>::MakeSymbolTable() {
          else err.submit(1021, Name1);
          break;
 
+      case SYMA_MAKE_UNDEF:
+         // Make local or public symbol undef and external
+         // FIXME: Does this work?
+         if (OldScope == 0 || OldScope == 1) {
+            Section = MAC_NO_SECT;  // External symbol. Set to 0
+            SymDesc = 0;
+            SymType = MAC_N_UNDF;
+            Value = 0;
+         }
+         else err.submit(1025, Name1);
+         break;
+
       case SYMA_CHANGE_NAME:
          // Change name of symbol
          Name1 = Name2;  Name2 = 0;
@@ -124,7 +138,7 @@ void CMAC2MAC<MACSTRUCTURES>::MakeSymbolTable() {
             err.submit(1022, Name1); break;
          }
          // Make alias
-         NewSymbols[1].AddSymbol(-1, Name2, SymType, SymDesc, Section, symp->n_value);
+         NewSymbols[1].AddSymbol(-1, Name2, SymType, SymDesc, Section, Value);
          break;
 
       default:
@@ -132,7 +146,7 @@ void CMAC2MAC<MACSTRUCTURES>::MakeSymbolTable() {
       }
 
       // Store symbol, possibly modified
-      NewSymbols[NewScope].AddSymbol(symi, Name1, SymType, SymDesc, Section, symp->n_value);
+      NewSymbols[NewScope].AddSymbol(symi, Name1, SymType, SymDesc, Section, Value);
    }
 
    // Put everything into symbol table and string table
