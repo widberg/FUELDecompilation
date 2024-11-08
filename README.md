@@ -3,7 +3,7 @@
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/widberg/FUELDecompilation/build.yml)](https://github.com/widberg/FUELDecompilation/actions)
 [![Join the chat at https://discord.gg/CQgMNbYeUR](https://img.shields.io/badge/chat-on_discord-7389D8.svg?logo=discord&logoColor=ffffff&labelColor=6A7EC2)](https://discord.gg/CQgMNbYeUR)
 
-This is a decompilation of the game FUEL (PC, US Retail), which was released in 2009 by Asobo Studio and published by Codemasters. The game was developed using the Zouna Game Engine, which is a proprietary engine with a long and storied history. Neither the game nor its assets are included in this repository. A legally obtained copy of the game is required to build and run the decompiled code.
+This is a decompilation of the game FUEL (PC, US Retail), which was released in 2009 by Asobo Studio and published by Codemasters. The game was developed using the Zouna Game Engine, which is a proprietary engine with a long and storied history. Neither the game executable nor its assets are included in this repository. A legally obtained copy of the game is required to build and run the decompiled code.
 
 ## Getting Started
 
@@ -11,17 +11,17 @@ This is a decompilation of the game FUEL (PC, US Retail), which was released in 
 
 #### Required
 
-* Git
-* CMake
-* Ninja
-* Python 3
+* [Git](https://git-scm.com/)
+* [CMake](https://cmake.org/)
+* [Ninja](https://github.com/ninja-build/ninja)
+* [Python 3](https://www.python.org/downloads/)
 * [msvc8.0](https://github.com/widberg/msvc8.0)
 * [Microsoft DirectX SDK (August 2008)](https://archive.org/details/dxsdk_aug08)
-* FUEL (PC, US Retail)
+* FUEL (PC, US Retail) - FUEL.exe SHA-256: `ac1b2077137b7c6299c344111857b032635fe3d4794bc5135dad7c35feeda856`
 
 #### Optional
 
-* x64dbg (x32dbg)
+* [x64dbg (x32dbg)](https://github.com/x64dbg/x64dbg)
 
 ### Checkout
 
@@ -31,7 +31,7 @@ git clone https://github.com/widberg/FUELDecompilation.git
 
 ### Ghidra Project
 
-A Ghidra server with the FUEL project is available at `cs.widberg.me:13100` with anonymous read-only access enabled. If you would like an account with write access, please ask in the [Discord](https://discord.gg/CQgMNbYeUR).
+A [Ghidra](https://ghidra-sre.org/) server with the FUEL project is available at `cs.widberg.me:13100` with anonymous read-only access enabled. If you would like an account with write access, please ask in the [Discord](https://discord.gg/CQgMNbYeUR).
 
 ### Build
 
