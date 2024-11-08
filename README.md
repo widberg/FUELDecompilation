@@ -3,7 +3,7 @@
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/widberg/FUELDecompilation/build.yml)](https://github.com/widberg/FUELDecompilation/actions)
 [![Join the chat at https://discord.gg/CQgMNbYeUR](https://img.shields.io/badge/chat-on_discord-7389D8.svg?logo=discord&logoColor=ffffff&labelColor=6A7EC2)](https://discord.gg/CQgMNbYeUR)
 
-This is a decompilation of the game FUEL (PC, US Retail), which was released in 2009 by Asobo Studio and published by Codemasters. The game was developed using the Zouna Game Engine, which is a proprietary engine with a long and storied history. Neither the game executable nor its assets are included in this repository. A legally obtained copy of the game is required to build and run the decompiled code.
+This is a decompilation of the game FUEL (PC, US Retail), which was released in 2009 by Asobo Studio and published by Codemasters. The game was developed using the Zouna Game Engine, which is a proprietary engine with a long and storied history. Neither the game executable nor its assets are included in this repository. A legally obtained copy of the game is required to build and run the decompiled code. A lot of the theory and techniques used in this project are outlined in the [Decompilation page of the FMTK Wiki](https://github.com/widberg/fmtk/wiki/Decompilation).
 
 ## Getting Started
 
