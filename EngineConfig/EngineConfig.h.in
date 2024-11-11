@@ -23,4 +23,8 @@
 // Undefine an address
 #define UNDEFADDRESS(address) __pragma(comment(user, "undefaddress;" #address))
 
+#define CAT2(x, y) x ## y
+#define CAT(x, y) CAT2(x, y)
+#define STATIC_ASSERT(expr, ...) enum { CAT(__STATIC_ASSERT_FAILED, __COUNTER__) = 1 / (int)(!!(expr)) }
+
 #endif // CONFIG_H
