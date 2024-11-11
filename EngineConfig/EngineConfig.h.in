@@ -8,7 +8,19 @@
 #cmakedefine01 USE_SECUROM
 #cmakedefine01 USE_RUNNING_CHECK
 
+// Rename a symbol without undefining it
 #define ADDRESSSYMBOL(address, symbol) __pragma(comment(user, "addresssymbol;" #address ";" symbol))
+
+// Rename a symbol and undefine the original
 #define DELINKFUNCTION(address, ...) __pragma(comment(user, "delinkfunction;" __FUNCSIG__ ";" __FUNCDNAME__ ";" #address ";" #__VA_ARGS__))
+
+// Rename a vftable and undefine the original
+#define ADDRESSVFTABLE(address, class) __pragma(comment(user, "addressvftable;" #address ";" #class))
+
+// Rename a `virtual void function(void)` without undefining it
+#define ADDRESSVF(address, class, function) __pragma(comment(user, "addressvf;" #address ";" #class ";" #function))
+
+// Undefine an address
+#define UNDEFADDRESS(address) __pragma(comment(user, "undefaddress;" #address))
 
 #endif // CONFIG_H

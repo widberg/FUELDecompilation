@@ -295,6 +295,8 @@ add_library(defuel STATIC
 	OffRoad/ViewportHUD.cpp
 	OffRoad/VisibleObjectMgr.cpp
 	OffRoad/WeatherManagerEffects.cpp
+	OffRoad/Includes/vftables.hpp
+	OffRoad/vftables.cpp
 )
 
 target_include_directories(defuel PRIVATE
@@ -351,7 +353,7 @@ add_custom_command(
     COMMAND "$<TARGET_FILE:objconv>" -wex "@${CMAKE_CURRENT_BINARY_DIR}/libfuelundef.txt" "${CMAKE_CURRENT_SOURCE_DIR}/libs/libfuel.obj" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.intermediate.obj"
     COMMAND "$<TARGET_FILE:objconv>" -wex "@${CMAKE_CURRENT_BINARY_DIR}/libfuelrename.txt" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.intermediate.obj" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj"
     COMMAND lib "/OUT:${CMAKE_CURRENT_BINARY_DIR}/libfuel.lib" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj"
-    DEPENDS objconv "${CMAKE_CURRENT_BINARY_DIR}/libfuelundef.txt" "${CMAKE_CURRENT_BINARY_DIR}/libfuelrename.txt"
+    DEPENDS objconv "${CMAKE_CURRENT_BINARY_DIR}/libfuelundef.txt" "${CMAKE_CURRENT_BINARY_DIR}/libfuelrename.txt" "${CMAKE_CURRENT_SOURCE_DIR}/libs/libfuel.obj"
     BYPRODUCTS "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj"
     OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/libfuel.lib"
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"

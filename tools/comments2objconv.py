@@ -120,6 +120,8 @@ def main():
         with open(obj, "rb") as f:
             comments += process_file(f)
 
+    comments = set(comments)
+
     # Parse comments
     undef = set()
     rename = {}
@@ -158,6 +160,27 @@ def main():
                 address = int(parts[1], 16)
                 dname = parts[2]
                 rename[address] = dname
+            elif tag == "addressvftable":
+                if len(parts) != 3:
+                    print("Invalid delinkvftable comment:", comment)
+                    exit(1)
+                address = int(parts[1], 16)
+                klass = parts[2]
+                rename[address] = "??_7%s@@6B@" % klass
+            elif tag == "addressvf":
+                if len(parts) != 4:
+                    print("Invalid addressvf comment:", comment)
+                    exit(1)
+                address = int(parts[1], 16)
+                klass = parts[2]
+                function = parts[3]
+                rename[address] = "?%s@%s@@UAEXXZ" % (function, klass)
+            elif tag == "undefaddress":
+                if len(parts) != 2:
+                    print("Invalid undefaddress comment:", comment)
+                    exit(1)
+                address = int(parts[1], 16)
+                undef.add(address)
             else:
                 print("Unknown tag:", tag)
                 exit(1)
