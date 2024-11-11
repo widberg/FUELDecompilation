@@ -10,6 +10,24 @@ add_link_options("/MANIFEST:NO") # Disable manifest generation
 
 project(FUEL C CXX)
 
+# Verify that the correct compiler is being used
+if (NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+    message(FATAL_ERROR "Only MSVC is supported for C++. Found ${CMAKE_CXX_COMPILER_ID}. Please read the README for more information.")
+endif()
+
+if (NOT "${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
+    message(FATAL_ERROR "Only MSVC is supported for C. Found ${CMAKE_C_COMPILER_ID}. Please read the README for more information.")
+endif()
+
+# Verify that the correct compiler version is being used
+if (NOT "${CMAKE_CXX_COMPILER_VERSION}" STREQUAL "14.0.50727")
+    message(FATAL_ERROR "MSVC 14.0.50727 from MSVC 8.0 is required for C++. Found ${CMAKE_CXX_COMPILER_VERSION}. Please read the README for more information.")
+endif()
+
+if (NOT "${CMAKE_C_COMPILER_VERSION}" STREQUAL "14.0.50727")
+    message(FATAL_ERROR "MSVC 14.0.50727 from MSVC 8.0 is required for C. Found ${CMAKE_C_COMPILER_VERSION}. Please read the README for more information.")
+endif()
+
 find_package (Python3 COMPONENTS Interpreter REQUIRED)
 
 set(FUEL_DECOMPILATION_NAME "FUELDecompilation" CACHE STRING "Name to use for the FUEL decompilation executable.")
