@@ -5,7 +5,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # Generate compile_commands.json for clang
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON) # Enable LTO
 cmake_policy(SET CMP0091 NEW) # Enable MSVC runtime library selection
 set(CMAKE_MSVC_RUNTIME_LIBRARY "") # Manually set runtime library to avoid warning
-add_compile_options("/MT$<$<CONFIG:Debug>:d>") # Use static runtime libraries
+add_compile_options("/MT$<$<CONFIG:Debug>:d>" $<$<COMPILE_LANGUAGE:CXX>:/GR> /GS- /fp:fast) # Use static runtime libraries
 add_link_options("/MANIFEST:NO") # Disable manifest generation
 
 project(FUEL C CXX)
@@ -41,11 +41,10 @@ set(FUEL_INSTALL_DIR "$ENV{FUEL_INSTALL_DIR}" CACHE STRING "Path to FUEL install
 set(X64DBG_INSTALL_DIR "$ENV{X64DBG_INSTALL_DIR}" CACHE STRING "Path to x64dbg install directory.")
 set(DXSDK_DIR "$ENV{DXSDK_DIR}" CACHE STRING "Path to Microsoft DirectX SDK (August 2008) install directory.")
 
-add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/GR> /GS- /fp:fast)
-
 add_executable(FUEL WIN32
 	Resources/FUEL.rc
 	OffRoad/xcu.c
+    "${CMAKE_CURRENT_BINARY_DIR}/trampolines.asm"
 )
 
 target_link_options(FUEL BEFORE PRIVATE
@@ -332,9 +331,9 @@ target_link_libraries(defuel PUBLIC
 )
 
 add_custom_command(
-	COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/comments2objconv.py" --rename "${CMAKE_CURRENT_BINARY_DIR}/libfuelrename.txt" --undef "${CMAKE_CURRENT_BINARY_DIR}/libfuelundef.txt" "$<TARGET_FILE:defuel>" "$<TARGET_FILE:Engine>" "$<TARGET_FILE:LIBPC_Common>" "$<TARGET_FILE:LIBPC_TNL>"
+	COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/comments2objconv.py" --rename "${CMAKE_CURRENT_BINARY_DIR}/libfuelrename.txt" --undef "${CMAKE_CURRENT_BINARY_DIR}/libfuelundef.txt" --trampolines "${CMAKE_CURRENT_BINARY_DIR}/trampolines.asm" "$<TARGET_FILE:defuel>" "$<TARGET_FILE:Engine>" "$<TARGET_FILE:LIBPC_Common>" "$<TARGET_FILE:LIBPC_TNL>"
 	DEPENDS defuel Engine LIBPC_Common LIBPC_TNL "${CMAKE_CURRENT_SOURCE_DIR}/tools/comments2objconv.py"
-	OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/libfuelundef.txt" "${CMAKE_CURRENT_BINARY_DIR}/libfuelrename.txt"
+	OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/libfuelundef.txt" "${CMAKE_CURRENT_BINARY_DIR}/libfuelrename.txt" "${CMAKE_CURRENT_BINARY_DIR}/trampolines.asm"
 	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 

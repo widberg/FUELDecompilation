@@ -2,6 +2,7 @@
 
 import argparse
 import struct
+import re
 
 OBJ_MAGIC = 0x14C
 MSIL_MAGIC = b"\x00\x00\xFF\xFF\x01\x00\x4C\x01"
@@ -105,6 +106,42 @@ def process_file(f):
     exit(1)
 
 
+def msvc_demangle(symbol):
+    conventions = {
+        "__cdecl": r"^\?[\w@]+@@YA[X0-9]",
+        "__stdcall": r"^\?[\w@]+@@YG[X0-9]",
+        "__fastcall": r"^\?[\w@]+@@YI[X0-9]",
+        "__thiscall": r"^\?[\w@]+@@Q[A-Z0-9]",
+        "__vectorcall": r"^\?[\w@]+@@YH[X0-9]",
+        "__clrcall": r"^\?[\w@]+@@YZ[X0-9]",
+    }
+
+    cc = None
+    for convention, pattern in conventions.items():
+        if re.match(pattern, symbol):
+            cc = convention
+
+    member_function_pattern = re.compile(r"\?\w+@.+@@")
+    this_in_ecx = re.match(member_function_pattern, symbol) and cc in ["__thiscall", "__fastcall"]
+    return cc, this_in_ecx
+
+
+def fatal_error(file, line, message):
+    print(f"FATAL: {file}:{line} : {message}")
+    return 1
+
+
+def check_argument_count(tag, file, line, comment, parts, count):
+    if len(parts) != count:
+        fatal_error(
+            file,
+            line,
+            f'Invalid {tag} comment: "{comment}". Expected {count} arguments, got {len(parts)}.',
+        )
+        return 1
+    return 0
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Generate list of defined symbols in libraries and objects."
@@ -112,6 +149,7 @@ def main():
     parser.add_argument("objs", type=str, nargs="+")
     parser.add_argument("--undef", type=argparse.FileType("a+"), required=True)
     parser.add_argument("--rename", type=argparse.FileType("a+"), required=True)
+    parser.add_argument("--trampolines", type=argparse.FileType("a+"), required=True)
     args = parser.parse_args()
 
     # Read comments from all objects
@@ -125,22 +163,27 @@ def main():
     # Parse comments
     undef = set()
     rename = {}
+    trampolines = set()
+    spoils = set()
+    error_count = 0
 
     for comment in comments:
         parts = comment.split(";")
         if len(parts) > 0:
             tag = parts[0]
+            file = parts[1]
+            line = parts[2]
+            parts = parts[3:]
             if tag == "delinkfunction":
-                if len(parts) != 5:
-                    print("Invalid delinkfunction comment:", comment)
-                    exit(1)
-                undname = parts[1]  # to check template parameters
-                dname = parts[2]
-                address = int(parts[3], 16)
-                template_params = parts[4].split(", ")
-                if template_params != [""]:
-                    print("Template parameters are not supported yet.")
-                    exit(1)
+                error_count += check_argument_count(tag, file, line, comment, parts, 4)
+                undname = parts[0]  # to check template parameters
+                dname = parts[1]
+                address = int(parts[2], 16)
+                if parts[3] != "":
+                    error_count += fatal_error(
+                        file, line, "Template parameters are not supported yet."
+                    )
+                template_params = parts[3].split(", ")
                 if address in rename:
                     if rename[address] != dname:
                         print(
@@ -154,36 +197,92 @@ def main():
                     undef.add(address)
                     rename[address] = dname
             elif tag == "addresssymbol":
-                if len(parts) != 3:
-                    print("Invalid delinkfunction comment:", comment)
-                    exit(1)
-                address = int(parts[1], 16)
-                dname = parts[2]
+                error_count += check_argument_count(tag, file, line, comment, parts, 2)
+                address = int(parts[0], 16)
+                dname = parts[1]
                 rename[address] = dname
             elif tag == "addressvftable":
-                if len(parts) != 3:
-                    print("Invalid delinkvftable comment:", comment)
-                    exit(1)
-                address = int(parts[1], 16)
-                klass = parts[2]
-                rename[address] = "??_7%s@@6B@" % klass
+                error_count += check_argument_count(tag, file, line, comment, parts, 2)
+                address = int(parts[0], 16)
+                klass = parts[1]
+                rename[address] = f"??_7{klass}@@6B@"
             elif tag == "addressvf":
-                if len(parts) != 4:
-                    print("Invalid addressvf comment:", comment)
-                    exit(1)
-                address = int(parts[1], 16)
-                klass = parts[2]
-                function = parts[3]
-                rename[address] = "?%s@%s@@UAEXXZ" % (function, klass)
+                error_count += check_argument_count(tag, file, line, comment, parts, 3)
+                address = int(parts[0], 16)
+                klass = parts[1]
+                function = parts[2]
+                rename[address] = f"?{function}@{klass}@@UAEXXZ"
             elif tag == "undefaddress":
-                if len(parts) != 2:
-                    print("Invalid undefaddress comment:", comment)
-                    exit(1)
-                address = int(parts[1], 16)
+                error_count += check_argument_count(tag, file, line, comment, parts, 1)
+                address = int(parts[0], 16)
                 undef.add(address)
+            elif tag == "usercall" or tag == "userpurge":
+                error_count += check_argument_count(tag, file, line, comment, parts, 4)
+                undname = parts[0]  # to check template parameters
+                dname = parts[1]
+                ret = parts[2].upper()
+                if ret == "" or ret == "VOID":
+                    ret = None
+                arguments = []
+                if parts[3] != "":
+                    for x in parts[3].split(", "):
+                        try:
+                            arguments.append(int(x))
+                        except ValueError:
+                            arguments.append(x.upper())
+                if ret is None or ret == "EAX" or ret == "AL":
+                    if len(arguments) == 0:
+                        error_count += fatal_error(
+                            file,
+                            line,
+                            f'Unnecessary {tag} comment. Use {"__stdcall" if tag == "usercall" else "__cdecl"} instead.',
+                        )
+                    additional_help = None
+                    if arguments == ["ECX"]:
+                        additional_help = "__fastcall with the second parameter ignored or use a non-static member function if ECX is the this pointer"
+                    elif arguments == ["EDX"]:
+                        additional_help = "__fastcall with the first parameter ignored"
+                    elif arguments == ["ECX", "EDX"]:
+                        additional_help = "__fastcall"
+                    elif arguments == ["EDX", "ECX"]:
+                        additional_help = (
+                            "__fastcall with the first and second parameter swapped"
+                        )
+                    if additional_help is not None:
+                        error_count += fatal_error(
+                            file,
+                            line,
+                            f"Unnecessary {tag} comment. Use {additional_help} instead.",
+                        )
+                cc, this_in_ecx = msvc_demangle(dname)
+                if cc is None:
+                    error_count += fatal_error(
+                        file, line, f'Unknown calling convention: "{undname}"'
+                    )
+                if cc != "__fastcall" and (arguments != ["ECX"] or cc != "__thiscall"):
+                    additional_help = ""
+                    if arguments == ["ECX"]:
+                        additional_help = " or a non-static member function"
+                    error_count += fatal_error(
+                        file,
+                        line,
+                        f'Incorrect calling convention: "{undname}". Found {cc}, should be __fastcall{additional_help}.',
+                    )
+                trampolines.add(dname)
+            elif tag == "spoils":
+                error_count += check_argument_count(tag, file, line, comment, parts, 3)
+                undname = parts[0]
+                dname = parts[1]
+                regs = parts[2].split(", ")
+                if regs == [""]:
+                    regs = []
+                spoils.add(dname)
             else:
-                print("Unknown tag:", tag)
-                exit(1)
+                error_count += fatal_error(file, line, f'Unknown tag: "{tag}"')
+
+    if error_count > 0:
+        print(f"{error_count} errors found.")
+        exit(1)
 
     # Handle undefs
     args.undef.seek(0)

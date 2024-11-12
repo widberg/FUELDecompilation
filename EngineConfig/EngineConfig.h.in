@@ -8,23 +8,35 @@
 #cmakedefine01 USE_SECUROM
 #cmakedefine01 USE_RUNNING_CHECK
 
-// Rename a symbol without undefining it
-#define ADDRESSSYMBOL(address, symbol) __pragma(comment(user, "addresssymbol;" #address ";" symbol))
-
-// Rename a symbol and undefine the original
-#define DELINKFUNCTION(address, ...) __pragma(comment(user, "delinkfunction;" __FUNCSIG__ ";" __FUNCDNAME__ ";" #address ";" #__VA_ARGS__))
-
-// Rename a vftable and undefine the original
-#define ADDRESSVFTABLE(address, class) __pragma(comment(user, "addressvftable;" #address ";" #class))
-
-// Rename a `virtual void function(void)` without undefining it
-#define ADDRESSVF(address, class, function) __pragma(comment(user, "addressvf;" #address ";" #class ";" #function))
-
-// Undefine an address
-#define UNDEFADDRESS(address) __pragma(comment(user, "undefaddress;" #address))
-
 #define CAT2(x, y) x ## y
 #define CAT(x, y) CAT2(x, y)
+#define STR2(x) #x
+#define STR(x) STR2(x)
+
+// Rename a symbol without undefining it
+#define ADDRESSSYMBOL(address, symbol) __pragma(comment(user, "addresssymbol;" __FILE__ ";" STR(__LINE__) ";" #address ";" symbol))
+
+// Rename a symbol and undefine the original
+#define DELINKFUNCTION(address, ...) __pragma(comment(user, "delinkfunction;" __FILE__ ";" STR(__LINE__) ";" __FUNCSIG__ ";" __FUNCDNAME__ ";" #address ";" #__VA_ARGS__))
+
+// Rename a vftable and undefine the original
+#define ADDRESSVFTABLE(address, class) __pragma(comment(user, "addressvftable;" __FILE__ ";" STR(__LINE__) ";" #address ";" #class))
+
+// Rename a `virtual void function(void)` without undefining it
+#define ADDRESSVF(address, class, function) __pragma(comment(user, "addressvf;" __FILE__ ";" STR(__LINE__) ";" #address ";" #class ";" #function))
+
+// Undefine an address
+#define UNDEFADDRESS(address) __pragma(comment(user, "undefaddress;" __FILE__ ";" STR(__LINE__) ";" #address))
+
+// Usercall trampoline generator
+#define USERCALL(return, ...) __pragma(comment(user, "usercall;" __FILE__ ";" STR(__LINE__) ";" __FUNCSIG__ ";" __FUNCDNAME__ ";" #return ";" #__VA_ARGS__))
+
+// Userpurge trampoline generator
+#define USERPURGE(return, ...) __pragma(comment(user, "userpurge;" __FILE__ ";" STR(__LINE__) ";" __FUNCSIG__ ";" __FUNCDNAME__ ";" #return ";" #__VA_ARGS__))
+
+// Spoils trampoline generator
+#define SPOILS(...) __pragma(comment(user, "spoils;" __FILE__ ";" STR(__LINE__) ";" __FUNCSIG__ ";" __FUNCDNAME__ ";" #__VA_ARGS__))
+
 #define STATIC_ASSERT(expr, ...) enum { CAT(__STATIC_ASSERT_FAILED, __COUNTER__) = 1 / (int)(!!(expr)) }
 
 #endif // CONFIG_H
