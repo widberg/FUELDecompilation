@@ -122,7 +122,10 @@ def msvc_demangle(symbol):
             cc = convention
 
     member_function_pattern = re.compile(r"\?\w+@.+@@")
-    this_in_ecx = re.match(member_function_pattern, symbol) and cc in ["__thiscall", "__fastcall"]
+    this_in_ecx = re.match(member_function_pattern, symbol) and cc in [
+        "__thiscall",
+        "__fastcall",
+    ]
     return cc, this_in_ecx
 
 
@@ -186,13 +189,12 @@ def main():
                 template_params = parts[3].split(", ")
                 if address in rename:
                     if rename[address] != dname:
-                        print(
-                            "Symbol address collision:",
-                            address,
-                            rename[address],
-                            dname,
+                        error_count += fatal_error(
+                            file,
+                            line,
+                            "Symbol address collision: address: 0x%08X, old: %s, new: %s"
+                            % (address, rename[address], dname),
                         )
-                        exit(1)
                 else:
                     undef.add(address)
                     rename[address] = dname
