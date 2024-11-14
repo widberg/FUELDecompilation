@@ -7,9 +7,7 @@
 
 struct Name_Z
 {
-	static Name_Z Null;
-
-	U32	m_ID;
+    U32 m_ID;
 }
 
 #endif
