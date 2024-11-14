@@ -537,6 +537,7 @@ add_library(Engine STATIC
 	Engine/Includes/Material_Z.h
 	Engine/Includes/MemList_Z.h
 	Engine/Includes/MovingAgent_Z.h
+	Engine/Includes/Name_Z.h
 	Engine/Includes/Node_Z.h
 	Engine/Includes/ObjectCache_Z.h
 	Engine/Includes/ObjectMove_Z.h
@@ -600,6 +601,7 @@ add_library(Engine STATIC
 	Engine/MemoryBank_Z.cpp
 	Engine/MenuParser.cpp
 	Engine/ModelOrder1C.cpp
+	Engine/Name_Z.cpp
 	Engine/NetPlayManager_Z.cpp
 	Engine/NetWorkPeerToPeer_XBL.cpp
 	Engine/PackerArith_Z.cpp
@@ -625,7 +627,7 @@ add_library(Engine STATIC
 	Engine/VolatileMem_Z.cpp
 )
 
-target_include_directories(Engine INTERFACE
+target_include_directories(Engine PUBLIC
 	Engine/Includes
 )
 
