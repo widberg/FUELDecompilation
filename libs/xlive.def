@@ -2,30 +2,30 @@ LIBRARY XLIVE
 EXPORTS
 	XWSAStartup @1 NONAME
 	XWSACleanup @2 NONAME
-	XSocketCreate @3 NONAME
-	XSocketClose @4 NONAME
+	XSocketCreate@12 @3 NONAME
+	XSocketClose@8 @4 NONAME
 	XSocketShutdown @5 NONAME
-	XSocketIOCTLSocket @6 NONAME
-	XSocketSetSockOpt @7 NONAME
+	XSocketIOCTLSocket@12 @6 NONAME
+	XSocketSetSockOpt@20 @7 NONAME
 	XSocketGetSockOpt @8 NONAME
 	XSocketGetSockName @9 NONAME
 	XSocketGetPeerName @10 NONAME
-	XSocketBind @11 NONAME
-	XSocketConnect @12 NONAME
-	XSocketListen @13 NONAME
+	XSocketBind@12 @11 NONAME
+	XSocketConnect@12 @12 NONAME
+	XSocketListen@8 @13 NONAME
 	XSocketAccept @14 NONAME
 	XSocketSelect @15 NONAME
 	XWSAGetOverlappedResult @16 NONAME
 	XWSACancelOverlappedIO @17 NONAME
-	XSocketRecv @18 NONAME
+	XSocketRecv@16 @18 NONAME
 	XWSARecv @19 NONAME
 	XSocketRecvFrom @20 NONAME
 	XWSARecvFrom @21 NONAME
-	XSocketSend @22 NONAME
+	XSocketSend@16 @22 NONAME
 	XWSASend @ 23 NONAME
-	XSocketSendTo @24 NONAME
+	XSocketSendTo@24 @24 NONAME
 	XWSASendTo @25 NONAME
-	XSocketInet_Addr @26 NONAME
+	XSocketInet_Addr@4 @26 NONAME
 	XSocketWSAGetLastError @27 NONAME
 	XWSASetLastError @28 NONAME
 	XWSACreateEvent @29 NONAME
@@ -35,10 +35,10 @@ EXPORTS
 	XWSAWaitForMultipleEvents @33 NONAME
 	XWSAFDIsSet @34 NONAME
 	XWSAEventSelect @35 NONAME
-	XSocketHTONL @37 NONAME
-	XSocketNTOHS @38 NONAME
-	XSocketNTOHL @39 NONAME
-	XSocketHTONS @40 NONAME
+	XSocketHTONL@4 @37 NONAME
+	XSocketNTOHS@4 @38 NONAME
+	XSocketNTOHL@4 @39 NONAME
+	XSocketHTONS@4 @40 NONAME
 	XNetStartup @51 NONAME
 	XNetCleanup @52 NONAME
 	XNetRandom @53 NONAME
@@ -88,7 +88,7 @@ EXPORTS
 	XLiveInitialize @5000 NONAME
 	XLiveInput @5001 NONAME
 	XLiveRender @5002 NONAME
-	XLiveUninitialize @5003 NONAME
+	XLiveUninitialize@0 @5003 NONAME
 	XLiveOnCreateDevice @5005 NONAME
 	XLiveOnDestroyDevice @5006 NONAME
 	XLiveOnResetDevice @5007 NONAME

@@ -1,3 +1,6 @@
+#include <WinSock2.h>
+#include <cstdlib>
+#include <cstring>
 #include "vftables.hpp"
 
 int CameraAgent_Z::CameraAgent_Z_vftable_39() { DELINKFUNCTION(0x004010A0); return 0x0; }
@@ -2033,3 +2036,759 @@ void Skin_Z::Object_Z_vftable_16(int, int) { DELINKFUNCTION(0x00883740); }
 void __stdcall _0x008E8910() { DELINKFUNCTION(0x008E8910); }
 void __stdcall _0x008E8D30() { DELINKFUNCTION(0x008E8D30); }
 void __stdcall _0x008E8D40() { DELINKFUNCTION(0x008E8D40); }
+void Creatures_G::ABC_Agent_vftable_19() { DELINKFUNCTION(0x00417450); MovingAgent_Z::ABC_Agent_vftable_19(); }
+void Creatures_G::ABC_Agent_vftable_18() { DELINKFUNCTION(0x00417460); MovingAgent_Z::ABC_Agent_vftable_18(); }
+void Creatures_G::Agent_Z_vftable_22() { DELINKFUNCTION(0x00419BB0); MovingAgent_Z::Agent_Z_vftable_22(); }
+extern "C" void __cdecl _0x006697D0(void);
+void __cdecl _0x0041A540() { DELINKFUNCTION(0x0041A540); _0x006697D0(); }
+void CreaturesMove_G::ObjectMove_Z_vftable_21() { DELINKFUNCTION(0x0041C1D0); ObjectMove_Z::ObjectMove_Z_vftable_21(); }
+extern "C" void __cdecl _0x0041F8F0(void);
+void __cdecl _0x0041FA70() { DELINKFUNCTION(0x0041FA70); _0x0041F8F0(); }
+void PlayerMove_G::ObjectMove_Z_vftable_43() { DELINKFUNCTION(0x0042DC30); ObjectThrow_Z::ObjectMove_Z_vftable_43(); }
+void Enemies_G::Agent_Z_vftable_24() { DELINKFUNCTION(0x0042F9A0); Creatures_G::Agent_Z_vftable_24(); }
+void GameLogicAgent_G::LogicAgent_G_vftable_39() { DELINKFUNCTION(0x00431CB0); LogicAgent_G::LogicAgent_G_vftable_39(); }
+extern "C" void __cdecl _0x00435820(void);
+void __cdecl _0x00434C20() { DELINKFUNCTION(0x00434C20); _0x00435820(); }
+extern "C" void __cdecl _0x00435820(void);
+void __cdecl _0x00434E20() { DELINKFUNCTION(0x00434E20); _0x00435820(); }
+extern "C" void __cdecl _0x00435820(void);
+void __cdecl _0x00435020() { DELINKFUNCTION(0x00435020); _0x00435820(); }
+extern "C" void __cdecl _0x00435820(void);
+void __cdecl _0x00435220() { DELINKFUNCTION(0x00435220); _0x00435820(); }
+extern "C" void __cdecl _0x00435820(void);
+void __cdecl _0x00435420() { DELINKFUNCTION(0x00435420); _0x00435820(); }
+extern "C" void __cdecl _0x00435820(void);
+void __cdecl _0x00435620() { DELINKFUNCTION(0x00435620); _0x00435820(); }
+extern "C" void __cdecl _0x00693820(void);
+void __cdecl _0x00437160() { DELINKFUNCTION(0x00437160); _0x00693820(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x0043C940() { DELINKFUNCTION(0x0043C940); _0x00665C50(); }
+extern "C" void __cdecl _0x00447570(void);
+void __cdecl _0x0043FD00() { DELINKFUNCTION(0x0043FD00); _0x00447570(); }
+void Dialog_BaseAlert::Dialog_G_vftable_22() { DELINKFUNCTION(0x0043FEA0); Dialog_G::Dialog_G_vftable_22(); }
+void Dialog_InfosText::Dialog_G_vftable_22() { DELINKFUNCTION(0x00440700); Dialog_G::Dialog_G_vftable_22(); }
+void FrontGlobalInGameData_G::BaseInGameDatas_G_vftable_22() { DELINKFUNCTION(0x00442980); BaseInGameDatas_G::BaseInGameDatas_G_vftable_22(); }
+void BaseInGameDatas_G::_0x00442C20() { DELINKFUNCTION(0x00442C20); BaseInGameDatas_G::BaseInGameDatas_G_vftable_36(); }
+void FrontGlobalInGameData_G::BaseInGameDatas_G_vftable_23() { DELINKFUNCTION(0x004431F0); BaseInGameDatas_G::BaseInGameDatas_G_vftable_23(); }
+void InGamePlayer_G::BaseInGameDatas_G_vftable_22() { DELINKFUNCTION(0x00443FC0); BaseInGameDatas_G::BaseInGameDatas_G_vftable_22(); }
+void InGamePlayer_G::BaseInGameDatas_G_vftable_23() { DELINKFUNCTION(0x00443FD0); BaseInGameDatas_G::BaseInGameDatas_G_vftable_23(); }
+extern "C" void __cdecl _0x004453B0(void);
+void __cdecl _0x00445270() { DELINKFUNCTION(0x00445270); _0x004453B0(); }
+void ChatHUD::ViewportHUD_vftable_1() { DELINKFUNCTION(0x00449F40); ViewportHUD::ViewportHUD_vftable_1(); }
+extern "C" void __cdecl _0x00696D60(void);
+void __cdecl _0x00450390() { DELINKFUNCTION(0x00450390); _0x00696D60(); }
+void DebugHUD::ViewportHUD_vftable_1() { DELINKFUNCTION(0x00454500); ViewportHUD::ViewportHUD_vftable_1(); }
+extern "C" void __cdecl _0x0046F080(void);
+void __cdecl _0x0046EF00() { DELINKFUNCTION(0x0046EF00); _0x0046F080(); }
+extern "C" void __cdecl _0x00475CE0(void);
+void __cdecl _0x00475D50() { DELINKFUNCTION(0x00475D50); _0x00475CE0(); }
+extern "C" void __cdecl _0x00475CE0(void);
+void __cdecl _0x00475D60() { DELINKFUNCTION(0x00475D60); _0x00475CE0(); }
+extern "C" void __cdecl _0x00475CE0(void);
+void __cdecl _0x00475D70() { DELINKFUNCTION(0x00475D70); _0x00475CE0(); }
+extern "C" void __cdecl _0x004CE400(void);
+void __cdecl _0x00476840() { DELINKFUNCTION(0x00476840); _0x004CE400(); }
+extern "C" void __cdecl _0x004CE400(void);
+void __cdecl _0x004796C0() { DELINKFUNCTION(0x004796C0); _0x004CE400(); }
+extern "C" void __cdecl _0x004CE400(void);
+void __cdecl _0x004796D0() { DELINKFUNCTION(0x004796D0); _0x004CE400(); }
+extern "C" void __cdecl _0x004CE400(void);
+void __cdecl _0x0047E9D0() { DELINKFUNCTION(0x0047E9D0); _0x004CE400(); }
+extern "C" void __cdecl _0x004CDFA0(void);
+void __cdecl _0x0047E9E0() { DELINKFUNCTION(0x0047E9E0); _0x004CDFA0(); }
+extern "C" void __cdecl _0x004CE400(void);
+void __cdecl _0x0047F360() { DELINKFUNCTION(0x0047F360); _0x004CE400(); }
+extern "C" void __cdecl _0x004CE400(void);
+void __cdecl _0x0047F370() { DELINKFUNCTION(0x0047F370); _0x004CE400(); }
+extern "C" void __cdecl _0x004CDFA0(void);
+void __cdecl _0x0047F380() { DELINKFUNCTION(0x0047F380); _0x004CDFA0(); }
+extern "C" void __cdecl _0x004CDFA0(void);
+void __cdecl _0x0047F390() { DELINKFUNCTION(0x0047F390); _0x004CDFA0(); }
+extern "C" void __cdecl _0x004CDFA0(void);
+void __cdecl _0x0047F3A0() { DELINKFUNCTION(0x0047F3A0); _0x004CDFA0(); }
+extern "C" void __cdecl _0x004CE400(void);
+void __cdecl _0x0047F4F0() { DELINKFUNCTION(0x0047F4F0); _0x004CE400(); }
+extern "C" void __cdecl _0x004CE400(void);
+void __cdecl _0x0047F570() { DELINKFUNCTION(0x0047F570); _0x004CE400(); }
+extern "C" void __cdecl _0x004CE400(void);
+void __cdecl _0x0047F580() { DELINKFUNCTION(0x0047F580); _0x004CE400(); }
+extern "C" void __cdecl _0x004CDFA0(void);
+void __cdecl _0x0047F590() { DELINKFUNCTION(0x0047F590); _0x004CDFA0(); }
+extern "C" void __cdecl _0x004CE400(void);
+void __cdecl _0x00481D60() { DELINKFUNCTION(0x00481D60); _0x004CE400(); }
+extern "C" void __cdecl _0x004A06E0(void);
+void __cdecl _0x004824F0() { DELINKFUNCTION(0x004824F0); _0x004A06E0(); }
+extern "C" void __cdecl _0x004CE400(void);
+void __cdecl _0x00490350() { DELINKFUNCTION(0x00490350); _0x004CE400(); }
+extern "C" void __cdecl _0x004CE400(void);
+void __cdecl _0x00490360() { DELINKFUNCTION(0x00490360); _0x004CE400(); }
+extern "C" void __cdecl _0x004CE400(void);
+void __cdecl _0x00490370() { DELINKFUNCTION(0x00490370); _0x004CE400(); }
+extern "C" void __cdecl _0x004CE400(void);
+void __cdecl _0x00490380() { DELINKFUNCTION(0x00490380); _0x004CE400(); }
+extern "C" void __cdecl _0x004CE400(void);
+void __cdecl _0x00490390() { DELINKFUNCTION(0x00490390); _0x004CE400(); }
+extern "C" void __cdecl _0x004CE400(void);
+void __cdecl _0x004903A0() { DELINKFUNCTION(0x004903A0); _0x004CE400(); }
+extern "C" void __cdecl _0x004CDFA0(void);
+void __cdecl _0x004903B0() { DELINKFUNCTION(0x004903B0); _0x004CDFA0(); }
+extern "C" void __cdecl _0x004CDFA0(void);
+void __cdecl _0x004903C0() { DELINKFUNCTION(0x004903C0); _0x004CDFA0(); }
+extern "C" void __cdecl _0x004CDFA0(void);
+void __cdecl _0x00492A80() { DELINKFUNCTION(0x00492A80); _0x004CDFA0(); }
+extern "C" void __cdecl _0x004CDFA0(void);
+void __cdecl _0x00492A90() { DELINKFUNCTION(0x00492A90); _0x004CDFA0(); }
+extern "C" void __cdecl _0x004CDFA0(void);
+void __cdecl _0x00492AA0() { DELINKFUNCTION(0x00492AA0); _0x004CDFA0(); }
+extern "C" void __cdecl _0x004CDFA0(void);
+void __cdecl _0x0049B3C0() { DELINKFUNCTION(0x0049B3C0); _0x004CDFA0(); }
+void InGameWarningHUD::ViewportHUD_vftable_7() { DELINKFUNCTION(0x0049B7A0); InGameMenuHUD::ViewportHUD_vftable_7(); }
+void MessagesHUD::ViewportHUD_vftable_1() { DELINKFUNCTION(0x004AF890); ViewportHUD::ViewportHUD_vftable_1(); }
+void MeterHUD::ViewportHUD_vftable_1() { DELINKFUNCTION(0x004B06F0); ViewportHUD::ViewportHUD_vftable_1(); }
+void MeterHUD::ViewportHUD_vftable_7() { DELINKFUNCTION(0x004B0700); ViewportHUD::ViewportHUD_vftable_7(); }
+extern "C" void __cdecl _0x004B0BA0(void);
+void __cdecl _0x004B1440() { DELINKFUNCTION(0x004B1440); _0x004B0BA0(); }
+void MissionHUD::ViewportHUD_vftable_1() { DELINKFUNCTION(0x004B1820); ViewportHUD::ViewportHUD_vftable_1(); }
+extern "C" void __cdecl _0x004BA200(void);
+void __cdecl _0x004BA1F0() { DELINKFUNCTION(0x004BA1F0); _0x004BA200(); }
+extern "C" void __cdecl _0x004BEE20(void);
+void __cdecl _0x004BECA0() { DELINKFUNCTION(0x004BECA0); _0x004BEE20(); }
+void Navigator3dHUD::ViewportHUD_vftable_1() { DELINKFUNCTION(0x004BF750); ViewportHUD::ViewportHUD_vftable_1(); }
+extern "C" void __cdecl _0x004C8110(void);
+void __cdecl _0x004C7E60() { DELINKFUNCTION(0x004C7E60); _0x004C8110(); }
+void VignettageHUD::ViewportHUD_vftable_1() { DELINKFUNCTION(0x004CAE60); ViewportHUD::ViewportHUD_vftable_1(); }
+extern "C" void __cdecl _0x0070B440(void);
+void __cdecl _0x004D1AC0() { DELINKFUNCTION(0x004D1AC0); _0x0070B440(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004D1B60() { DELINKFUNCTION(0x004D1B60); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004D2290() { DELINKFUNCTION(0x004D2290); _0x00665C50(); }
+extern "C" void __cdecl _0x0072D200(void);
+void __cdecl _0x004D2F30() { DELINKFUNCTION(0x004D2F30); _0x0072D200(); }
+extern "C" void __cdecl _0x0072D200(void);
+void __cdecl _0x004D2F70() { DELINKFUNCTION(0x004D2F70); _0x0072D200(); }
+extern "C" void __cdecl _0x0072D200(void);
+void __cdecl _0x004D2FA0() { DELINKFUNCTION(0x004D2FA0); _0x0072D200(); }
+extern "C" void __cdecl _0x0072D200(void);
+void __cdecl _0x004D2FB0() { DELINKFUNCTION(0x004D2FB0); _0x0072D200(); }
+extern "C" void __cdecl _0x0072D200(void);
+void __cdecl _0x004D2FC0() { DELINKFUNCTION(0x004D2FC0); _0x0072D200(); }
+extern "C" void __cdecl _0x0072D200(void);
+void __cdecl _0x004D2FD0() { DELINKFUNCTION(0x004D2FD0); _0x0072D200(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004D3520() { DELINKFUNCTION(0x004D3520); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004D37F0() { DELINKFUNCTION(0x004D37F0); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004D38E0() { DELINKFUNCTION(0x004D38E0); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004D39C0() { DELINKFUNCTION(0x004D39C0); _0x00665C50(); }
+extern "C" void __cdecl _0x0070B440(void);
+void __cdecl _0x004D4160() { DELINKFUNCTION(0x004D4160); _0x0070B440(); }
+extern "C" void __cdecl _0x0070B440(void);
+void __cdecl _0x004D4210() { DELINKFUNCTION(0x004D4210); _0x0070B440(); }
+extern "C" void __cdecl _0x0070B440(void);
+void __cdecl _0x004D4330() { DELINKFUNCTION(0x004D4330); _0x0070B440(); }
+extern "C" void __cdecl _0x0070B440(void);
+void __cdecl _0x004D43D0() { DELINKFUNCTION(0x004D43D0); _0x0070B440(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004D4730() { DELINKFUNCTION(0x004D4730); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004D4890() { DELINKFUNCTION(0x004D4890); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004D4930() { DELINKFUNCTION(0x004D4930); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004D4A40() { DELINKFUNCTION(0x004D4A40); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004D4BE0() { DELINKFUNCTION(0x004D4BE0); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004D5020() { DELINKFUNCTION(0x004D5020); _0x00665C50(); }
+extern "C" void __cdecl _0x0070B440(void);
+void __cdecl _0x004D5200() { DELINKFUNCTION(0x004D5200); _0x0070B440(); }
+extern "C" void __cdecl _0x0070B440(void);
+void __cdecl _0x004D5270() { DELINKFUNCTION(0x004D5270); _0x0070B440(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004D5790() { DELINKFUNCTION(0x004D5790); _0x00665C50(); }
+extern "C" void __cdecl _0x0070B440(void);
+void __cdecl _0x004D5800() { DELINKFUNCTION(0x004D5800); _0x0070B440(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004D59D0() { DELINKFUNCTION(0x004D59D0); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004D5A90() { DELINKFUNCTION(0x004D5A90); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004D5B40() { DELINKFUNCTION(0x004D5B40); _0x00665C50(); }
+extern "C" void __cdecl _0x0070B440(void);
+void __cdecl _0x004D5BB0() { DELINKFUNCTION(0x004D5BB0); _0x0070B440(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004D5C40() { DELINKFUNCTION(0x004D5C40); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004D5CC0() { DELINKFUNCTION(0x004D5CC0); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004D5D40() { DELINKFUNCTION(0x004D5D40); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004D5DC0() { DELINKFUNCTION(0x004D5DC0); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004D5E40() { DELINKFUNCTION(0x004D5E40); _0x00665C50(); }
+extern "C" void __cdecl _0x004D99B0(void);
+void __cdecl _0x004D8160() { DELINKFUNCTION(0x004D8160); _0x004D99B0(); }
+extern "C" void __cdecl _0x004DA590(void);
+void __cdecl _0x004D8190() { DELINKFUNCTION(0x004D8190); _0x004DA590(); }
+extern "C" void __cdecl _0x004DA540(void);
+void __cdecl _0x004D81A0() { DELINKFUNCTION(0x004D81A0); _0x004DA540(); }
+extern "C" void __cdecl _0x004D9A60(void);
+void __cdecl _0x004D81F0() { DELINKFUNCTION(0x004D81F0); _0x004D9A60(); }
+extern "C" void __cdecl _0x004DA640(void);
+void __cdecl _0x004D8200() { DELINKFUNCTION(0x004D8200); _0x004DA640(); }
+extern "C" void __cdecl _0x004DA6F0(void);
+void __cdecl _0x004D8220() { DELINKFUNCTION(0x004D8220); _0x004DA6F0(); }
+extern "C" void __cdecl _0x004DA6A0(void);
+void __cdecl _0x004D8230() { DELINKFUNCTION(0x004D8230); _0x004DA6A0(); }
+extern "C" void __cdecl _0x004D9B10(void);
+void __cdecl _0x004D8280() { DELINKFUNCTION(0x004D8280); _0x004D9B10(); }
+extern "C" void __cdecl _0x004DA7B0(void);
+void __cdecl _0x004D8290() { DELINKFUNCTION(0x004D8290); _0x004DA7B0(); }
+extern "C" void __cdecl _0x004DA870(void);
+void __cdecl _0x004D82B0() { DELINKFUNCTION(0x004D82B0); _0x004DA870(); }
+extern "C" void __cdecl _0x004DA810(void);
+void __cdecl _0x004D82C0() { DELINKFUNCTION(0x004D82C0); _0x004DA810(); }
+extern "C" void __cdecl _0x004D9BC0(void);
+void __cdecl _0x004D8310() { DELINKFUNCTION(0x004D8310); _0x004D9BC0(); }
+extern "C" void __cdecl _0x004DA930(void);
+void __cdecl _0x004D8320() { DELINKFUNCTION(0x004D8320); _0x004DA930(); }
+extern "C" void __cdecl _0x004DA9E0(void);
+void __cdecl _0x004D8340() { DELINKFUNCTION(0x004D8340); _0x004DA9E0(); }
+extern "C" void __cdecl _0x004DA990(void);
+void __cdecl _0x004D8350() { DELINKFUNCTION(0x004D8350); _0x004DA990(); }
+extern "C" void __cdecl _0x00546480(void);
+void __cdecl _0x004D8D10() { DELINKFUNCTION(0x004D8D10); _0x00546480(); }
+extern "C" void __cdecl _0x004DA150(void);
+void __cdecl _0x004D8E00() { DELINKFUNCTION(0x004D8E00); _0x004DA150(); }
+extern "C" void __cdecl _0x004DA480(void);
+void __cdecl _0x004D9940() { DELINKFUNCTION(0x004D9940); _0x004DA480(); }
+extern "C" void __cdecl _0x004DA590(void);
+void __cdecl _0x004D9950() { DELINKFUNCTION(0x004D9950); _0x004DA590(); }
+extern "C" void __cdecl _0x004DA540(void);
+void __cdecl _0x004D9960() { DELINKFUNCTION(0x004D9960); _0x004DA540(); }
+extern "C" void __cdecl _0x004DA640(void);
+void __cdecl _0x004D99E0() { DELINKFUNCTION(0x004D99E0); _0x004DA640(); }
+extern "C" void __cdecl _0x004DA5F0(void);
+void __cdecl _0x004D99F0() { DELINKFUNCTION(0x004D99F0); _0x004DA5F0(); }
+extern "C" void __cdecl _0x004DA6F0(void);
+void __cdecl _0x004D9A00() { DELINKFUNCTION(0x004D9A00); _0x004DA6F0(); }
+extern "C" void __cdecl _0x004DA6A0(void);
+void __cdecl _0x004D9A10() { DELINKFUNCTION(0x004D9A10); _0x004DA6A0(); }
+extern "C" void __cdecl _0x004DA7B0(void);
+void __cdecl _0x004D9A90() { DELINKFUNCTION(0x004D9A90); _0x004DA7B0(); }
+extern "C" void __cdecl _0x004DA750(void);
+void __cdecl _0x004D9AA0() { DELINKFUNCTION(0x004D9AA0); _0x004DA750(); }
+extern "C" void __cdecl _0x004DA870(void);
+void __cdecl _0x004D9AB0() { DELINKFUNCTION(0x004D9AB0); _0x004DA870(); }
+extern "C" void __cdecl _0x004DA810(void);
+void __cdecl _0x004D9AC0() { DELINKFUNCTION(0x004D9AC0); _0x004DA810(); }
+extern "C" void __cdecl _0x004DA930(void);
+void __cdecl _0x004D9B40() { DELINKFUNCTION(0x004D9B40); _0x004DA930(); }
+extern "C" void __cdecl _0x004DA8E0(void);
+void __cdecl _0x004D9B50() { DELINKFUNCTION(0x004D9B50); _0x004DA8E0(); }
+extern "C" void __cdecl _0x004DA9E0(void);
+void __cdecl _0x004D9B60() { DELINKFUNCTION(0x004D9B60); _0x004DA9E0(); }
+extern "C" void __cdecl _0x004DA990(void);
+void __cdecl _0x004D9B70() { DELINKFUNCTION(0x004D9B70); _0x004DA990(); }
+void ObjectGame_Z::BaseObject_Z_vftable_13() { DELINKFUNCTION(0x004DB610); BaseObject_Z::BaseObject_Z_vftable_13(); }
+extern "C" void __cdecl _0x004DC110(void);
+void __cdecl _0x004DC100() { DELINKFUNCTION(0x004DC100); _0x004DC110(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004DC260() { DELINKFUNCTION(0x004DC260); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004DC3E0() { DELINKFUNCTION(0x004DC3E0); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004DC410() { DELINKFUNCTION(0x004DC410); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004DC4A0() { DELINKFUNCTION(0x004DC4A0); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004DC7C0() { DELINKFUNCTION(0x004DC7C0); _0x00665C50(); }
+extern "C" void __cdecl _0x004DCEB0(void);
+void __cdecl _0x004DCFF0() { DELINKFUNCTION(0x004DCFF0); _0x004DCEB0(); }
+extern "C" void __cdecl _0x004DCEB0(void);
+void __cdecl _0x004DD1B0() { DELINKFUNCTION(0x004DD1B0); _0x004DCEB0(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004DF6E0() { DELINKFUNCTION(0x004DF6E0); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004DF6F0() { DELINKFUNCTION(0x004DF6F0); _0x00665C50(); }
+extern "C" void __cdecl _0x004DF900(void);
+void __cdecl _0x004DF8F0() { DELINKFUNCTION(0x004DF8F0); _0x004DF900(); }
+extern "C" void __cdecl _0x004E0020(void);
+void __cdecl _0x004E0010() { DELINKFUNCTION(0x004E0010); _0x004E0020(); }
+extern "C" void __cdecl _0x004E00C0(void);
+void __cdecl _0x004E00B0() { DELINKFUNCTION(0x004E00B0); _0x004E00C0(); }
+extern "C" void __cdecl _0x0070B440(void);
+void __cdecl _0x004E05F0() { DELINKFUNCTION(0x004E05F0); _0x0070B440(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004E06B0() { DELINKFUNCTION(0x004E06B0); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004E0700() { DELINKFUNCTION(0x004E0700); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x004E35E0() { DELINKFUNCTION(0x004E35E0); _0x00665C50(); }
+extern "C" void __cdecl _0x004FD090(void);
+void __cdecl _0x004FD080() { DELINKFUNCTION(0x004FD080); _0x004FD090(); }
+extern "C" void __cdecl _0x0050A400(void);
+void __cdecl _0x0050A4B0() { DELINKFUNCTION(0x0050A4B0); _0x0050A400(); }
+extern "C" void __cdecl _0x0051B5E0(void);
+void __cdecl _0x00515A60() { DELINKFUNCTION(0x00515A60); _0x0051B5E0(); }
+extern "C" void __cdecl _0x006670A0(void);
+void __cdecl _0x005174A0() { DELINKFUNCTION(0x005174A0); _0x006670A0(); }
+void IT_Dyn_Vehicle_G::Agent_Z_vftable_20() { DELINKFUNCTION(0x0051D080); IT_DYNBASE_G::Agent_Z_vftable_20(); }
+extern "C" void __cdecl _0x0052F620(void);
+void __cdecl _0x00544F20() { DELINKFUNCTION(0x00544F20); _0x0052F620(); }
+extern "C" void __cdecl _0x0055B070(void);
+void __cdecl _0x00555DF0() { DELINKFUNCTION(0x00555DF0); _0x0055B070(); }
+extern "C" void __cdecl _0x00696D60(void);
+void __cdecl _0x0055B140() { DELINKFUNCTION(0x0055B140); _0x00696D60(); }
+extern "C" void __cdecl _0x005506F0(void);
+void __cdecl _0x0055B820() { DELINKFUNCTION(0x0055B820); _0x005506F0(); }
+extern "C" void __cdecl _0x0055B840(void);
+void __cdecl _0x0055B830() { DELINKFUNCTION(0x0055B830); _0x0055B840(); }
+extern "C" void __cdecl _0x00561290(void);
+void __cdecl _0x00561170() { DELINKFUNCTION(0x00561170); _0x00561290(); }
+extern "C" void __cdecl _0x0056EE40(void);
+void __cdecl _0x0056EBC0() { DELINKFUNCTION(0x0056EBC0); _0x0056EE40(); }
+extern "C" void __cdecl _0x00736DD0(void);
+void __cdecl _0x0056EFA0() { DELINKFUNCTION(0x0056EFA0); _0x00736DD0(); }
+extern "C" void __cdecl _0x00736DD0(void);
+void __cdecl _0x0056FE50() { DELINKFUNCTION(0x0056FE50); _0x00736DD0(); }
+void EndMissionVolumeAgent_G::BaseObject_Z_vftable_0() { DELINKFUNCTION(0x00570060); VolumeDelayedStart_G::BaseObject_Z_vftable_0(); }
+void EndMissionVolumeAgent_G::Agent_Z_vftable_24() { DELINKFUNCTION(0x005700B0); VolumeDelayedStart_G::Agent_Z_vftable_24(); }
+void EvenementVolAgent_G::VolumeAgent_Z_vftable_44(int x) { DELINKFUNCTION(0x00570AD0); VolumeDelayedStart_G::VolumeAgent_Z_vftable_44(x); }
+extern "C" void __cdecl _0x00736DD0(void);
+void __cdecl _0x005716B0() { DELINKFUNCTION(0x005716B0); _0x00736DD0(); }
+extern "C" void __cdecl _0x00736DD0(void);
+void __cdecl _0x00571990() { DELINKFUNCTION(0x00571990); _0x00736DD0(); }
+void LightVolumeAgent_G::Agent_Z_vftable_22() { DELINKFUNCTION(0x00571E90); Agent_Z::Agent_Z_vftable_22(); }
+extern "C" void __cdecl _0x00736DD0(void);
+void __cdecl _0x00572280() { DELINKFUNCTION(0x00572280); _0x00736DD0(); }
+extern "C" void __cdecl _0x00736DD0(void);
+void __cdecl _0x00572290() { DELINKFUNCTION(0x00572290); _0x00736DD0(); }
+void SaveVolumeAgent_G::BaseObject_Z_vftable_0() { DELINKFUNCTION(0x00572340); VolumeDelayedStart_G::BaseObject_Z_vftable_0(); }
+void SaveVolumeAgent_G::Agent_Z_vftable_24() { DELINKFUNCTION(0x00572390); VolumeDelayedStart_G::Agent_Z_vftable_24(); }
+extern "C" void __cdecl _0x00736DD0(void);
+void __cdecl _0x00572420() { DELINKFUNCTION(0x00572420); _0x00736DD0(); }
+extern "C" void __cdecl _0x00736DD0(void);
+void __cdecl _0x00572430() { DELINKFUNCTION(0x00572430); _0x00736DD0(); }
+extern "C" void __cdecl _0x00736DD0(void);
+void __cdecl _0x00572440() { DELINKFUNCTION(0x00572440); _0x00736DD0(); }
+extern "C" void __cdecl _0x00736DD0(void);
+void __cdecl _0x00572450() { DELINKFUNCTION(0x00572450); _0x00736DD0(); }
+extern "C" void __cdecl _0x00736DD0(void);
+void __cdecl _0x00572460() { DELINKFUNCTION(0x00572460); _0x00736DD0(); }
+extern "C" void __cdecl _0x00736DD0(void);
+void __cdecl _0x00572470() { DELINKFUNCTION(0x00572470); _0x00736DD0(); }
+extern "C" void __cdecl _0x00736DD0(void);
+void __cdecl _0x00572480() { DELINKFUNCTION(0x00572480); _0x00736DD0(); }
+extern "C" void __cdecl _0x00736DD0(void);
+void __cdecl _0x00573560() { DELINKFUNCTION(0x00573560); _0x00736DD0(); }
+extern "C" void __cdecl _0x00736DD0(void);
+void __cdecl _0x00573850() { DELINKFUNCTION(0x00573850); _0x00736DD0(); }
+extern "C" void __cdecl _0x00736DD0(void);
+void __cdecl _0x00573F40() { DELINKFUNCTION(0x00573F40); _0x00736DD0(); }
+extern "C" void __cdecl _0x00736DD0(void);
+void __cdecl _0x00574420() { DELINKFUNCTION(0x00574420); _0x00736DD0(); }
+void OfflineMissionVolumeAgent_G::BaseObject_Z_vftable_0() { DELINKFUNCTION(0x005744E0); VolumeDelayedStart_G::BaseObject_Z_vftable_0(); }
+extern "C" void __cdecl _0x00736DD0(void);
+void __cdecl _0x00574BB0() { DELINKFUNCTION(0x00574BB0); _0x00736DD0(); }
+extern "C" void __cdecl _0x00743ED0(void);
+void __cdecl _0x005793C0() { DELINKFUNCTION(0x005793C0); _0x00743ED0(); }
+extern "C" void __cdecl _0x00736DD0(void);
+void __cdecl _0x0057A990() { DELINKFUNCTION(0x0057A990); _0x00736DD0(); }
+extern "C" void __cdecl _0x00580EC0(void);
+void __cdecl _0x00580EB0() { DELINKFUNCTION(0x00580EB0); _0x00580EC0(); }
+extern "C" void __cdecl _0x00447570(void);
+void __cdecl _0x00585B00() { DELINKFUNCTION(0x00585B00); _0x00447570(); }
+void DialogInGame_G::Dialog_G_vftable_17() { DELINKFUNCTION(0x00585B10); Dialog_G::Dialog_G_vftable_17(); }
+void DialogInGame_G::Dialog_G_vftable_22() { DELINKFUNCTION(0x00585B20); Dialog_G::Dialog_G_vftable_22(); }
+void DialogMenu_G::Dialog_G_vftable_17() { DELINKFUNCTION(0x00585F70); Dialog_G::Dialog_G_vftable_17(); }
+void DialogMenu_G::Dialog_G_vftable_22() { DELINKFUNCTION(0x00585F80); Dialog_G::Dialog_G_vftable_22(); }
+extern "C" void __cdecl _0x00585F20(void);
+void __cdecl _0x005886D0() { DELINKFUNCTION(0x005886D0); _0x00585F20(); }
+void MenuManager_G::BaseInGameDatas_G_vftable_23() { DELINKFUNCTION(0x00589160); BaseInGameDatas_G::BaseInGameDatas_G_vftable_23(); }
+extern "C" void __cdecl _0x00585F20(void);
+void __cdecl _0x00589660() { DELINKFUNCTION(0x00589660); _0x00585F20(); }
+extern "C" void __cdecl _0x00585F20(void);
+void __cdecl _0x00589670() { DELINKFUNCTION(0x00589670); _0x00585F20(); }
+extern "C" void __cdecl _0x00585F20(void);
+void __cdecl _0x00589680() { DELINKFUNCTION(0x00589680); _0x00585F20(); }
+extern "C" void __cdecl _0x00585F20(void);
+void __cdecl _0x00589690() { DELINKFUNCTION(0x00589690); _0x00585F20(); }
+extern "C" void __cdecl _0x00585F20(void);
+void __cdecl _0x005896A0() { DELINKFUNCTION(0x005896A0); _0x00585F20(); }
+extern "C" void __cdecl _0x00585F20(void);
+void __cdecl _0x005896B0() { DELINKFUNCTION(0x005896B0); _0x00585F20(); }
+extern "C" void __cdecl _0x00437B20(void);
+void __cdecl _0x00589700() { DELINKFUNCTION(0x00589700); _0x00437B20(); }
+void Dialog_SelectVehicle::Dialog_G_vftable_22() { DELINKFUNCTION(0x0058D7E0); Dialog_G::Dialog_G_vftable_22(); }
+extern "C" void __cdecl _0x00585F20(void);
+void __cdecl _0x0058EAE0() { DELINKFUNCTION(0x0058EAE0); _0x00585F20(); }
+void Dialog_LegalText::Dialog_G_vftable_17() { DELINKFUNCTION(0x0058F900); Dialog_G::Dialog_G_vftable_17(); }
+void Dialog_LegalText::Dialog_G_vftable_22() { DELINKFUNCTION(0x0058F910); Dialog_G::Dialog_G_vftable_22(); }
+void Dialog_MainMenuFirst::Dialog_G_vftable_17() { DELINKFUNCTION(0x005905A0); Dialog_G::Dialog_G_vftable_17(); }
+void Dialog_MainMenuFirst::Dialog_G_vftable_22() { DELINKFUNCTION(0x005905B0); Dialog_G::Dialog_G_vftable_22(); }
+void Dialog_Online::Dialog_G_vftable_22() { DELINKFUNCTION(0x00591590); Dialog_G::Dialog_G_vftable_22(); }
+void Dialog_PressStart::Dialog_G_vftable_22() { DELINKFUNCTION(0x00591AD0); Dialog_G::Dialog_G_vftable_22(); }
+void Dialog_PressStart::Dialog_G_vftable_21() { DELINKFUNCTION(0x00591EF0); Dialog_G::Dialog_G_vftable_21(); }
+extern "C" void __cdecl _0x005866D0(void);
+void __cdecl _0x005926E0() { DELINKFUNCTION(0x005926E0); _0x005866D0(); }
+void Dialog_TestMenu::Dialog_G_vftable_17() { DELINKFUNCTION(0x005946A0); Dialog_G::Dialog_G_vftable_17(); }
+void Dialog_TestMenu::Dialog_G_vftable_22() { DELINKFUNCTION(0x005946B0); Dialog_G::Dialog_G_vftable_22(); }
+extern "C" void __cdecl _0x00585F20(void);
+void __cdecl _0x005947A0() { DELINKFUNCTION(0x005947A0); _0x00585F20(); }
+void CBitmap_G::CWindow_G_vftable_16() { DELINKFUNCTION(0x00598820); CWindow_G::CWindow_G_vftable_16(); }
+void CBitmap_G::CWindow_G_vftable_28() { DELINKFUNCTION(0x00598B30); CWindow_G::CWindow_G_vftable_28(); }
+void CBitmap_G::CWindow_G_vftable_29() { DELINKFUNCTION(0x00598B40); CWindow_G::CWindow_G_vftable_29(); }
+void CBitmapPushButton_G::CWindow_G_vftable_16() { DELINKFUNCTION(0x005991A0); CWindow_G::CWindow_G_vftable_16(); }
+void CBox_G::CWindow_G_vftable_28() { DELINKFUNCTION(0x005994A0); CWindow_G::CWindow_G_vftable_28(); }
+void CBox_G::CWindow_G_vftable_29() { DELINKFUNCTION(0x005994B0); CWindow_G::CWindow_G_vftable_29(); }
+extern "C" void __cdecl _0x005A1410(void);
+void CButtonBase_G::CWindow_G_vftable_18() { DELINKFUNCTION(0x00599720); _0x005A1410(); }
+void CDynTextPushButton_G::CWindow_G_vftable_16() { DELINKFUNCTION(0x0059A960); CWindow_G::CWindow_G_vftable_16(); }
+extern "C" void __cdecl _0x005A1410(void);
+void CFrame_G::CWindow_G_vftable_18() { DELINKFUNCTION(0x0059AC90); _0x005A1410(); }
+extern "C" void __cdecl _0x005A1410(void);
+void CGauge_G::CWindow_G_vftable_18() { DELINKFUNCTION(0x0059B260); _0x005A1410(); }
+extern "C" void __cdecl _0x0059B070(void);
+void __cdecl _0x0059B8A0() { DELINKFUNCTION(0x0059B8A0); _0x0059B070(); }
+void CListBox_G::CPreviewList_G_vftable_37() { DELINKFUNCTION(0x0059C5E0); CPreviewList_G::CPreviewList_G_vftable_37(); }
+void CLockCheckbox_G::CButtonBase_G_vftable_31() { DELINKFUNCTION(0x0059D1A0); CCheckbox_G::CButtonBase_G_vftable_31(); }
+void CLockCheckbox_G::CCheckbox_G_vftable_35() { DELINKFUNCTION(0x0059D390); CCheckbox_G::CCheckbox_G_vftable_35(); }
+void CLockCheckbox_G::CCheckbox_G_vftable_36() { DELINKFUNCTION(0x0059D3A0); CCheckbox_G::CCheckbox_G_vftable_36(); }
+extern "C" void __cdecl _0x005A1410(void);
+void CNumericUpDown_G::CWindow_G_vftable_18() { DELINKFUNCTION(0x0059DB70); _0x005A1410(); }
+void CPreviewList_G::CWindow_G_vftable_16() { DELINKFUNCTION(0x0059E050); CWindow_G::CWindow_G_vftable_16(); }
+extern "C" void __cdecl _0x005A1410(void);
+void CPreviewList_G::CWindow_G_vftable_18() { DELINKFUNCTION(0x0059E060); _0x005A1410(); }
+extern "C" void __cdecl _0x005A1410(void);
+void CPushButton_G::CWindow_G_vftable_18() { DELINKFUNCTION(0x0059E6E0); _0x005A1410(); }
+extern "C" void __cdecl _0x005A1410(void);
+void CRotatingList_G::CWindow_G_vftable_18() { DELINKFUNCTION(0x0059F130); _0x005A1410(); }
+extern "C" void __cdecl _0x005A1410(void);
+void CScrollBar_G::CWindow_G_vftable_18() { DELINKFUNCTION(0x0059FE70); _0x005A1410(); }
+void CStaticText_G::CWindow_G_vftable_28() { DELINKFUNCTION(0x005A0400); CWindow_G::CWindow_G_vftable_28(); }
+void CStaticText_G::CWindow_G_vftable_29() { DELINKFUNCTION(0x005A0410); CWindow_G::CWindow_G_vftable_29(); }
+extern "C" void __cdecl _0x0059B070(void);
+void __cdecl _0x005A0E50() { DELINKFUNCTION(0x005A0E50); _0x0059B070(); }
+void CVScrollBar_G::CWindow_G_vftable_16() { DELINKFUNCTION(0x005A1090); CScrollBar_G::CWindow_G_vftable_16(); }
+extern "C" void __cdecl _0x004DFF80(void);
+void __cdecl _0x005A5E50() { DELINKFUNCTION(0x005A5E50); _0x004DFF80(); }
+extern "C" void __cdecl _0x00822BC0(void);
+void __cdecl _0x005A70A0() { DELINKFUNCTION(0x005A70A0); _0x00822BC0(); }
+extern "C" void __cdecl _0x00822BC0(void);
+void __cdecl _0x005A70B0() { DELINKFUNCTION(0x005A70B0); _0x00822BC0(); }
+extern "C" void __cdecl _0x005AA6E0(void);
+void __cdecl _0x005AA040() { DELINKFUNCTION(0x005AA040); _0x005AA6E0(); }
+extern "C" void __cdecl _0x004DFF80(void);
+void __cdecl _0x005AADE0() { DELINKFUNCTION(0x005AADE0); _0x004DFF80(); }
+extern "C" void __cdecl _0x004D2320(void);
+void __cdecl _0x005AAF00() { DELINKFUNCTION(0x005AAF00); _0x004D2320(); }
+extern "C" void __cdecl _0x005A5ED0(void);
+void __cdecl _0x005AB030() { DELINKFUNCTION(0x005AB030); _0x005A5ED0(); }
+extern "C" void __cdecl _0x005BC640(void);
+void __cdecl _0x005BFDF0() { DELINKFUNCTION(0x005BFDF0); _0x005BC640(); }
+void DaylightManipulator_G::BaseObject_Z_vftable_0() { DELINKFUNCTION(0x005C0AC0); ObjectGame_Z::BaseObject_Z_vftable_0(); }
+void TrafficManipulator_G::BaseObject_Z_vftable_0() { DELINKFUNCTION(0x005C3200); ObjectGame_Z::BaseObject_Z_vftable_0(); }
+extern "C" void __cdecl _0x005C6390(void);
+void __cdecl _0x005C62A0() { DELINKFUNCTION(0x005C62A0); _0x005C6390(); }
+extern "C" void __cdecl _0x005D1FD0(void);
+void __cdecl _0x005D1980() { DELINKFUNCTION(0x005D1980); _0x005D1FD0(); }
+extern "C" void __cdecl _0x00696D60(void);
+void __cdecl _0x005D67E0() { DELINKFUNCTION(0x005D67E0); _0x00696D60(); }
+extern "C" void __cdecl _0x00696D60(void);
+void __cdecl _0x005D6840() { DELINKFUNCTION(0x005D6840); _0x00696D60(); }
+void IT_TornadoDebrisManipulator::BaseObject_Z_vftable_0() { DELINKFUNCTION(0x005EA080); LodMove_Z::BaseObject_Z_vftable_0(); }
+void IT_TornadoDebrisManipulator::Manipulator_Z_vftable_14() { DELINKFUNCTION(0x005EA090); LodMove_Z::Manipulator_Z_vftable_14(); }
+extern "C" void __cdecl _0x005F3B90(void);
+void __cdecl _0x005F35B0() { DELINKFUNCTION(0x005F35B0); _0x005F3B90(); }
+extern "C" void __cdecl _0x00773540(void);
+void __cdecl _0x005F5920() { DELINKFUNCTION(0x005F5920); _0x00773540(); }
+extern "C" void __cdecl _0x005FD710(void);
+void __cdecl _0x005FD7E0() { DELINKFUNCTION(0x005FD7E0); _0x005FD710(); }
+void CareerModeManager_G::BaseObject_Z_vftable_0() { DELINKFUNCTION(0x00616CE0); ObjectGame_Z::BaseObject_Z_vftable_0(); }
+void IAOnroadFollower_G::IAPathFollower_G_vftable_2() { DELINKFUNCTION(0x00622C50); IAPathFollower_G::IAPathFollower_G_vftable_2(); }
+void IAPathBlockOffRoad::IAPathBlock_vftable_4() { DELINKFUNCTION(0x00624E10); IAPathBlock::IAPathBlock_vftable_4(); }
+void ClassManager_Z::HandleManager_Z_vftable_11() { DELINKFUNCTION(0x00633940); HandleManager_Z::HandleManager_Z_vftable_11(); }
+void *__cdecl _0x00637C40(size_t _Size) { DELINKFUNCTION(0x00637C40); return malloc(_Size); }
+void __cdecl _0x00637C50(void* _Block) { DELINKFUNCTION(0x00637C50); free(_Block); }
+extern "C" void __cdecl _0x00777580(void);
+void __cdecl _0x00637EE0() { DELINKFUNCTION(0x00637EE0); _0x00777580(); }
+extern "C" void __cdecl _0x00641AA0(void);
+void __cdecl _0x0063E9F0() { DELINKFUNCTION(0x0063E9F0); _0x00641AA0(); }
+extern "C" void __cdecl _0x00553180(void);
+void __cdecl _0x0063FE60() { DELINKFUNCTION(0x0063FE60); _0x00553180(); }
+extern "C" void __cdecl _0x00640B20(void);
+void __cdecl _0x00640430() { DELINKFUNCTION(0x00640430); _0x00640B20(); }
+extern "C" void __cdecl _0x00641A20(void);
+void __cdecl _0x006415A0() { DELINKFUNCTION(0x006415A0); _0x00641A20(); }
+extern "C" void __cdecl _0x00641AA0(void);
+void __cdecl _0x006415D0() { DELINKFUNCTION(0x006415D0); _0x00641AA0(); }
+extern "C" void __cdecl _0x006460F0(void);
+void __cdecl _0x00646320() { DELINKFUNCTION(0x00646320); _0x006460F0(); }
+extern "C" void __cdecl _0x00646450(void);
+void __cdecl _0x00646380() { DELINKFUNCTION(0x00646380); _0x00646450(); }
+extern "C" void __cdecl _0x0064EF00(void);
+void __cdecl _0x0064EE70() { DELINKFUNCTION(0x0064EE70); _0x0064EF00(); }
+extern "C" void __cdecl _0x00644350(void);
+void __cdecl _0x0065B610() { DELINKFUNCTION(0x0065B610); _0x00644350(); }
+extern "C" void __cdecl _0x0066A4A0(void);
+void __cdecl _0x00667060() { DELINKFUNCTION(0x00667060); _0x0066A4A0(); }
+extern "C" void __cdecl _0x006670A0(void);
+void __cdecl _0x00669250() { DELINKFUNCTION(0x00669250); _0x006670A0(); }
+extern "C" void __cdecl _0x0067D5A0(void);
+void __cdecl _0x0067D590() { DELINKFUNCTION(0x0067D590); _0x0067D5A0(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x00686E00() { DELINKFUNCTION(0x00686E00); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x00687B70() { DELINKFUNCTION(0x00687B70); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x00687C60() { DELINKFUNCTION(0x00687C60); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x00688260() { DELINKFUNCTION(0x00688260); _0x00665C50(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x00688480() { DELINKFUNCTION(0x00688480); _0x00665C50(); }
+extern "C" void __cdecl _0x0068BAF0(void);
+void __cdecl _0x0068B4E0() { DELINKFUNCTION(0x0068B4E0); _0x0068BAF0(); }
+extern "C" void __cdecl _0x0068BC30(void);
+void __cdecl _0x0068B620() { DELINKFUNCTION(0x0068B620); _0x0068BC30(); }
+extern "C" void __cdecl _0x0068BCC0(void);
+void __cdecl _0x0068BAA0() { DELINKFUNCTION(0x0068BAA0); _0x0068BCC0(); }
+extern "C" void __cdecl _0x0068BE30(void);
+void __cdecl _0x0068BDA0() { DELINKFUNCTION(0x0068BDA0); _0x0068BE30(); }
+extern "C" void __cdecl _0x0068BF30(void);
+void __cdecl _0x0068BF00() { DELINKFUNCTION(0x0068BF00); _0x0068BF30(); }
+extern "C" void __cdecl _0x0068C7E0(void);
+void __cdecl _0x0068C7D0() { DELINKFUNCTION(0x0068C7D0); _0x0068C7E0(); }
+extern "C" void __cdecl _0x0068E250(void);
+void __cdecl _0x0068E240() { DELINKFUNCTION(0x0068E240); _0x0068E250(); }
+extern "C" void __cdecl _0x00691B50(void);
+void ABC_ScriptManager::ABC_ScriptManager_vftable_1() { DELINKFUNCTION(0x00691FD0); _0x00691B50(); }
+extern "C" void __cdecl _0x00691D40(void);
+void ABC_ScriptManager::ABC_ScriptManager_vftable_2() { DELINKFUNCTION(0x00691FE0); _0x00691D40(); }
+extern "C" void __cdecl _0x006935D0(void);
+void __cdecl _0x006935C0() { DELINKFUNCTION(0x006935C0); _0x006935D0(); }
+int __cdecl _0x00696E80(char const* _String1, char const* _String2) { DELINKFUNCTION(0x00696E80); return _stricmp(_String1, _String2); }
+extern "C" void __cdecl _0x00696D60(void);
+void __cdecl _0x0069AEC0() { DELINKFUNCTION(0x0069AEC0); _0x00696D60(); }
+extern "C" void __cdecl _0x006C2AA0(void);
+void __cdecl _0x006C2B60() { DELINKFUNCTION(0x006C2B60); _0x006C2AA0(); }
+extern "C" void __cdecl _0x006CF910(void);
+void __cdecl _0x006CD2A0() { DELINKFUNCTION(0x006CD2A0); _0x006CF910(); }
+extern "C" void __cdecl _0x006D5A30(void);
+void __cdecl _0x006D6780() { DELINKFUNCTION(0x006D6780); _0x006D5A30(); }
+extern "C" void __cdecl _0x006D71A0(void);
+void __cdecl _0x006D6CB0() { DELINKFUNCTION(0x006D6CB0); _0x006D71A0(); }
+extern "C" void __cdecl _0x006DC180(void);
+void __cdecl _0x006DBBB0() { DELINKFUNCTION(0x006DBBB0); _0x006DC180(); }
+extern "C" void __cdecl _0x006EEF40(void);
+void __cdecl _0x006EEE00() { DELINKFUNCTION(0x006EEE00); _0x006EEF40(); }
+extern "C" void __cdecl _0x006FDF40(void);
+void __cdecl _0x006F1320() { DELINKFUNCTION(0x006F1320); _0x006FDF40(); }
+extern "C" void __cdecl _0x006FF0D0(void);
+void __cdecl _0x006FEEC0() { DELINKFUNCTION(0x006FEEC0); _0x006FF0D0(); }
+extern "C" void __cdecl _0x00707C20(void);
+void __cdecl _0x00707E40() { DELINKFUNCTION(0x00707E40); _0x00707C20(); }
+extern "C" void __cdecl _0x00706F00(void);
+void __cdecl _0x00707E50() { DELINKFUNCTION(0x00707E50); _0x00706F00(); }
+extern "C" void __cdecl _0x00714670(void);
+void __cdecl _0x0070B230() { DELINKFUNCTION(0x0070B230); _0x00714670(); }
+extern "C" void __cdecl _0x007146F0(void);
+void __cdecl _0x0070B240() { DELINKFUNCTION(0x0070B240); _0x007146F0(); }
+extern "C" void __cdecl _0x00665C50(void);
+void __cdecl _0x00717770() { DELINKFUNCTION(0x00717770); _0x00665C50(); }
+extern "C" void __cdecl _0x0072F3C0(void);
+void __cdecl _0x0072F2F0() { DELINKFUNCTION(0x0072F2F0); _0x0072F3C0(); }
+extern "C" void __cdecl _0x00830B40(void);
+void __cdecl _0x007361D0() { DELINKFUNCTION(0x007361D0); _0x00830B40(); }
+extern "C" void __cdecl _0x00830BC0(void);
+void __cdecl _0x00736BA0() { DELINKFUNCTION(0x00736BA0); _0x00830BC0(); }
+extern "C" void __cdecl _0x00830D00(void);
+void __cdecl _0x00736BE0() { DELINKFUNCTION(0x00736BE0); _0x00830D00(); }
+void VolumeAgent_Z::Agent_Z_vftable_22() { DELINKFUNCTION(0x007370F0); Agent_Z::Agent_Z_vftable_22(); }
+extern "C" void __cdecl _0x0073EC40(void);
+void __cdecl _0x0073C310() { DELINKFUNCTION(0x0073C310); _0x0073EC40(); }
+extern "C" void __cdecl _0x0066A4A0(void);
+void __cdecl _0x00745D90() { DELINKFUNCTION(0x00745D90); _0x0066A4A0(); }
+extern "C" void __cdecl _0x0074A8E0(void);
+void __cdecl _0x0074A8D0() { DELINKFUNCTION(0x0074A8D0); _0x0074A8E0(); }
+extern "C" void __cdecl _0x007511B0(void);
+void __cdecl _0x00750920() { DELINKFUNCTION(0x00750920); _0x007511B0(); }
+extern "C" void __cdecl _0x00750BE0(void);
+void __cdecl _0x00750BD0() { DELINKFUNCTION(0x00750BD0); _0x00750BE0(); }
+extern "C" void __cdecl _0x00751690(void);
+void __cdecl _0x007516E0() { DELINKFUNCTION(0x007516E0); _0x00751690(); }
+extern "C" void __cdecl _0x00759290(void);
+void __cdecl _0x00759120() { DELINKFUNCTION(0x00759120); _0x00759290(); }
+extern "C" void __cdecl _0x007592E0(void);
+void __cdecl _0x00759160() { DELINKFUNCTION(0x00759160); _0x007592E0(); }
+extern "C" void __cdecl _0x00759330(void);
+void __cdecl _0x007591A0() { DELINKFUNCTION(0x007591A0); _0x00759330(); }
+extern "C" void __cdecl _0x00759380(void);
+void __cdecl _0x007591E0() { DELINKFUNCTION(0x007591E0); _0x00759380(); }
+extern "C" void __cdecl _0x00786030(void);
+void __cdecl _0x007832B0() { DELINKFUNCTION(0x007832B0); _0x00786030(); }
+extern "C" void __cdecl _0x0079C750(void);
+void __cdecl _0x0079C720() { DELINKFUNCTION(0x0079C720); _0x0079C750(); }
+extern "C" void __cdecl _0x007A0A90(void);
+void __cdecl _0x007A0A80() { DELINKFUNCTION(0x007A0A80); _0x007A0A90(); }
+extern "C" void __cdecl _0x007AA3B0(void);
+void __cdecl _0x007AA3A0() { DELINKFUNCTION(0x007AA3A0); _0x007AA3B0(); }
+extern "C" void __cdecl _0x007CC430(void);
+void __cdecl _0x007B4660() { DELINKFUNCTION(0x007B4660); _0x007CC430(); }
+extern "C" void __cdecl _0x007CC350(void);
+void __cdecl _0x007B4670() { DELINKFUNCTION(0x007B4670); _0x007CC350(); }
+extern "C" void __cdecl _0x007B4770(void);
+void __cdecl _0x007B4760() { DELINKFUNCTION(0x007B4760); _0x007B4770(); }
+extern "C" void __cdecl _0x006670A0(void);
+void __cdecl _0x007CAC00() { DELINKFUNCTION(0x007CAC00); _0x006670A0(); }
+extern "C" void __cdecl _0x00736DD0(void);
+void __cdecl _0x007CB0F0() { DELINKFUNCTION(0x007CB0F0); _0x00736DD0(); }
+extern "C" void __cdecl _0x006670A0(void);
+void __cdecl _0x007CB1A0() { DELINKFUNCTION(0x007CB1A0); _0x006670A0(); }
+extern "C" void __cdecl _0x0068D810(void);
+void __cdecl _0x007DA6B0() { DELINKFUNCTION(0x007DA6B0); _0x0068D810(); }
+extern "C" void __cdecl _0x007E07E0(void);
+void __cdecl _0x007DE840() { DELINKFUNCTION(0x007DE840); _0x007E07E0(); }
+extern "C" void __cdecl _0x007E07E0(void);
+void __cdecl _0x007DE8C0() { DELINKFUNCTION(0x007DE8C0); _0x007E07E0(); }
+extern "C" void __cdecl _0x007E07E0(void);
+void __cdecl _0x007DE940() { DELINKFUNCTION(0x007DE940); _0x007E07E0(); }
+extern "C" void __cdecl _0x007E07E0(void);
+void __cdecl _0x007DEA70() { DELINKFUNCTION(0x007DEA70); _0x007E07E0(); }
+extern "C" void __cdecl _0x007E0F50(void);
+void __cdecl _0x007E0C00() { DELINKFUNCTION(0x007E0C00); _0x007E0F50(); }
+extern "C" void __cdecl _0x007E07E0(void);
+void __cdecl _0x007F79A0() { DELINKFUNCTION(0x007F79A0); _0x007E07E0(); }
+extern "C" void __cdecl _0x0081BFD0(void);
+void __cdecl _0x0081C070() { DELINKFUNCTION(0x0081C070); _0x0081BFD0(); }
+extern "C" void __cdecl _0x0068FB00(void);
+void __cdecl _0x0081C640() { DELINKFUNCTION(0x0081C640); _0x0068FB00(); }
+int ComUDP_Z::ComUDP_Z_vftable_22(SOCKET s, const struct sockaddr FAR * name, int namelen) { DELINKFUNCTION(0x0081C680); return bind(s, name, namelen); }
+int ComUDP_Z::ComUDP_Z_vftable_23(SOCKET s, const struct sockaddr FAR * name, int namelen) { DELINKFUNCTION(0x0081C690); return connect(s, name, namelen); }
+SOCKET ComUDP_Z::ComUDP_Z_vftable_24(int af, int type, int protocol) { DELINKFUNCTION(0x0081C6A0); return socket(af, type, protocol); }
+int ComUDP_Z::ComUDP_Z_vftable_25(SOCKET s, int backlog) { DELINKFUNCTION(0x0081C6B0); return listen(s, backlog); }
+int ComUDP_Z::ComUDP_Z_vftable_26(SOCKET s, char FAR * buf, int len, int flags) { DELINKFUNCTION(0x0081C6C0); return recv(s, buf, len, flags); }
+int ComUDP_Z::ComUDP_Z_vftable_27(SOCKET s, const char FAR * buf, int len, int flags) { DELINKFUNCTION(0x0081C6D0); return send(s, buf, len, flags); }
+int ComUDP_Z::ComUDP_Z_vftable_28(SOCKET s, const char FAR * buf, int len, int flags, const struct sockaddr FAR * to, int tolen) { DELINKFUNCTION(0x0081C6E0); return sendto(s, buf, len, flags, to, tolen); }
+int ComUDP_Z::ComUDP_Z_vftable_29(SOCKET s, int level, int optname, const char FAR * optval, int optlen) { DELINKFUNCTION(0x0081C6F0); return setsockopt(s, level, optname, optval, optlen); }
+unsigned long ComUDP_Z::ComUDP_Z_vftable_30(unsigned long hostlong) { DELINKFUNCTION(0x0081C700); return htonl(hostlong); }
+unsigned short ComUDP_Z::ComUDP_Z_vftable_31(unsigned short hostshort) { DELINKFUNCTION(0x0081C710); return htons(hostshort); }
+unsigned long ComUDP_Z::ComUDP_Z_vftable_32(unsigned long netlong) { DELINKFUNCTION(0x0081C720); return ntohl(netlong); }
+unsigned short ComUDP_Z::ComUDP_Z_vftable_33(unsigned short netshort) { DELINKFUNCTION(0x0081C730); return ntohs(netshort); }
+int ComWinsockUDP_Z::ComUDP_Z_vftable_35(char *name, int namelen) { DELINKFUNCTION(0x0081C750); return gethostname(name, namelen); }
+unsigned long ComWinsockUDP_Z::ComUDP_Z_vftable_37(const char FAR * cp) { DELINKFUNCTION(0x0081C780); return inet_addr(cp); }
+int ComWinsockUDP_Z::ComUDP_Z_vftable_38(SOCKET s, long cmd, unsigned long *argp) { DELINKFUNCTION(0x0081C790); return ioctlsocket(s, cmd, argp); }
+extern "C" void __cdecl _0x00879C90(void);
+void __cdecl _0x0081C860() { DELINKFUNCTION(0x0081C860); _0x00879C90(); }
+SYMBOLSYMBOL("_XSocketBind", "_XSocketBind@12");
+extern "C" int __stdcall XSocketBind(SOCKET, const struct sockaddr FAR *, int);
+int ComWinLivesockUDP_Z::ComUDP_Z_vftable_22(SOCKET s, const struct sockaddr FAR * name, int namelen) { DELINKFUNCTION(0x0081C870); return XSocketBind(s, name, namelen); }
+SYMBOLSYMBOL("_XSocketClose", "_XSocketClose@8");
+extern "C" int __stdcall XSocketClose(char *, int);
+int ComWinLivesockUDP_Z::ComUDP_Z_vftable_35(char *name, int namelen) { DELINKFUNCTION(0x0081C880); return XSocketClose(name, namelen); }
+SYMBOLSYMBOL("_XSocketConnect", "_XSocketConnect@12");
+extern "C" int __stdcall XSocketConnect(SOCKET, const struct sockaddr FAR *, int);
+int ComWinLivesockUDP_Z::ComUDP_Z_vftable_23(SOCKET s, const struct sockaddr FAR * name, int namelen) { DELINKFUNCTION(0x0081C890); return XSocketConnect(s, name, namelen); }
+SYMBOLSYMBOL("_XSocketCreate", "_XSocketCreate@12");
+extern "C" SOCKET __stdcall XSocketCreate(int, int, int);
+SOCKET ComWinLivesockUDP_Z::ComUDP_Z_vftable_24(int af, int type, int protocol) { DELINKFUNCTION(0x0081C8A0); return XSocketCreate(af, type, protocol); }
+SYMBOLSYMBOL("_XSocketHTONL", "_XSocketHTONL@4");
+extern "C" unsigned long __stdcall XSocketHTONL(unsigned long);
+unsigned long ComWinLivesockUDP_Z::ComUDP_Z_vftable_30(unsigned long hostlong) { DELINKFUNCTION(0x0081C8B0); return XSocketHTONL(hostlong); }
+SYMBOLSYMBOL("_XSocketNTOHS", "_XSocketNTOHS@4");
+extern "C" unsigned short __stdcall XSocketNTOHS(unsigned short);
+unsigned short ComWinLivesockUDP_Z::ComUDP_Z_vftable_31(unsigned short hostshort) { DELINKFUNCTION(0x0081C8C0); return XSocketNTOHS(hostshort); }
+SYMBOLSYMBOL("_XSocketInet_Addr", "_XSocketInet_Addr@4");
+extern "C" unsigned long __stdcall XSocketInet_Addr(const char FAR *);
+unsigned long ComWinLivesockUDP_Z::ComUDP_Z_vftable_37(const char FAR * cp) { DELINKFUNCTION(0x0081C8D0); return XSocketInet_Addr(cp); }
+SYMBOLSYMBOL("_XSocketIOCTLSocket", "_XSocketIOCTLSocket@12");
+extern "C" int __stdcall XSocketIOCTLSocket(SOCKET, long, unsigned long *);
+int ComWinLivesockUDP_Z::ComUDP_Z_vftable_38(SOCKET s, long cmd, unsigned long *argp) { DELINKFUNCTION(0x0081C8E0); return XSocketIOCTLSocket(s, cmd, argp); }
+SYMBOLSYMBOL("_XSocketListen", "_XSocketListen@8");
+extern "C" int __stdcall XSocketListen(SOCKET, int);
+int ComWinLivesockUDP_Z::ComUDP_Z_vftable_25(SOCKET s, int backlog) { DELINKFUNCTION(0x0081C8F0); return XSocketListen(s, backlog); }
+SYMBOLSYMBOL("_XSocketNTOHL", "_XSocketNTOHL@4");
+extern "C" unsigned long __stdcall XSocketNTOHL(unsigned long);
+unsigned long ComWinLivesockUDP_Z::ComUDP_Z_vftable_32(unsigned long netlong) { DELINKFUNCTION(0x0081C900); return XSocketNTOHL(netlong); }
+SYMBOLSYMBOL("_XSocketHTONS", "_XSocketHTONS@4");
+extern "C" unsigned short __stdcall XSocketHTONS(unsigned short);
+unsigned short ComWinLivesockUDP_Z::ComUDP_Z_vftable_33(unsigned short hostshort) { DELINKFUNCTION(0x0081C910); return XSocketHTONS(hostshort); }
+SYMBOLSYMBOL("_XSocketRecv", "_XSocketRecv@16");
+extern "C" int __stdcall XSocketRecv(SOCKET, char FAR *, int, int);
+int ComWinLivesockUDP_Z::ComUDP_Z_vftable_26(SOCKET s, char FAR * buf, int len, int flags) { DELINKFUNCTION(0x0081C920); return XSocketRecv(s, buf, len, flags); }
+SYMBOLSYMBOL("_XSocketSend", "_XSocketSend@16");
+extern "C" int __stdcall XSocketSend(SOCKET, const char FAR *, int, int);
+int ComWinLivesockUDP_Z::ComUDP_Z_vftable_27(SOCKET s, const char FAR * buf, int len, int flags) { DELINKFUNCTION(0x0081C960); return XSocketSend(s, buf, len, flags); }
+SYMBOLSYMBOL("_XSocketSendTo", "_XSocketSendTo@24");
+extern "C" int __stdcall XSocketSendTo(SOCKET, const char FAR *, int, int, const struct sockaddr FAR *, int);
+int ComWinLivesockUDP_Z::ComUDP_Z_vftable_28(SOCKET s, const char FAR * buf, int len, int flags, const struct sockaddr FAR * to, int tolen) { DELINKFUNCTION(0x0081C970); return XSocketSendTo(s, buf, len, flags, to, tolen); }
+SYMBOLSYMBOL("_XSocketSetSockOpt", "_XSocketSetSockOpt@20");
+extern "C" int __stdcall XSocketSetSockOpt(SOCKET, int, int, const char FAR *, int);
+int ComWinLivesockUDP_Z::ComUDP_Z_vftable_29(SOCKET s, int level, int optname, const char FAR * optval, int optlen) { DELINKFUNCTION(0x0081C980); return XSocketSetSockOpt(s, level, optname, optval, optlen); }
+extern "C" void __cdecl _0x00879C90(void);
+void __cdecl _0x0081CB50() { DELINKFUNCTION(0x0081CB50); _0x00879C90(); }
+extern "C" void __cdecl _0x00879C90(void);
+void __cdecl _0x0081CB60() { DELINKFUNCTION(0x0081CB60); _0x00879C90(); }
+extern "C" void __cdecl _0x0081F470(void);
+void __cdecl _0x0081EF70() { DELINKFUNCTION(0x0081EF70); _0x0081F470(); }
+extern "C" void __cdecl _0x0081F540(void);
+void __cdecl _0x0081EFA0() { DELINKFUNCTION(0x0081EFA0); _0x0081F540(); }
+extern "C" void __cdecl _0x0081F3A0(void);
+void __cdecl _0x0081F300() { DELINKFUNCTION(0x0081F300); _0x0081F3A0(); }
+extern "C" void __cdecl _0x008347D0(void);
+void __cdecl _0x008347C0() { DELINKFUNCTION(0x008347C0); _0x008347D0(); }
+extern "C" void __cdecl _0x00839980(void);
+void __cdecl _0x008397C0() { DELINKFUNCTION(0x008397C0); _0x00839980(); }
+extern "C" void __cdecl _0x008399E0(void);
+void __cdecl _0x008397D0() { DELINKFUNCTION(0x008397D0); _0x008399E0(); }
+extern "C" void __cdecl _0x00839A30(void);
+void __cdecl _0x008397E0() { DELINKFUNCTION(0x008397E0); _0x00839A30(); }
+extern "C" void __cdecl _0x00839B40(void);
+void __cdecl _0x00839B10() { DELINKFUNCTION(0x00839B10); _0x00839B40(); }
+extern "C" void __cdecl _0x00870090(void);
+void __cdecl _0x0083A090() { DELINKFUNCTION(0x0083A090); _0x00870090(); }
+extern "C" void __cdecl _0x0083BE30(void);
+void __cdecl _0x0083C700() { DELINKFUNCTION(0x0083C700); _0x0083BE30(); }
+extern "C" void __cdecl _0x0083E7F0(void);
+void __cdecl _0x0083E690() { DELINKFUNCTION(0x0083E690); _0x0083E7F0(); }
+void D3D_Renderer_Z::Renderer_Z_vftable_105() { DELINKFUNCTION(0x00843790); Renderer_Z::Renderer_Z_vftable_105(); }
+int ComWinsockUDP_Z::ComNet_Z_vftable_6(char FAR * name, int namelen) { DELINKFUNCTION(0x00846AE0); return gethostname(name, namelen); }
+SYMBOLSYMBOL("_XLiveUninitialize", "_XLiveUninitialize@0");
+extern "C" void __stdcall XLiveUninitialize(void);
+void WinLiveNetPlayManager_Z::LiveNetPlayManager_Z_vftable_42() { DELINKFUNCTION(0x00849790); XLiveUninitialize(); }
+const char *__cdecl _0x0084AE00(const char *str, int character) { DELINKFUNCTION(0x0084AE00); return strrchr(str, character); }
+extern "C" void __cdecl _0x0084B2B0(void);
+void __cdecl _0x0084B170() { DELINKFUNCTION(0x0084B170); _0x0084B2B0(); }
+extern "C" void __cdecl _0x0086D8A0(void);
+void __cdecl _0x0086D7D0() { DELINKFUNCTION(0x0086D7D0); _0x0086D8A0(); }
+extern "C" void __cdecl _0x0086D920(void);
+void __cdecl _0x0086D7E0() { DELINKFUNCTION(0x0086D7E0); _0x0086D920(); }
+extern "C" void __cdecl _0x0086DC00(void);
+void __cdecl _0x0086DAB0() { DELINKFUNCTION(0x0086DAB0); _0x0086DC00(); }
+int __cdecl _0x0086F050(char const* _String1, char const* _String2) { DELINKFUNCTION(0x0086F050); return _stricmp(_String1, _String2); }
+extern "C" void __cdecl _0x0086F420(void);
+void __cdecl _0x0086F410() { DELINKFUNCTION(0x0086F410); _0x0086F420(); }
+extern "C" void __cdecl _0x0086F6C0(void);
+void __cdecl _0x0086F6B0() { DELINKFUNCTION(0x0086F6B0); _0x0086F6C0(); }
+extern "C" void __cdecl _0x0087AEF0(void);
+void __cdecl _0x0087AEE0() { DELINKFUNCTION(0x0087AEE0); _0x0087AEF0(); }
+void *__cdecl _0x008B2570(size_t _Size) { DELINKFUNCTION(0x008B2570); return _0x00637C40(_Size); }
+extern "C" void __cdecl _0x004D99B0(void);
+void __cdecl _0x008E8570() { DELINKFUNCTION(0x008E8570); _0x004D99B0(); }
+extern "C" void __cdecl _0x004D9A60(void);
+void __cdecl _0x008E8580() { DELINKFUNCTION(0x008E8580); _0x004D9A60(); }
+extern "C" void __cdecl _0x004D9B10(void);
+void __cdecl _0x008E8590() { DELINKFUNCTION(0x008E8590); _0x004D9B10(); }
+extern "C" void __cdecl _0x004D9BC0(void);
+void __cdecl _0x008E85A0() { DELINKFUNCTION(0x008E85A0); _0x004D9BC0(); }
+extern "C" void __cdecl _0x0079C6B0(void);
+void __cdecl _0x008E8D00() { DELINKFUNCTION(0x008E8D00); _0x0079C6B0(); }
+extern "C" void __cdecl _0x00841620(void);
+void __cdecl _0x008E8DF0() { DELINKFUNCTION(0x008E8DF0); _0x00841620(); }
+extern "C" void __cdecl _0x0086F420(void);
+void __cdecl _0x008E8E30() { DELINKFUNCTION(0x008E8E30); _0x0086F420(); }
+extern "C" void __cdecl _0x0086F6C0(void);
+void __cdecl _0x008E8E40() { DELINKFUNCTION(0x008E8E40); _0x0086F6C0(); }

@@ -1,3 +1,10 @@
+#pragma once
+
+#ifndef _VFTABLES_H_
+#define _VFTABLES_H_
+
+#include <WinSock2.h>
+
 ADDRESSVFTABLE(0x009C2498, NetPlayModule_Z);
 class __declspec(dllexport) NetPlayModule_Z
 {
@@ -478,7 +485,6 @@ class __declspec(dllexport) IAOnroadFollower_G : public IAPathFollower_G
 public:
     ADDRESSVF(0x00622C30, IAOnroadFollower_G, IAPathFollower_G_vftable_1);
     virtual void IAPathFollower_G_vftable_1() override;
-    ADDRESSVF(0x00622C50, IAOnroadFollower_G, IAPathFollower_G_vftable_2);
     virtual void IAPathFollower_G_vftable_2() override;
     ADDRESSVF(0x00622C60, IAOnroadFollower_G, IAPathFollower_G_vftable_3);
     virtual void IAPathFollower_G_vftable_3() override;
@@ -995,7 +1001,7 @@ public:
     virtual void ComNet_Z_vftable_4();
     ADDRESSVF(0x00879AE0, ComNet_Z, ComNet_Z_vftable_5);
     virtual void ComNet_Z_vftable_5();
-    virtual void ComNet_Z_vftable_6() = 0;
+    virtual int ComNet_Z_vftable_6(char FAR * name, int namelen) = 0;
     virtual void ComNet_Z_vftable_7() = 0;
     virtual void ComNet_Z_vftable_8() = 0;
     virtual void ComNet_Z_vftable_9() = 0;
@@ -1314,7 +1320,6 @@ public:
     virtual void BaseObject_Z_vftable_0() override;
     ADDRESSVF(0x004E0740, ObjectGame_Z, BaseObject_Z_vftable_2);
     virtual void BaseObject_Z_vftable_2() override;
-    ADDRESSVF(0x004DB610, ObjectGame_Z, BaseObject_Z_vftable_13);
     virtual void BaseObject_Z_vftable_13() override;
     virtual void Manipulator_Z_vftable_14() override;
     ADDRESSSYMBOL(0x0072CBF0, "?Manipulator_Z_vftable_15@ObjectGame_Z@@UAEXXZ");
@@ -1395,7 +1400,6 @@ ADDRESSVFTABLE(0x009C4E2C, CareerModeManager_G);
 class __declspec(dllexport) CareerModeManager_G : public ObjectGame_Z
 {
 public:
-    ADDRESSSYMBOL(0x00616CE0, "?BaseObject_Z_vftable_0@CareerModeManager_G@@UAEXXZ");
     virtual void BaseObject_Z_vftable_0() override;
     ADDRESSVF(0x00616CA0, CareerModeManager_G, BaseObject_Z_vftable_2);
     virtual void BaseObject_Z_vftable_2() override;
@@ -1410,9 +1414,7 @@ class __declspec(dllexport) ABC_ScriptManager
 public:
     ADDRESSVF(0x00691FB0, ABC_ScriptManager, ABC_ScriptManager_vftable_0);
     virtual void ABC_ScriptManager_vftable_0();
-    ADDRESSVF(0x00691FD0, ABC_ScriptManager, ABC_ScriptManager_vftable_1);
     virtual void ABC_ScriptManager_vftable_1();
-    ADDRESSVF(0x00691FE0, ABC_ScriptManager, ABC_ScriptManager_vftable_2);
     virtual void ABC_ScriptManager_vftable_2();
     ADDRESSVF(0x00691FF0, ABC_ScriptManager, ABC_ScriptManager_vftable_3);
     virtual void ABC_ScriptManager_vftable_3();
@@ -1606,7 +1608,6 @@ ADDRESSVFTABLE(0x009AEA3C, DaylightManipulator_G);
 class __declspec(dllexport) DaylightManipulator_G : public ObjectGame_Z
 {
 public:
-    ADDRESSSYMBOL(0x005C0AC0, "?BaseObject_Z_vftable_0@DaylightManipulator_G@@UAEXXZ");
     virtual void BaseObject_Z_vftable_0() override;
     ADDRESSVF(0x004D2270, DaylightManipulator_G, BaseObject_Z_vftable_2);
     virtual void BaseObject_Z_vftable_2() override;
@@ -1720,36 +1721,24 @@ public:
     virtual void ComUDP_Z_vftable_19() = 0;
     virtual void ComUDP_Z_vftable_20() = 0;
     virtual void ComUDP_Z_vftable_21() = 0;
-    ADDRESSVF(0x0081C680, ComUDP_Z, ComUDP_Z_vftable_22);
-    virtual void ComUDP_Z_vftable_22();
-    ADDRESSVF(0x0081C690, ComUDP_Z, ComUDP_Z_vftable_23);
-    virtual void ComUDP_Z_vftable_23();
-    ADDRESSVF(0x0081C6A0, ComUDP_Z, ComUDP_Z_vftable_24);
-    virtual void ComUDP_Z_vftable_24();
-    ADDRESSVF(0x0081C6B0, ComUDP_Z, ComUDP_Z_vftable_25);
-    virtual void ComUDP_Z_vftable_25();
-    ADDRESSVF(0x0081C6C0, ComUDP_Z, ComUDP_Z_vftable_26);
-    virtual void ComUDP_Z_vftable_26();
-    ADDRESSVF(0x0081C6D0, ComUDP_Z, ComUDP_Z_vftable_27);
-    virtual void ComUDP_Z_vftable_27();
-    ADDRESSVF(0x0081C6E0, ComUDP_Z, ComUDP_Z_vftable_28);
-    virtual void ComUDP_Z_vftable_28();
-    ADDRESSVF(0x0081C6F0, ComUDP_Z, ComUDP_Z_vftable_29);
-    virtual void ComUDP_Z_vftable_29();
-    ADDRESSVF(0x0081C700, ComUDP_Z, ComUDP_Z_vftable_30);
-    virtual void ComUDP_Z_vftable_30();
-    ADDRESSVF(0x0081C710, ComUDP_Z, ComUDP_Z_vftable_31);
-    virtual void ComUDP_Z_vftable_31();
-    ADDRESSVF(0x0081C720, ComUDP_Z, ComUDP_Z_vftable_32);
-    virtual void ComUDP_Z_vftable_32();
-    ADDRESSVF(0x0081C730, ComUDP_Z, ComUDP_Z_vftable_33);
-    virtual void ComUDP_Z_vftable_33();
+    virtual int ComUDP_Z_vftable_22(SOCKET s, const struct sockaddr FAR * name, int namelen);
+    virtual int ComUDP_Z_vftable_23(SOCKET s, const struct sockaddr FAR * name, int namelen);
+    virtual SOCKET ComUDP_Z_vftable_24(int af, int type, int protocol);
+    virtual int ComUDP_Z_vftable_25(SOCKET s, int backlog);
+    virtual int ComUDP_Z_vftable_26(SOCKET s, char FAR * buf, int len, int flags);
+    virtual int ComUDP_Z_vftable_27(SOCKET s, const char FAR * buf, int len, int flags);
+    virtual int ComUDP_Z_vftable_28(SOCKET s, const char FAR * buf, int len, int flags, const struct sockaddr FAR * to, int tolen);
+    virtual int ComUDP_Z_vftable_29(SOCKET s, int level, int optname, const char FAR * optval, int optlen);
+    virtual unsigned long ComUDP_Z_vftable_30(unsigned long hostlong);
+    virtual unsigned short ComUDP_Z_vftable_31(unsigned short hostshort);
+    virtual unsigned long ComUDP_Z_vftable_32(unsigned long netlong);
+    virtual unsigned short ComUDP_Z_vftable_33(unsigned short netshort);
     ADDRESSVF(0x0081C740, ComUDP_Z, ComUDP_Z_vftable_34);
     virtual void ComUDP_Z_vftable_34();
-    virtual void ComUDP_Z_vftable_35() = 0;
+    virtual int ComUDP_Z_vftable_35(char *, int) = 0;
     virtual void ComUDP_Z_vftable_36() = 0;
-    virtual void ComUDP_Z_vftable_37() = 0;
-    virtual void ComUDP_Z_vftable_38() = 0;
+    virtual unsigned long ComUDP_Z_vftable_37(const char FAR * cp) = 0;
+    virtual int ComUDP_Z_vftable_38(SOCKET s, long cmd, unsigned long *argp) = 0;
     virtual void ComUDP_Z_vftable_39() = 0;
     virtual void ComUDP_Z_vftable_40() = 0;
     ADDRESSVF(0x0087AB70, ComUDP_Z, ComUDP_Z_vftable_41);
@@ -3298,7 +3287,6 @@ class __declspec(dllexport) MissionHUD : public ViewportHUD
 public:
     ADDRESSSYMBOL(0x004B16A0, "?ViewportHUD_vftable_0@MissionHUD@@UAEXH@Z");
     virtual void ViewportHUD_vftable_0(int) override;
-    ADDRESSSYMBOL(0x004B1820, "?ViewportHUD_vftable_1@MissionHUD@@UAEXXZ");
     virtual void ViewportHUD_vftable_1() override;
     ADDRESSSYMBOL(0x004B18C0, "?ViewportHUD_vftable_2@MissionHUD@@UAEXH@Z");
     virtual void ViewportHUD_vftable_2(int) override;
@@ -4660,22 +4648,18 @@ public:
     virtual void ComNet_Z_vftable_4() override;
     ADDRESSVF(0x0081C840, ComWinsockUDP_Z, ComNet_Z_vftable_5);
     virtual void ComNet_Z_vftable_5() override;
-    ADDRESSVF(0x00846AE0, ComWinsockUDP_Z, ComNet_Z_vftable_6);
-    virtual void ComNet_Z_vftable_6() override;
+    virtual int ComNet_Z_vftable_6(char FAR * name, int namelen) override;
     ADDRESSVF(0x00846B30, ComWinsockUDP_Z, ComUDP_Z_vftable_19);
     virtual void ComUDP_Z_vftable_19() override;
     ADDRESSVF(0x00846AF0, ComWinsockUDP_Z, ComUDP_Z_vftable_20);
     virtual void ComUDP_Z_vftable_20() override;
     ADDRESSVF(0x0081C800, ComWinsockUDP_Z, ComUDP_Z_vftable_21);
     virtual void ComUDP_Z_vftable_21() override;
-    ADDRESSVF(0x0081C750, ComWinsockUDP_Z, ComUDP_Z_vftable_35);
-    virtual void ComUDP_Z_vftable_35() override;
+    virtual int ComUDP_Z_vftable_35(char *, int) override;
     ADDRESSVF(0x0081C760, ComWinsockUDP_Z, ComUDP_Z_vftable_36);
     virtual void ComUDP_Z_vftable_36() override;
-    ADDRESSVF(0x0081C780, ComWinsockUDP_Z, ComUDP_Z_vftable_37);
-    virtual void ComUDP_Z_vftable_37() override;
-    ADDRESSVF(0x0081C790, ComWinsockUDP_Z, ComUDP_Z_vftable_38);
-    virtual void ComUDP_Z_vftable_38() override;
+    virtual unsigned long ComUDP_Z_vftable_37(const char FAR * cp) override;
+    virtual int ComUDP_Z_vftable_38(SOCKET s, long cmd, unsigned long *argp) override;
     ADDRESSVF(0x0081C7A0, ComWinsockUDP_Z, ComUDP_Z_vftable_39);
     virtual void ComUDP_Z_vftable_39() override;
     ADDRESSVF(0x0081C7D0, ComWinsockUDP_Z, ComUDP_Z_vftable_40);
@@ -5154,7 +5138,6 @@ class __declspec(dllexport) Navigator3dHUD : public ViewportHUD
 public:
     ADDRESSSYMBOL(0x004BF680, "?ViewportHUD_vftable_0@Navigator3dHUD@@UAEXH@Z");
     virtual void ViewportHUD_vftable_0(int) override;
-    ADDRESSSYMBOL(0x004BF750, "?ViewportHUD_vftable_1@Navigator3dHUD@@UAEXXZ");
     virtual void ViewportHUD_vftable_1() override;
     ADDRESSSYMBOL(0x004BFBB0, "?ViewportHUD_vftable_2@Navigator3dHUD@@UAEXH@Z");
     virtual void ViewportHUD_vftable_2(int) override;
@@ -5197,7 +5180,6 @@ class __declspec(dllexport) ChatHUD : public ViewportHUD
 public:
     ADDRESSSYMBOL(0x00449DF0, "?ViewportHUD_vftable_0@ChatHUD@@UAEXH@Z");
     virtual void ViewportHUD_vftable_0(int) override;
-    ADDRESSSYMBOL(0x00449F40, "?ViewportHUD_vftable_1@ChatHUD@@UAEXXZ");
     virtual void ViewportHUD_vftable_1() override;
     ADDRESSSYMBOL(0x00449F80, "?ViewportHUD_vftable_2@ChatHUD@@UAEXH@Z");
     virtual void ViewportHUD_vftable_2(int) override;
@@ -5268,7 +5250,6 @@ public:
     virtual void IAPathBlock_vftable_2() override;
     ADDRESSSYMBOL(0x00624CF0, "?IAPathBlock_vftable_3@IAPathBlockOffRoad@@UAEDH@Z");
     virtual char IAPathBlock_vftable_3(int) override;
-    ADDRESSVF(0x00624E10, IAPathBlockOffRoad, IAPathBlock_vftable_4);
     virtual void IAPathBlock_vftable_4() override;
     ADDRESSVF(0x00624E20, IAPathBlockOffRoad, IAPathBlock_vftable_5);
     virtual void IAPathBlock_vftable_5() override;
@@ -5501,7 +5482,6 @@ class __declspec(dllexport) MeterHUD : public ViewportHUD
 public:
     ADDRESSSYMBOL(0x004B06C0, "?ViewportHUD_vftable_0@MeterHUD@@UAEXH@Z");
     virtual void ViewportHUD_vftable_0(int) override;
-    ADDRESSSYMBOL(0x004B06F0, "?ViewportHUD_vftable_1@MeterHUD@@UAEXXZ");
     virtual void ViewportHUD_vftable_1() override;
     ADDRESSSYMBOL(0x004B08E0, "?ViewportHUD_vftable_2@MeterHUD@@UAEXH@Z");
     virtual void ViewportHUD_vftable_2(int) override;
@@ -5509,7 +5489,6 @@ public:
     virtual void ViewportHUD_vftable_3() override;
     ADDRESSSYMBOL(0x004B0940, "?ViewportHUD_vftable_5@MeterHUD@@UAEXH@Z");
     virtual void ViewportHUD_vftable_5(int) override;
-    ADDRESSVF(0x004B0700, MeterHUD, ViewportHUD_vftable_7);
     virtual void ViewportHUD_vftable_7() override;
 };
 
@@ -5939,7 +5918,6 @@ ADDRESSVFTABLE(0x009C37BC, TrafficManipulator_G);
 class __declspec(dllexport) TrafficManipulator_G : public ObjectGame_Z
 {
 public:
-    ADDRESSSYMBOL(0x005C3200, "?BaseObject_Z_vftable_0@TrafficManipulator_G@@UAEXXZ");
     virtual void BaseObject_Z_vftable_0() override;
     ADDRESSVF(0x005C2F20, TrafficManipulator_G, BaseObject_Z_vftable_2);
     virtual void BaseObject_Z_vftable_2() override;
@@ -6365,9 +6343,7 @@ public:
     virtual char CWindow_G_vftable_21() override;
     ADDRESSSYMBOL(0x005994D0, "?CWindow_G_vftable_22@CBox_G@@UAEDXZ");
     virtual char CWindow_G_vftable_22() override;
-    ADDRESSVF(0x005994A0, CBox_G, CWindow_G_vftable_28);
     virtual void CWindow_G_vftable_28() override;
-    ADDRESSVF(0x005994B0, CBox_G, CWindow_G_vftable_29);
     virtual void CWindow_G_vftable_29() override;
 };
 
@@ -6536,7 +6512,6 @@ public:
     virtual void CWindowHierarchy_G_vftable_0() override;
     ADDRESSSYMBOL(0x0059ACA0, "?CWindowHierarchy_G_vftable_1@CFrame_G@@UAEXH@Z");
     virtual void CWindowHierarchy_G_vftable_1(int) override;
-    ADDRESSVF(0x0059AC90, CFrame_G, CWindow_G_vftable_18);
     virtual void CWindow_G_vftable_18() override;
     virtual char CWindow_G_vftable_21() override;
     ADDRESSSYMBOL(0x0059AFA0, "?CWindow_G_vftable_22@CFrame_G@@UAEDXZ");
@@ -6679,11 +6654,9 @@ public:
     virtual void Dialog_G_vftable_15() override;
     ADDRESSSYMBOL(0x00586AF0, "?Dialog_G_vftable_16@DialogMenu_G@@UAEXH@Z");
     virtual void Dialog_G_vftable_16(int) override;
-    ADDRESSSYMBOL(0x00585F70, "?Dialog_G_vftable_17@DialogMenu_G@@UAEXXZ");
     virtual void Dialog_G_vftable_17() override;
     ADDRESSVF(0x00586CB0, DialogMenu_G, Dialog_G_vftable_19);
     virtual void Dialog_G_vftable_19() override;
-    ADDRESSVF(0x00585F80, DialogMenu_G, Dialog_G_vftable_22);
     virtual void Dialog_G_vftable_22() override;
     virtual char DialogMenu_G_vftable_28();
     ADDRESSSYMBOL(0x00586BF0, "?DialogMenu_G_vftable_29@DialogMenu_G@@UAEXXZ");
@@ -6879,7 +6852,6 @@ public:
     virtual void CWindow_G_vftable_15() override;
     ADDRESSVF(0x0059DAE0, CNumericUpDown_G, CWindow_G_vftable_16);
     virtual void CWindow_G_vftable_16() override;
-    ADDRESSVF(0x0059DB70, CNumericUpDown_G, CWindow_G_vftable_18);
     virtual void CWindow_G_vftable_18() override;
     ADDRESSSYMBOL(0x0059DB80, "?CWindow_G_vftable_21@CNumericUpDown_G@@UAEDXZ");
     virtual char CWindow_G_vftable_21() override;
@@ -6920,7 +6892,6 @@ public:
     virtual void CWindowHierarchy_G_vftable_0() override;
     ADDRESSSYMBOL(0x004403D0, "?Dialog_G_vftable_17@Dialog_InfosText@@UAEXXZ");
     virtual void Dialog_G_vftable_17() override;
-    ADDRESSVF(0x00440700, Dialog_InfosText, Dialog_G_vftable_22);
     virtual void Dialog_G_vftable_22() override;
     ADDRESSVF(0x00440450, Dialog_InfosText, Dialog_G_vftable_23);
     virtual void Dialog_G_vftable_23() override;
@@ -7088,7 +7059,6 @@ class __declspec(dllexport) VignettageHUD : public ViewportHUD
 public:
     ADDRESSSYMBOL(0x004CAE30, "?ViewportHUD_vftable_0@VignettageHUD@@UAEXH@Z");
     virtual void ViewportHUD_vftable_0(int) override;
-    ADDRESSSYMBOL(0x004CAE60, "?ViewportHUD_vftable_1@VignettageHUD@@UAEXXZ");
     virtual void ViewportHUD_vftable_1() override;
     ADDRESSSYMBOL(0x004CAE70, "?ViewportHUD_vftable_2@VignettageHUD@@UAEXH@Z");
     virtual void ViewportHUD_vftable_2(int) override;
@@ -7337,9 +7307,7 @@ public:
     virtual void CWindowHierarchy_G_vftable_0() override;
     ADDRESSSYMBOL(0x00585C50, "?Dialog_G_vftable_15@DialogInGame_G@@UAEXXZ");
     virtual void Dialog_G_vftable_15() override;
-    ADDRESSSYMBOL(0x00585B10, "?Dialog_G_vftable_17@DialogInGame_G@@UAEXXZ");
     virtual void Dialog_G_vftable_17() override;
-    ADDRESSVF(0x00585B20, DialogInGame_G, Dialog_G_vftable_22);
     virtual void Dialog_G_vftable_22() override;
     ADDRESSVF(0x00585B30, DialogInGame_G, Dialog_G_vftable_23);
     virtual void Dialog_G_vftable_23() override;
@@ -7410,7 +7378,6 @@ public:
     virtual void ABC_Agent_vftable_16(int) override;
     ADDRESSVF(0x00545E30, VolumeAgent_Z, ABC_Agent_vftable_17);
     virtual void ABC_Agent_vftable_17() override;
-    ADDRESSVF(0x007370F0, VolumeAgent_Z, Agent_Z_vftable_22);
     virtual void Agent_Z_vftable_22() override;
     ADDRESSVF(0x00736E70, VolumeAgent_Z, VolumeAgent_Z_vftable_39);
     virtual void VolumeAgent_Z_vftable_39();
@@ -7671,7 +7638,6 @@ public:
     virtual void HandleManager_Z_vftable_8() override;
     ADDRESSVF(0x00634770, ClassManager_Z, HandleManager_Z_vftable_10);
     virtual void HandleManager_Z_vftable_10() override;
-    ADDRESSVF(0x00633940, ClassManager_Z, HandleManager_Z_vftable_11);
     virtual void HandleManager_Z_vftable_11() override;
     ADDRESSVF(0x006339F0, ClassManager_Z, HandleManager_Z_vftable_13);
     virtual void HandleManager_Z_vftable_13() override;
@@ -7766,7 +7732,6 @@ class __declspec(dllexport) MessagesHUD : public ViewportHUD
 public:
     ADDRESSSYMBOL(0x004AF800, "?ViewportHUD_vftable_0@MessagesHUD@@UAEXH@Z");
     virtual void ViewportHUD_vftable_0(int) override;
-    ADDRESSSYMBOL(0x004AF890, "?ViewportHUD_vftable_1@MessagesHUD@@UAEXXZ");
     virtual void ViewportHUD_vftable_1() override;
     ADDRESSSYMBOL(0x004AF8A0, "?ViewportHUD_vftable_2@MessagesHUD@@UAEXH@Z");
     virtual void ViewportHUD_vftable_2(int) override;
@@ -7825,7 +7790,6 @@ public:
     virtual void ViewportHUD_vftable_2(int) override;
     ADDRESSSYMBOL(0x0049B950, "?ViewportHUD_vftable_5@InGameWarningHUD@@UAEXH@Z");
     virtual void ViewportHUD_vftable_5(int) override;
-    ADDRESSVF(0x0049B7A0, InGameWarningHUD, ViewportHUD_vftable_7);
     virtual void ViewportHUD_vftable_7() override;
     ADDRESSVF(0x0049B7B0, InGameWarningHUD, ViewportHUD_vftable_8);
     virtual void ViewportHUD_vftable_8() override;
@@ -8236,36 +8200,21 @@ class __declspec(dllexport) ComWinLivesockUDP_Z : public ComWinsockUDP_Z
 public:
     ADDRESSVF(0x0081CB70, ComWinLivesockUDP_Z, ComNet_Z_vftable_5);
     virtual void ComNet_Z_vftable_5() override;
-    ADDRESSVF(0x0081C870, ComWinLivesockUDP_Z, ComUDP_Z_vftable_22);
-    virtual void ComUDP_Z_vftable_22() override;
-    ADDRESSVF(0x0081C890, ComWinLivesockUDP_Z, ComUDP_Z_vftable_23);
-    virtual void ComUDP_Z_vftable_23() override;
-    ADDRESSVF(0x0081C8A0, ComWinLivesockUDP_Z, ComUDP_Z_vftable_24);
-    virtual void ComUDP_Z_vftable_24() override;
-    ADDRESSVF(0x0081C8F0, ComWinLivesockUDP_Z, ComUDP_Z_vftable_25);
-    virtual void ComUDP_Z_vftable_25() override;
-    ADDRESSVF(0x0081C920, ComWinLivesockUDP_Z, ComUDP_Z_vftable_26);
-    virtual void ComUDP_Z_vftable_26() override;
-    ADDRESSVF(0x0081C960, ComWinLivesockUDP_Z, ComUDP_Z_vftable_27);
-    virtual void ComUDP_Z_vftable_27() override;
-    ADDRESSVF(0x0081C970, ComWinLivesockUDP_Z, ComUDP_Z_vftable_28);
-    virtual void ComUDP_Z_vftable_28() override;
-    ADDRESSVF(0x0081C980, ComWinLivesockUDP_Z, ComUDP_Z_vftable_29);
-    virtual void ComUDP_Z_vftable_29() override;
-    ADDRESSVF(0x0081C8B0, ComWinLivesockUDP_Z, ComUDP_Z_vftable_30);
-    virtual void ComUDP_Z_vftable_30() override;
-    ADDRESSVF(0x0081C8C0, ComWinLivesockUDP_Z, ComUDP_Z_vftable_31);
-    virtual void ComUDP_Z_vftable_31() override;
-    ADDRESSVF(0x0081C900, ComWinLivesockUDP_Z, ComUDP_Z_vftable_32);
-    virtual void ComUDP_Z_vftable_32() override;
-    ADDRESSVF(0x0081C910, ComWinLivesockUDP_Z, ComUDP_Z_vftable_33);
-    virtual void ComUDP_Z_vftable_33() override;
-    ADDRESSVF(0x0081C880, ComWinLivesockUDP_Z, ComUDP_Z_vftable_35);
-    virtual void ComUDP_Z_vftable_35() override;
-    ADDRESSVF(0x0081C8D0, ComWinLivesockUDP_Z, ComUDP_Z_vftable_37);
-    virtual void ComUDP_Z_vftable_37() override;
-    ADDRESSVF(0x0081C8E0, ComWinLivesockUDP_Z, ComUDP_Z_vftable_38);
-    virtual void ComUDP_Z_vftable_38() override;
+    virtual int ComUDP_Z_vftable_22(SOCKET s, const struct sockaddr FAR * name, int namelen) override;
+    virtual int ComUDP_Z_vftable_23(SOCKET s, const struct sockaddr FAR * name, int namelen) override;
+    virtual SOCKET ComUDP_Z_vftable_24(int af, int type, int protocol) override;
+    virtual int ComUDP_Z_vftable_25(SOCKET s, int backlog) override;
+    virtual int ComUDP_Z_vftable_26(SOCKET s, char FAR * buf, int len, int flags) override;
+    virtual int ComUDP_Z_vftable_27(SOCKET s, const char FAR * buf, int len, int flags) override;
+    virtual int ComUDP_Z_vftable_28(SOCKET s, const char FAR * buf, int len, int flags, const struct sockaddr FAR * to, int tolen) override;
+    virtual int ComUDP_Z_vftable_29(SOCKET s, int level, int optname, const char FAR * optval, int optlen) override;
+    virtual unsigned long ComUDP_Z_vftable_30(unsigned long hostlong) override;
+    virtual unsigned short ComUDP_Z_vftable_31(unsigned short hostlong) override;
+    virtual unsigned long ComUDP_Z_vftable_32(unsigned long netlong) override;
+    virtual unsigned short ComUDP_Z_vftable_33(unsigned short netshort) override;
+    virtual int ComUDP_Z_vftable_35(char *, int) override;
+    virtual unsigned long ComUDP_Z_vftable_37(const char FAR * cp) override;
+    virtual int ComUDP_Z_vftable_38(SOCKET s, long cmd, unsigned long *argp) override;
     ADDRESSVF(0x0081C930, ComWinLivesockUDP_Z, ComUDP_Z_vftable_39);
     virtual void ComUDP_Z_vftable_39() override;
     ADDRESSVF(0x0081C990, ComWinLivesockUDP_Z, ComUDP_Z_vftable_40);
@@ -8565,7 +8514,6 @@ public:
     virtual void Renderer_Z_vftable_103() override;
     ADDRESSVF(0x00854B10, D3D_Renderer_Z, Renderer_Z_vftable_104);
     virtual void Renderer_Z_vftable_104() override;
-    ADDRESSVF(0x00843790, D3D_Renderer_Z, Renderer_Z_vftable_105);
     virtual void Renderer_Z_vftable_105() override;
     ADDRESSSYMBOL(0x008437A0, "?Renderer_Z_vftable_106@D3D_Renderer_Z@@UAEXXZ");
     virtual void Renderer_Z_vftable_106() override;
@@ -8782,7 +8730,6 @@ public:
     virtual void Dialog_G_vftable_19() override;
     ADDRESSSYMBOL(0x0043FFA0, "?Dialog_G_vftable_20@Dialog_BaseAlert@@UAEXXZ");
     virtual void Dialog_G_vftable_20() override;
-    ADDRESSVF(0x0043FEA0, Dialog_BaseAlert, Dialog_G_vftable_22);
     virtual void Dialog_G_vftable_22() override;
     virtual void Dialog_BaseAlert_vftable_28() = 0;
     virtual void Dialog_BaseAlert_vftable_29() = 0;
@@ -9195,9 +9142,7 @@ public:
     virtual void CWindowHierarchy_G_vftable_0() override;
     ADDRESSVF(0x0059E030, CPreviewList_G, CWindow_G_vftable_15);
     virtual void CWindow_G_vftable_15() override;
-    ADDRESSVF(0x0059E050, CPreviewList_G, CWindow_G_vftable_16);
     virtual void CWindow_G_vftable_16() override;
-    ADDRESSVF(0x0059E060, CPreviewList_G, CWindow_G_vftable_18);
     virtual void CWindow_G_vftable_18() override;
     virtual char CWindow_G_vftable_21() override;
     ADDRESSSYMBOL(0x0059E140, "?CWindow_G_vftable_22@CPreviewList_G@@UAEDXZ");
@@ -9315,11 +9260,9 @@ ADDRESSVFTABLE(0x009B0934, IT_TornadoDebrisManipulator);
 class __declspec(dllexport) IT_TornadoDebrisManipulator : public LodMove_Z
 {
 public:
-    ADDRESSSYMBOL(0x005EA080, "?BaseObject_Z_vftable_0@IT_TornadoDebrisManipulator@@UAEXXZ");
     virtual void BaseObject_Z_vftable_0() override;
     ADDRESSVF(0x004D5C20, IT_TornadoDebrisManipulator, BaseObject_Z_vftable_2);
     virtual void BaseObject_Z_vftable_2() override;
-    ADDRESSSYMBOL(0x005EA090, "?Manipulator_Z_vftable_14@IT_TornadoDebrisManipulator@@UAEXXZ");
     virtual void Manipulator_Z_vftable_14() override;
     ADDRESSSYMBOL(0x005EA0A0, "?Manipulator_Z_vftable_17@IT_TornadoDebrisManipulator@@UAEXH@Z");
     virtual void Manipulator_Z_vftable_17(int) override;
@@ -9637,7 +9580,6 @@ public:
     virtual void CWindow_G_vftable_16() override;
     ADDRESSVF(0x0059B290, CGauge_G, CWindow_G_vftable_17);
     virtual void CWindow_G_vftable_17() override;
-    ADDRESSVF(0x0059B260, CGauge_G, CWindow_G_vftable_18);
     virtual void CWindow_G_vftable_18() override;
     virtual char CWindow_G_vftable_21() override;
     virtual char CWindow_G_vftable_22() override;
@@ -9705,9 +9647,7 @@ public:
     virtual void CWindow_G_vftable_24() override;
     ADDRESSVF(0x005A09D0, CStaticText_G, CWindow_G_vftable_25);
     virtual void CWindow_G_vftable_25() override;
-    ADDRESSVF(0x005A0400, CStaticText_G, CWindow_G_vftable_28);
     virtual void CWindow_G_vftable_28() override;
-    ADDRESSVF(0x005A0410, CStaticText_G, CWindow_G_vftable_29);
     virtual void CWindow_G_vftable_29() override;
     ADDRESSVF(0x005A0590, CStaticText_G, CStaticText_G_vftable_31);
     virtual void CStaticText_G_vftable_31();
@@ -9917,13 +9857,11 @@ public:
     virtual void CWindowHierarchy_G_vftable_0() override;
     ADDRESSSYMBOL(0x005906E0, "?Dialog_G_vftable_15@Dialog_MainMenuFirst@@UAEXXZ");
     virtual void Dialog_G_vftable_15() override;
-    ADDRESSSYMBOL(0x005905A0, "?Dialog_G_vftable_17@Dialog_MainMenuFirst@@UAEXXZ");
     virtual void Dialog_G_vftable_17() override;
     ADDRESSVF(0x005905C0, Dialog_MainMenuFirst, Dialog_G_vftable_19);
     virtual void Dialog_G_vftable_19() override;
     ADDRESSSYMBOL(0x005906D0, "?Dialog_G_vftable_20@Dialog_MainMenuFirst@@UAEXXZ");
     virtual void Dialog_G_vftable_20() override;
-    ADDRESSVF(0x005905B0, Dialog_MainMenuFirst, Dialog_G_vftable_22);
     virtual void Dialog_G_vftable_22() override;
     ADDRESSVF(0x00590740, Dialog_MainMenuFirst, Dialog_G_vftable_23);
     virtual void Dialog_G_vftable_23() override;
@@ -10081,6 +10019,8 @@ public:
     virtual void BaseInGameDatas_G_vftable_39();
     ADDRESSVF(0x00437E90, BaseInGameDatas_G, BaseInGameDatas_G_vftable_40);
     virtual void BaseInGameDatas_G_vftable_40();
+
+    void _0x00442C20();
 };
 
 ADDRESSVFTABLE(0x009C8BBC, BasePlayAnim_Z);
@@ -10196,12 +10136,10 @@ public:
     virtual void CWindowHierarchy_G_vftable_0() override;
     ADDRESSSYMBOL(0x00594730, "?Dialog_G_vftable_16@Dialog_TestMenu@@UAEXH@Z");
     virtual void Dialog_G_vftable_16(int) override;
-    ADDRESSSYMBOL(0x005946A0, "?Dialog_G_vftable_17@Dialog_TestMenu@@UAEXXZ");
     virtual void Dialog_G_vftable_17() override;
     ADDRESSVF(0x005946C0, Dialog_TestMenu, Dialog_G_vftable_19);
     virtual void Dialog_G_vftable_19() override;
     virtual void Dialog_G_vftable_20() override;
-    ADDRESSVF(0x005946B0, Dialog_TestMenu, Dialog_G_vftable_22);
     virtual void Dialog_G_vftable_22() override;
     ADDRESSVF(0x005946F0, Dialog_TestMenu, Dialog_G_vftable_23);
     virtual void Dialog_G_vftable_23() override;
@@ -10261,7 +10199,6 @@ public:
     virtual void CWindow_G_vftable_15() override;
     ADDRESSVF(0x0059FD30, CScrollBar_G, CWindow_G_vftable_16);
     virtual void CWindow_G_vftable_16() override;
-    ADDRESSVF(0x0059FE70, CScrollBar_G, CWindow_G_vftable_18);
     virtual void CWindow_G_vftable_18() override;
     virtual char CWindow_G_vftable_21() override;
     ADDRESSSYMBOL(0x0059FE50, "?CWindow_G_vftable_22@CScrollBar_G@@UAEDXZ");
@@ -10426,7 +10363,6 @@ class __declspec(dllexport) CButtonBase_G : public CWindow_G
 public:
     ADDRESSVF(0x00599690, CButtonBase_G, CWindowHierarchy_G_vftable_0);
     virtual void CWindowHierarchy_G_vftable_0() override;
-    ADDRESSVF(0x00599720, CButtonBase_G, CWindow_G_vftable_18);
     virtual void CWindow_G_vftable_18() override;
     ADDRESSSYMBOL(0x00599B30, "?CWindow_G_vftable_21@CButtonBase_G@@UAEDXZ");
     virtual char CWindow_G_vftable_21() override;
@@ -10489,9 +10425,7 @@ public:
     virtual void Dialog_G_vftable_17() override;
     ADDRESSVF(0x00591B90, Dialog_PressStart, Dialog_G_vftable_19);
     virtual void Dialog_G_vftable_19() override;
-    ADDRESSVF(0x00591EF0, Dialog_PressStart, Dialog_G_vftable_21);
     virtual void Dialog_G_vftable_21() override;
-    ADDRESSVF(0x00591AD0, Dialog_PressStart, Dialog_G_vftable_22);
     virtual void Dialog_G_vftable_22() override;
     ADDRESSVF(0x00591D60, Dialog_PressStart, Dialog_G_vftable_23);
     virtual void Dialog_G_vftable_23() override;
@@ -10660,7 +10594,6 @@ public:
     virtual void ManipulatorDraw_Z_vftable_19(int) override;
     ADDRESSVF(0x00589120, MenuManager_G, BaseInGameDatas_G_vftable_22);
     virtual void BaseInGameDatas_G_vftable_22() override;
-    ADDRESSVF(0x00589160, MenuManager_G, BaseInGameDatas_G_vftable_23);
     virtual void BaseInGameDatas_G_vftable_23() override;
     ADDRESSSYMBOL(0x00589180, "?BaseInGameDatas_G_vftable_24@MenuManager_G@@UAEXXZ");
     virtual void BaseInGameDatas_G_vftable_24() override;
@@ -10874,7 +10807,6 @@ public:
     virtual void Dialog_G_vftable_19() override;
     ADDRESSVF(0x0058DFC0, Dialog_SelectVehicle, Dialog_G_vftable_21);
     virtual void Dialog_G_vftable_21() override;
-    ADDRESSVF(0x0058D7E0, Dialog_SelectVehicle, Dialog_G_vftable_22);
     virtual void Dialog_G_vftable_22() override;
     ADDRESSVF(0x0058D8F0, Dialog_SelectVehicle, Dialog_G_vftable_23);
     virtual void Dialog_G_vftable_23() override;
@@ -11016,7 +10948,6 @@ public:
     virtual void Dialog_G_vftable_19() override;
     ADDRESSVF(0x005915F0, Dialog_Online, Dialog_G_vftable_21);
     virtual void Dialog_G_vftable_21() override;
-    ADDRESSVF(0x00591590, Dialog_Online, Dialog_G_vftable_22);
     virtual void Dialog_G_vftable_22() override;
     ADDRESSVF(0x005915A0, Dialog_Online, Dialog_G_vftable_23);
     virtual void Dialog_G_vftable_23() override;
@@ -11302,7 +11233,6 @@ public:
     virtual void Manipulator_Z_vftable_17(int) override;
     ADDRESSSYMBOL(0x0041C9A0, "?ObjectMove_Z_vftable_18@CreaturesMove_G@@UAEXHHHHHH@Z");
     virtual void ObjectMove_Z_vftable_18(int, int, int, int, int, int) override;
-    ADDRESSVF(0x0041C1D0, CreaturesMove_G, ObjectMove_Z_vftable_21);
     virtual void ObjectMove_Z_vftable_21() override;
     ADDRESSVF(0x0041D010, CreaturesMove_G, ObjectMove_Z_vftable_26);
     virtual void ObjectMove_Z_vftable_26() override;
@@ -11458,9 +11388,7 @@ public:
     virtual void Manipulator_Z_vftable_17(int) override;
     ADDRESSSYMBOL(0x00443290, "?ManipulatorDraw_Z_vftable_19@InGamePlayer_G@@UAEXH@Z");
     virtual void ManipulatorDraw_Z_vftable_19(int) override;
-    ADDRESSVF(0x00443FC0, InGamePlayer_G, BaseInGameDatas_G_vftable_22);
     virtual void BaseInGameDatas_G_vftable_22() override;
-    ADDRESSVF(0x00443FD0, InGamePlayer_G, BaseInGameDatas_G_vftable_23);
     virtual void BaseInGameDatas_G_vftable_23() override;
     virtual void BaseInGameDatas_G_vftable_24() override;
     virtual void *BaseInGameDatas_G_vftable_25() override;
@@ -11540,7 +11468,6 @@ ADDRESSVFTABLE(0x009B839C, EndMissionVolumeAgent_G);
 class __declspec(dllexport) EndMissionVolumeAgent_G : public VolumeDelayedStart_G
 {
 public:
-    ADDRESSSYMBOL(0x00570060, "?BaseObject_Z_vftable_0@EndMissionVolumeAgent_G@@UAEXXZ");
     virtual void BaseObject_Z_vftable_0() override;
     ADDRESSVF(0x00545970, EndMissionVolumeAgent_G, BaseObject_Z_vftable_2);
     virtual void BaseObject_Z_vftable_2() override;
@@ -11554,7 +11481,6 @@ public:
     virtual void ABC_Agent_vftable_17() override;
     ADDRESSSYMBOL(0x00570070, "?Agent_Z_vftable_20@EndMissionVolumeAgent_G@@UAEXXZ");
     virtual void Agent_Z_vftable_20() override;
-    ADDRESSVF(0x005700B0, EndMissionVolumeAgent_G, Agent_Z_vftable_24);
     virtual void Agent_Z_vftable_24() override;
     ADDRESSSYMBOL(0x005701D0, "?VolumeAgent_Z_vftable_44@EndMissionVolumeAgent_G@@UAEXH@Z");
     virtual void VolumeAgent_Z_vftable_44(int) override;
@@ -11593,7 +11519,6 @@ public:
     virtual void CWindowHierarchy_G_vftable_0() override;
     ADDRESSVF(0x00598760, CBitmap_G, CWindow_G_vftable_15);
     virtual void CWindow_G_vftable_15() override;
-    ADDRESSVF(0x00598820, CBitmap_G, CWindow_G_vftable_16);
     virtual void CWindow_G_vftable_16() override;
     ADDRESSVF(0x00598AD0, CBitmap_G, CWindow_G_vftable_17);
     virtual void CWindow_G_vftable_17() override;
@@ -11602,9 +11527,7 @@ public:
     virtual char CWindow_G_vftable_21() override;
     ADDRESSSYMBOL(0x00598E10, "?CWindow_G_vftable_22@CBitmap_G@@UAEDXZ");
     virtual char CWindow_G_vftable_22() override;
-    ADDRESSVF(0x00598B30, CBitmap_G, CWindow_G_vftable_28);
     virtual void CWindow_G_vftable_28() override;
-    ADDRESSVF(0x00598B40, CBitmap_G, CWindow_G_vftable_29);
     virtual void CWindow_G_vftable_29() override;
 };
 
@@ -11632,7 +11555,6 @@ public:
     virtual void LiveNetPlayManager_Z_vftable_37() override;
     ADDRESSVF(0x00849660, WinLiveNetPlayManager_Z, LiveNetPlayManager_Z_vftable_41);
     virtual void LiveNetPlayManager_Z_vftable_41() override;
-    ADDRESSVF(0x00849790, WinLiveNetPlayManager_Z, LiveNetPlayManager_Z_vftable_42);
     virtual void LiveNetPlayManager_Z_vftable_42() override;
     virtual int LiveNetPlayManager_Z_vftable_43() override;
 };
@@ -11794,13 +11716,11 @@ public:
     virtual void CWindowHierarchy_G_vftable_0() override;
     ADDRESSSYMBOL(0x0058F980, "?Dialog_G_vftable_16@Dialog_LegalText@@UAEXH@Z");
     virtual void Dialog_G_vftable_16(int) override;
-    ADDRESSSYMBOL(0x0058F900, "?Dialog_G_vftable_17@Dialog_LegalText@@UAEXXZ");
     virtual void Dialog_G_vftable_17() override;
     ADDRESSVF(0x0058F920, Dialog_LegalText, Dialog_G_vftable_19);
     virtual void Dialog_G_vftable_19() override;
     ADDRESSSYMBOL(0x0058F9D0, "?Dialog_G_vftable_20@Dialog_LegalText@@UAEXXZ");
     virtual void Dialog_G_vftable_20() override;
-    ADDRESSVF(0x0058F910, Dialog_LegalText, Dialog_G_vftable_22);
     virtual void Dialog_G_vftable_22() override;
     ADDRESSVF(0x0058F970, Dialog_LegalText, Dialog_G_vftable_23);
     virtual void Dialog_G_vftable_23() override;
@@ -11925,7 +11845,6 @@ public:
     virtual void ABC_Agent_vftable_17() override;
     ADDRESSSYMBOL(0x00571E60, "?Agent_Z_vftable_20@LightVolumeAgent_G@@UAEXXZ");
     virtual void Agent_Z_vftable_20() override;
-    ADDRESSVF(0x00571E90, LightVolumeAgent_G, Agent_Z_vftable_22);
     virtual void Agent_Z_vftable_22() override;
     ADDRESSVF(0x00571EA0, LightVolumeAgent_G, Agent_Z_vftable_24);
     virtual void Agent_Z_vftable_24() override;
@@ -12115,7 +12034,6 @@ public:
     virtual void CPreviewList_G_vftable_34() override;
     ADDRESSVF(0x0059C5F0, CListBox_G, CPreviewList_G_vftable_36);
     virtual void CPreviewList_G_vftable_36() override;
-    ADDRESSVF(0x0059C5E0, CListBox_G, CPreviewList_G_vftable_37);
     virtual void CPreviewList_G_vftable_37() override;
     ADDRESSVF(0x0059C5D0, CListBox_G, CPreviewList_G_vftable_38);
     virtual void CPreviewList_G_vftable_38() override;
@@ -12485,7 +12403,6 @@ ADDRESSVFTABLE(0x009A6ADC, DebugHUD);
 class __declspec(dllexport) DebugHUD : public DebugInfo
 {
 public:
-    ADDRESSSYMBOL(0x00454500, "?ViewportHUD_vftable_1@DebugHUD@@UAEXXZ");
     virtual void ViewportHUD_vftable_1() override;
     ADDRESSSYMBOL(0x00456440, "?ViewportHUD_vftable_2@DebugHUD@@UAEXH@Z");
     virtual void ViewportHUD_vftable_2(int) override;
@@ -12536,7 +12453,6 @@ class __declspec(dllexport) CPushButton_G : public CButtonBase_G
 public:
     ADDRESSVF(0x0059E650, CPushButton_G, CWindowHierarchy_G_vftable_0);
     virtual void CWindowHierarchy_G_vftable_0() override;
-    ADDRESSVF(0x0059E6E0, CPushButton_G, CWindow_G_vftable_18);
     virtual void CWindow_G_vftable_18() override;
     ADDRESSVF(0x0059E720, CPushButton_G, CWindow_G_vftable_25);
     virtual void CWindow_G_vftable_25() override;
@@ -12611,7 +12527,6 @@ public:
     virtual void Agent_Z_vftable_25() override;
     ADDRESSSYMBOL(0x005708B0, "?VolumeAgent_Z_vftable_43@EvenementVolAgent_G@@UAEXH@Z");
     virtual void VolumeAgent_Z_vftable_43(int) override;
-    ADDRESSSYMBOL(0x00570AD0, "?VolumeAgent_Z_vftable_44@EvenementVolAgent_G@@UAEXH@Z");
     virtual void VolumeAgent_Z_vftable_44(int) override;
     ADDRESSSYMBOL(0x00570870, "?VolumeDelayedStart_G_vftable_46@EvenementVolAgent_G@@UAEXH@Z");
     virtual void VolumeDelayedStart_G_vftable_46(int) override;
@@ -12650,9 +12565,7 @@ public:
     virtual void Manipulator_Z_vftable_17(int) override;
     ADDRESSSYMBOL(0x00442D20, "?ManipulatorDraw_Z_vftable_19@FrontGlobalInGameData_G@@UAEXH@Z");
     virtual void ManipulatorDraw_Z_vftable_19(int) override;
-    ADDRESSVF(0x00442980, FrontGlobalInGameData_G, BaseInGameDatas_G_vftable_22);
     virtual void BaseInGameDatas_G_vftable_22() override;
-    ADDRESSVF(0x004431F0, FrontGlobalInGameData_G, BaseInGameDatas_G_vftable_23);
     virtual void BaseInGameDatas_G_vftable_23() override;
     ADDRESSSYMBOL(0x00442990, "?BaseInGameDatas_G_vftable_24@FrontGlobalInGameData_G@@UAEXXZ");
     virtual void BaseInGameDatas_G_vftable_24() override;
@@ -12837,7 +12750,6 @@ public:
     virtual void ObjectMove_Z_vftable_18(int, int, int, int, int, int) override;
     ADDRESSSYMBOL(0x0042F4D0, "?ObjectMove_Z_vftable_28@PlayerMove_G@@UAEXHH@Z");
     virtual void ObjectMove_Z_vftable_28(int, int) override;
-    ADDRESSVF(0x0042DC30, PlayerMove_G, ObjectMove_Z_vftable_43);
     virtual void ObjectMove_Z_vftable_43() override;
     ADDRESSVF(0x0042F120, PlayerMove_G, CreaturesMove_G_vftable_103);
     virtual void CreaturesMove_G_vftable_103() override;
@@ -13042,7 +12954,6 @@ ADDRESSVFTABLE(0x009B764C, SaveVolumeAgent_G);
 class __declspec(dllexport) SaveVolumeAgent_G : public VolumeDelayedStart_G
 {
 public:
-    ADDRESSSYMBOL(0x00572340, "?BaseObject_Z_vftable_0@SaveVolumeAgent_G@@UAEXXZ");
     virtual void BaseObject_Z_vftable_0() override;
     ADDRESSVF(0x00541840, SaveVolumeAgent_G, BaseObject_Z_vftable_2);
     virtual void BaseObject_Z_vftable_2() override;
@@ -13056,7 +12967,6 @@ public:
     virtual void ABC_Agent_vftable_17() override;
     ADDRESSSYMBOL(0x00572350, "?Agent_Z_vftable_20@SaveVolumeAgent_G@@UAEXXZ");
     virtual void Agent_Z_vftable_20() override;
-    ADDRESSVF(0x00572390, SaveVolumeAgent_G, Agent_Z_vftable_24);
     virtual void Agent_Z_vftable_24() override;
     ADDRESSSYMBOL(0x005723A0, "?VolumeDelayedStart_G_vftable_46@SaveVolumeAgent_G@@UAEXH@Z");
     virtual void VolumeDelayedStart_G_vftable_46(int) override;
@@ -13197,7 +13107,6 @@ public:
     virtual void CWindowHierarchy_G_vftable_0() override;
     ADDRESSVF(0x005A0EE0, CVScrollBar_G, CWindow_G_vftable_15);
     virtual void CWindow_G_vftable_15() override;
-    ADDRESSVF(0x005A1090, CVScrollBar_G, CWindow_G_vftable_16);
     virtual void CWindow_G_vftable_16() override;
     ADDRESSVF(0x005A10A0, CVScrollBar_G, CScrollBar_G_vftable_31);
     virtual void CScrollBar_G_vftable_31() override;
@@ -13207,7 +13116,6 @@ ADDRESSVFTABLE(0x009B845C, OfflineMissionVolumeAgent_G);
 class __declspec(dllexport) OfflineMissionVolumeAgent_G : public VolumeDelayedStart_G
 {
 public:
-    ADDRESSSYMBOL(0x005744E0, "?BaseObject_Z_vftable_0@OfflineMissionVolumeAgent_G@@UAEXXZ");
     virtual void BaseObject_Z_vftable_0() override;
     ADDRESSVF(0x005457D0, OfflineMissionVolumeAgent_G, BaseObject_Z_vftable_2);
     virtual void BaseObject_Z_vftable_2() override;
@@ -13413,7 +13321,6 @@ public:
     virtual void ABC_Agent_vftable_17() override;
     ADDRESSSYMBOL(0x00431C60, "?Agent_Z_vftable_20@GameLogicAgent_G@@UAEXXZ");
     virtual void Agent_Z_vftable_20() override;
-    ADDRESSVF(0x00431CB0, GameLogicAgent_G, LogicAgent_G_vftable_39);
     virtual void LogicAgent_G_vftable_39() override;
     virtual int LogicAgent_G_vftable_40() override;
     ADDRESSSYMBOL(0x00431CC0, "?LogicAgent_G_vftable_41@GameLogicAgent_G@@UAEDHHH@Z");
@@ -13665,7 +13572,6 @@ public:
     virtual void CWindow_G_vftable_16() override;
     ADDRESSVF(0x0059F1E0, CRotatingList_G, CWindow_G_vftable_17);
     virtual void CWindow_G_vftable_17() override;
-    ADDRESSVF(0x0059F130, CRotatingList_G, CWindow_G_vftable_18);
     virtual void CWindow_G_vftable_18() override;
     ADDRESSSYMBOL(0x0059F140, "?CWindow_G_vftable_21@CRotatingList_G@@UAEDXZ");
     virtual char CWindow_G_vftable_21() override;
@@ -13876,7 +13782,6 @@ public:
     virtual void CWindowHierarchy_G_vftable_0() override;
     ADDRESSVF(0x00598FC0, CBitmapPushButton_G, CWindow_G_vftable_15);
     virtual void CWindow_G_vftable_15() override;
-    ADDRESSVF(0x005991A0, CBitmapPushButton_G, CWindow_G_vftable_16);
     virtual void CWindow_G_vftable_16() override;
 };
 
@@ -14038,15 +13943,12 @@ public:
     virtual void CWindow_G_vftable_26() override;
     ADDRESSVF(0x0059D2F0, CLockCheckbox_G, CWindow_G_vftable_27);
     virtual void CWindow_G_vftable_27() override;
-    ADDRESSSYMBOL(0x0059D1A0, "?CButtonBase_G_vftable_31@CLockCheckbox_G@@UAEXXZ");
     virtual void CButtonBase_G_vftable_31() override;
     ADDRESSVF(0x0059D270, CLockCheckbox_G, CButtonBase_G_vftable_32);
     virtual void CButtonBase_G_vftable_32() override;
     ADDRESSVF(0x0059D2A0, CLockCheckbox_G, CButtonBase_G_vftable_33);
     virtual void CButtonBase_G_vftable_33() override;
-    ADDRESSVF(0x0059D390, CLockCheckbox_G, CCheckbox_G_vftable_35);
     virtual void CCheckbox_G_vftable_35() override;
-    ADDRESSVF(0x0059D3A0, CLockCheckbox_G, CCheckbox_G_vftable_36);
     virtual void CCheckbox_G_vftable_36() override;
     ADDRESSVF(0x0059D1B0, CLockCheckbox_G, CLockCheckbox_G_vftable_37);
     virtual void CLockCheckbox_G_vftable_37();
@@ -14151,7 +14053,6 @@ public:
     virtual void CWindowHierarchy_G_vftable_0() override;
     ADDRESSVF(0x0059A840, CDynTextPushButton_G, CWindow_G_vftable_15);
     virtual void CWindow_G_vftable_15() override;
-    ADDRESSVF(0x0059A960, CDynTextPushButton_G, CWindow_G_vftable_16);
     virtual void CWindow_G_vftable_16() override;
 };
 
@@ -14271,13 +14172,10 @@ public:
     virtual void ABC_Agent_vftable_16(int) override;
     ADDRESSVF(0x0041A5D0, Creatures_G, ABC_Agent_vftable_17);
     virtual void ABC_Agent_vftable_17() override;
-    ADDRESSSYMBOL(0x00417460, "?ABC_Agent_vftable_18@Creatures_G@@UAEXXZ");
     virtual void ABC_Agent_vftable_18() override;
-    ADDRESSSYMBOL(0x00417450, "?ABC_Agent_vftable_19@Creatures_G@@UAEXXZ");
     virtual void ABC_Agent_vftable_19() override;
     ADDRESSSYMBOL(0x00417760, "?Agent_Z_vftable_20@Creatures_G@@UAEXXZ");
     virtual void Agent_Z_vftable_20() override;
-    ADDRESSVF(0x00419BB0, Creatures_G, Agent_Z_vftable_22);
     virtual void Agent_Z_vftable_22() override;
     ADDRESSVF(0x004178A0, Creatures_G, Agent_Z_vftable_24);
     virtual void Agent_Z_vftable_24() override;
@@ -15015,7 +14913,6 @@ public:
     virtual void ABC_Agent_vftable_17() override;
     ADDRESSSYMBOL(0x0042F8C0, "?Agent_Z_vftable_20@Enemies_G@@UAEXXZ");
     virtual void Agent_Z_vftable_20() override;
-    ADDRESSVF(0x0042F9A0, Enemies_G, Agent_Z_vftable_24);
     virtual void Agent_Z_vftable_24() override;
     ADDRESSVF(0x0042F9B0, Enemies_G, Agent_Z_vftable_25);
     virtual void Agent_Z_vftable_25() override;
@@ -15103,7 +15000,6 @@ public:
     virtual void ABC_Agent_vftable_16(int) override;
     ADDRESSVF(0x0051CF10, IT_Dyn_Vehicle_G, ABC_Agent_vftable_17);
     virtual void ABC_Agent_vftable_17() override;
-    ADDRESSSYMBOL(0x0051D080, "?Agent_Z_vftable_20@IT_Dyn_Vehicle_G@@UAEXXZ");
     virtual void Agent_Z_vftable_20() override;
     ADDRESSVF(0x0051D090, IT_Dyn_Vehicle_G, IT_DYNBASE_G_vftable_59);
     virtual void IT_DYNBASE_G_vftable_59() override;
@@ -15290,3 +15186,5 @@ public:
     ADDRESSVF(0x0051D2E0, IT_DYNCOLLECT2_G, ABC_Agent_vftable_17);
     virtual void ABC_Agent_vftable_17() override;
 };
+
+#endif // _VFTABLES_H_

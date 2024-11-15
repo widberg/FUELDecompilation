@@ -203,6 +203,11 @@ def main():
                 address = int(parts[0], 16)
                 dname = parts[1]
                 rename[address] = dname
+            elif tag == "symbolsymbol":
+                error_count += check_argument_count(tag, file, line, comment, parts, 2)
+                old = parts[0]
+                new = parts[1]
+                rename[old] = new
             elif tag == "addressvftable":
                 error_count += check_argument_count(tag, file, line, comment, parts, 2)
                 address = int(parts[0], 16)
@@ -292,8 +297,9 @@ def main():
 
     undef_result = ""
 
-    for address in sorted(undef):
-        undef_result += f"-ne:__0x{address:08X}\n"
+    for address in sorted(undef, key=lambda x: (isinstance(x, str), x)):
+        old_symbol = address if isinstance(address, str) else f"__0x{address:08X}"
+        undef_result += f"-ne:{old_symbol}\n"
 
     if undef_contents != undef_result:
         args.undef.truncate(0)
@@ -305,8 +311,9 @@ def main():
 
     rename_result = ""
 
-    for address, dname in sorted(rename.items()):
-        rename_result += f"-nr:__0x{address:08X}:{dname}\n"
+    for address, dname in sorted(rename.items(), key=lambda x: (isinstance(x[0], str), x[0])):
+        old_symbol = address if isinstance(address, str) else f"__0x{address:08X}"
+        rename_result += f"-nr:{old_symbol}:{dname}\n"
 
     if rename_contents != rename_result:
         args.rename.truncate(0)
