@@ -313,6 +313,8 @@ add_library(defuel STATIC
 	OffRoad/VisibleObjectMgr.cpp
 	OffRoad/WeatherManagerEffects.cpp
 	OffRoad/Includes/vftables.hpp
+    OffRoad/strings.cpp
+    OffRoad/strings_utf8.cpp
 	OffRoad/trivial.cpp
 )
 

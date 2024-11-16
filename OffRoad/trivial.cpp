@@ -124,8 +124,8 @@ int P_SUV::Creatures_G_vftable_71() { DELINKFUNCTION(0x004292B0); return 0x4; }
 int P_SUV::Player_G_vftable_135() { DELINKFUNCTION(0x004292C0); return 0x4; }
 int P_TRUCK::Creatures_G_vftable_71() { DELINKFUNCTION(0x00429430); return 0x4; }
 int P_TRUCK::Player_G_vftable_135() { DELINKFUNCTION(0x00429440); return 0x5; }
-extern "C" int _0x009A2CF4;
-void *Player_G::Player_G_vftable_134() { DELINKFUNCTION(0x00429B40); return (void *)&_0x009A2CF4; }
+extern "C" const char _0x009A2CF4[];
+void *Player_G::Player_G_vftable_134() { DELINKFUNCTION(0x00429B40); return (void *)_0x009A2CF4; }
 void __stdcall _0x0042B390() { DELINKFUNCTION(0x0042B390); }
 void __stdcall _0x0042D370() { DELINKFUNCTION(0x0042D370); }
 void __stdcall _0x0042D380() { DELINKFUNCTION(0x0042D380); }
@@ -163,8 +163,8 @@ void ManipulatorDraw_Z::ManipulatorDraw_Z_vftable_19(int) { DELINKFUNCTION(0x004
 void InGameFX_G::Manipulator_Z_vftable_17(int) { DELINKFUNCTION(0x0043ECA0); }
 void InGameFX_G::ManipulatorSceneDraw_Z_vftable_19(int) { DELINKFUNCTION(0x0043ECB0); }
 void ManipulatorSceneDraw_Z::Manipulator_Z_vftable_17(int) { DELINKFUNCTION(0x0043ECC0); }
-extern "C" int _0x009A4A44;
-void *BackGlobalInGameData_G::BaseInGameDatas_G_vftable_25() { DELINKFUNCTION(0x0043FB80); return (void *)&_0x009A4A44; }
+extern "C" const char _0x009A4A44[];
+void *BackGlobalInGameData_G::BaseInGameDatas_G_vftable_25() { DELINKFUNCTION(0x0043FB80); return (void *)_0x009A4A44; }
 void Dialog_G::Dialog_G_vftable_15() { DELINKFUNCTION(0x0043FB90); }
 void Dialog_G::Dialog_G_vftable_16(int) { DELINKFUNCTION(0x0043FBA0); }
 void Dialog_G::Dialog_G_vftable_18() { DELINKFUNCTION(0x0043FBB0); }
@@ -176,8 +176,8 @@ void *BackGlobalInGameData_G::BaseInGameDatas_G_vftable_30() { DELINKFUNCTION(0x
 int BackGlobalInGameData_G::BaseInGameDatas_G_vftable_31() { DELINKFUNCTION(0x0043FD40); return 0x1; }
 void __stdcall _0x00441750() { DELINKFUNCTION(0x00441750); }
 int DialogMenu_G::DialogMenu_G_vftable_30() { DELINKFUNCTION(0x004417B0); return 0x0; }
-extern "C" int _0x009A4EB4;
-void *FrontGlobalInGameData_G::BaseInGameDatas_G_vftable_25() { DELINKFUNCTION(0x00442700); return (void *)&_0x009A4EB4; }
+extern "C" const char _0x009A4EB4[];
+void *FrontGlobalInGameData_G::BaseInGameDatas_G_vftable_25() { DELINKFUNCTION(0x00442700); return (void *)_0x009A4EB4; }
 char FrontGlobalInGameData_G::BaseInGameDatas_G_vftable_37() { DELINKFUNCTION(0x00442710); return 0x0; }
 extern "C" int _0x00A668F8;
 void *FrontGlobalInGameData_G::BaseInGameDatas_G_vftable_28() { DELINKFUNCTION(0x00442BE0); return (void *)&_0x00A668F8; }
@@ -185,8 +185,8 @@ int FrontGlobalInGameData_G::BaseInGameDatas_G_vftable_29() { DELINKFUNCTION(0x0
 extern "C" int _0x00A6690C;
 void *FrontGlobalInGameData_G::BaseInGameDatas_G_vftable_30() { DELINKFUNCTION(0x00442C00); return (void *)&_0x00A6690C; }
 int FrontGlobalInGameData_G::BaseInGameDatas_G_vftable_31() { DELINKFUNCTION(0x00442C10); return 0xB; }
-extern "C" int _0x009A521C;
-void *InGamePlayer_G::BaseInGameDatas_G_vftable_25() { DELINKFUNCTION(0x00443860); return (void *)&_0x009A521C; }
+extern "C" const char _0x009A521C[];
+void *InGamePlayer_G::BaseInGameDatas_G_vftable_25() { DELINKFUNCTION(0x00443860); return (void *)_0x009A521C; }
 void InGamePlayer_G::BaseInGameDatas_G_vftable_24() { DELINKFUNCTION(0x00443FE0); }
 void *InGamePlayer_G::BaseInGameDatas_G_vftable_28() { DELINKFUNCTION(0x00443FF0); return 0x0; }
 int InGamePlayer_G::BaseInGameDatas_G_vftable_29() { DELINKFUNCTION(0x00444000); return 0x0; }
@@ -250,8 +250,8 @@ int __stdcall _0x0046D2A0() { DELINKFUNCTION(0x0046D2A0); return 0x3; }
 void __stdcall _0x00470380() { DELINKFUNCTION(0x00470380); }
 void __stdcall _0x004755B0() { DELINKFUNCTION(0x004755B0); }
 void __stdcall _0x0047C720() { DELINKFUNCTION(0x0047C720); }
-extern "C" int _0x009A8860;
-void *__stdcall _0x004823A0() { DELINKFUNCTION(0x004823A0); return (void *)&_0x009A8860; }
+extern "C" const char _0x009A8860[];
+void *__stdcall _0x004823A0() { DELINKFUNCTION(0x004823A0); return (void *)_0x009A8860; }
 void __stdcall _0x004844B0() { DELINKFUNCTION(0x004844B0); }
 int NetWorkSessionInfo_Z::NetWorkSessionInfo_Z_vftable_2(int) { DELINKFUNCTION(0x00484A50); return 0x0; }
 void NetWorkSessionInfo_Z::NetWorkSessionInfo_Z_vftable_3(int) { DELINKFUNCTION(0x00484A60); }
@@ -341,8 +341,8 @@ char ComMgr_Z::ComMgr_Z_vftable_20(int, int) { DELINKFUNCTION(0x004D2540); retur
 char ComMgr_Z::ComMgr_Z_vftable_26(int, int) { DELINKFUNCTION(0x004D2620); return 0x1; }
 char ComMgr_Z::ComMgr_Z_vftable_27(int) { DELINKFUNCTION(0x004D2630); return 0x1; }
 char ComMgr_Z::ComMgr_Z_vftable_29(int) { DELINKFUNCTION(0x004D2650); return 0x1; }
-extern "C" int _0x009AC714;
-void *ComObject_Z::ComObject_Z_vftable_5() { DELINKFUNCTION(0x004D26C0); return (void *)&_0x009AC714; }
+extern "C" const char _0x009AC714[];
+void *ComObject_Z::ComObject_Z_vftable_5() { DELINKFUNCTION(0x004D26C0); return (void *)_0x009AC714; }
 int ComObject_Z::ComObject_Z_vftable_10() { DELINKFUNCTION(0x004D2730); return 0x0; }
 int ComObject_Z::ComObject_Z_vftable_12() { DELINKFUNCTION(0x004D2750); return 0x6; }
 void ComClient_Z::ComObject_Z_vftable_3(int) { DELINKFUNCTION(0x004D2EA0); }
@@ -358,8 +358,8 @@ void __stdcall _0x004D3B60() { DELINKFUNCTION(0x004D3B60); }
 void RtcScripted_G::RtcPlayer_Z_vftable_22(int) { DELINKFUNCTION(0x004D3CB0); }
 void TornadoManipulator_G::TornadoManipulator_G_vftable_103() { DELINKFUNCTION(0x004D5380); }
 void TornadoManipulator_G::TornadoManipulator_G_vftable_106() { DELINKFUNCTION(0x004D53E0); }
-extern "C" int _0x009C2AB4;
-void *Client_G::ComObject_Z_vftable_5() { DELINKFUNCTION(0x004D5EA0); return (void *)&_0x009C2AB4; }
+extern "C" const char _0x009C2AB4[];
+void *Client_G::ComObject_Z_vftable_5() { DELINKFUNCTION(0x004D5EA0); return (void *)_0x009C2AB4; }
 void __stdcall _0x004D64B0() { DELINKFUNCTION(0x004D64B0); }
 void __stdcall _0x004D64C0() { DELINKFUNCTION(0x004D64C0); }
 void __stdcall _0x004D6F00() { DELINKFUNCTION(0x004D6F00); }
@@ -712,8 +712,8 @@ void __stdcall _0x00587940() { DELINKFUNCTION(0x00587940); }
 void __stdcall _0x00587AA0() { DELINKFUNCTION(0x00587AA0); }
 int Dialog_MsgBox::Dialog_MsgBox_vftable_31() { DELINKFUNCTION(0x00588650); return 0x0; }
 int Dialog_ALERT::Dialog_ALERT_vftable_31() { DELINKFUNCTION(0x005886A0); return 0x0; }
-extern "C" int _0x009BE230;
-void *MenuManager_G::BaseInGameDatas_G_vftable_25() { DELINKFUNCTION(0x00589170); return (void *)&_0x009BE230; }
+extern "C" const char _0x009BE230[];
+void *MenuManager_G::BaseInGameDatas_G_vftable_25() { DELINKFUNCTION(0x00589170); return (void *)_0x009BE230; }
 extern "C" int _0x00A668B8;
 void *MenuManager_G::BaseInGameDatas_G_vftable_28() { DELINKFUNCTION(0x005896C0); return (void *)&_0x00A668B8; }
 int MenuManager_G::BaseInGameDatas_G_vftable_29() { DELINKFUNCTION(0x005896D0); return 0x10; }
@@ -834,15 +834,14 @@ char ComMgrSrv_Z::ComMgrSrv_Z_vftable_36() { DELINKFUNCTION(0x005A5D70); return 
 void ComServer_Z::ComServer_Z_vftable_17(int) { DELINKFUNCTION(0x005A6230); }
 void ComServer_Z::ComObject_Z_vftable_3(int) { DELINKFUNCTION(0x005A6240); }
 int NetWorkPeerToPeer_Z::NetWorkPeerToPeer_Z_vftable_30() { DELINKFUNCTION(0x005A6810); return 0x0; }
-extern "C" int _0x009C17E4;
-void *NetWorkPeerToPeer_Z::NetWorkPeerToPeer_Z_vftable_31(int) { DELINKFUNCTION(0x005A6820); return (void *)&_0x009C17E4; }
+extern "C" const char _0x009C17E4[];
+void *NetWorkPeerToPeer_Z::NetWorkPeerToPeer_Z_vftable_31(int) { DELINKFUNCTION(0x005A6820); return (void *)_0x009C17E4; }
 int FuelNetworkPeerToPeer_XBL::NetWorkPeerToPeer_XBL_vftable_40() { DELINKFUNCTION(0x005A6930); return 0x29; }
 int FuelNetworkPeerToPeer_XBL::NetWorkPeerToPeer_XBL_vftable_41() { DELINKFUNCTION(0x005A6950); return 0x434D082F; }
 int FuelNetworkPeerToPeer_XBL::NetWorkPeerToPeer_XBL_vftable_44() { DELINKFUNCTION(0x005A69D0); return 0x1000001A; }
 void __stdcall _0x005A9D80() { DELINKFUNCTION(0x005A9D80); }
 void __stdcall _0x005A9FB0() { DELINKFUNCTION(0x005A9FB0); }
-extern "C" int _0x009C2AB4;
-void *Server_G::ComObject_Z_vftable_5() { DELINKFUNCTION(0x005AAD20); return (void *)&_0x009C2AB4; }
+void *Server_G::ComObject_Z_vftable_5() { DELINKFUNCTION(0x005AAD20); return (void *)_0x009C2AB4; }
 int __stdcall _0x005AB170() { DELINKFUNCTION(0x005AB170); return 0x29; }
 void GameActionClient_G::ComObj_Z_vftable_3(int) { DELINKFUNCTION(0x005AB200); }
 void GameActionClient_G::ComObj_Z_vftable_4(int) { DELINKFUNCTION(0x005AB210); }
@@ -1250,8 +1249,8 @@ void PhysicWorld_Z::PhysicWorld_Z_vftable_23() { DELINKFUNCTION(0x00687320); }
 char PhysicWorld_Z::PhysicWorld_Z_vftable_24() { DELINKFUNCTION(0x00687330); return 0x1; }
 void __stdcall _0x006873C0() { DELINKFUNCTION(0x006873C0); }
 void __stdcall _0x006873D0() { DELINKFUNCTION(0x006873D0); }
-extern "C" int _0x009C7950;
-void *Movie_Z::Movie_Z_vftable_6() { DELINKFUNCTION(0x006878A0); return (void *)&_0x009C7950; }
+extern "C" const char _0x009C7950[];
+void *Movie_Z::Movie_Z_vftable_6() { DELINKFUNCTION(0x006878A0); return (void *)_0x009C7950; }
 char Movie_Z::Movie_Z_vftable_7(int, int) { DELINKFUNCTION(0x006878B0); return 0x1; }
 void Movie_Z::Movie_Z_vftable_8() { DELINKFUNCTION(0x006878C0); }
 void Movie_Z::Movie_Z_vftable_9() { DELINKFUNCTION(0x006878D0); }
@@ -1825,18 +1824,18 @@ char NetWorkPeerToPeer_Z::NetWorkPeerToPeer_Z_vftable_34() { DELINKFUNCTION(0x00
 void NetWorkPeerToPeer_Z::NetWorkPeerToPeer_Z_vftable_35() { DELINKFUNCTION(0x00822290); }
 char NetWorkPeerToPeer_Z::NetWorkPeerToPeer_Z_vftable_36() { DELINKFUNCTION(0x008222A0); return 0x0; }
 void NetWorkPeerToPeer_Z::NetWorkPeerToPeer_Z_vftable_37(int) { DELINKFUNCTION(0x008222B0); }
-extern "C" int _0x009C2AC4;
-void *LiveOverlappedCommand_Z::LiveOverlappedCommand_Z_vftable_2() { DELINKFUNCTION(0x00822360); return (void *)&_0x009C2AC4; }
-extern "C" int _0x009D594C;
-void *XUserSetPropertyExLiveOverlappedCommand_Z::LiveOverlappedCommand_Z_vftable_2() { DELINKFUNCTION(0x00822400); return (void *)&_0x009D594C; }
-extern "C" int _0x009D5960;
-void *XUserSetContextExLiveOverlappedCommand_Z::LiveOverlappedCommand_Z_vftable_2() { DELINKFUNCTION(0x008224A0); return (void *)&_0x009D5960; }
-extern "C" int _0x009D5974;
-void *XSessionSearchLiveOverlappedCommand_Z::LiveOverlappedCommand_Z_vftable_2() { DELINKFUNCTION(0x00822570); return (void *)&_0x009D5974; }
-extern "C" int _0x009D5984;
-void *XSessionCreateLiveOverlappedCommand_Z::LiveOverlappedCommand_Z_vftable_2() { DELINKFUNCTION(0x00822620); return (void *)&_0x009D5984; }
-extern "C" int _0x009D5994;
-void *XSessionJoinLocalLiveOverlappedCommand_Z::LiveOverlappedCommand_Z_vftable_2() { DELINKFUNCTION(0x008226F0); return (void *)&_0x009D5994; }
+extern "C" const char _0x009C2AC4[];
+void *LiveOverlappedCommand_Z::LiveOverlappedCommand_Z_vftable_2() { DELINKFUNCTION(0x00822360); return (void *)_0x009C2AC4; }
+extern "C" const char _0x009D594C[];
+void *XUserSetPropertyExLiveOverlappedCommand_Z::LiveOverlappedCommand_Z_vftable_2() { DELINKFUNCTION(0x00822400); return (void *)_0x009D594C; }
+extern "C" const char _0x009D5960[];
+void *XUserSetContextExLiveOverlappedCommand_Z::LiveOverlappedCommand_Z_vftable_2() { DELINKFUNCTION(0x008224A0); return (void *)_0x009D5960; }
+extern "C" const char _0x009D5974[];
+void *XSessionSearchLiveOverlappedCommand_Z::LiveOverlappedCommand_Z_vftable_2() { DELINKFUNCTION(0x00822570); return (void *)_0x009D5974; }
+extern "C" const char _0x009D5984[];
+void *XSessionCreateLiveOverlappedCommand_Z::LiveOverlappedCommand_Z_vftable_2() { DELINKFUNCTION(0x00822620); return (void *)_0x009D5984; }
+extern "C" const char _0x009D5994[];
+void *XSessionJoinLocalLiveOverlappedCommand_Z::LiveOverlappedCommand_Z_vftable_2() { DELINKFUNCTION(0x008226F0); return (void *)_0x009D5994; }
 int NetWorkSessionInfoLive_Z::NetWorkSessionInfo_Z_vftable_5() { DELINKFUNCTION(0x008228A0); return 0x8; }
 int NetWorkPeerToPeer_XBL::NetWorkPeerToPeer_XBL_vftable_40() { DELINKFUNCTION(0x00822A10); return 0x0; }
 int NetWorkPeerToPeer_XBL::NetWorkPeerToPeer_XBL_vftable_41() { DELINKFUNCTION(0x00822A20); return 0x0; }
