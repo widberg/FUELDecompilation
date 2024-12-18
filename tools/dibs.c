@@ -5,7 +5,7 @@ int main(int argc, char *argv[])
 {
     STARTUPINFO si;
     PROCESS_INFORMATION pi;
-    BOOL result;
+    DWORD exitCode;
     LPVOID startAddress;
     SIZE_T size;
     LPVOID allocatedMemory;
@@ -24,19 +24,17 @@ int main(int argc, char *argv[])
     ZeroMemory(&si, sizeof(si));
     si.cb = sizeof(si);
 
-    result = CreateProcess(
-        NULL,
-        commandLine,
-        NULL,
-        NULL,
-        FALSE,
-        CREATE_SUSPENDED,
-        NULL,
-        NULL,
-        &si,
-        &pi);
-
-    if (!result)
+    if (!CreateProcess(
+            NULL,
+            commandLine,
+            NULL,
+            NULL,
+            FALSE,
+            CREATE_SUSPENDED,
+            NULL,
+            NULL,
+            &si,
+            &pi))
     {
         printf("Failed to create the process: %lu\n", GetLastError());
         return 1;
@@ -69,8 +67,16 @@ int main(int argc, char *argv[])
 
     WaitForSingleObject(pi.hProcess, INFINITE);
 
+    if (!GetExitCodeProcess(pi.hProcess, &exitCode))
+    {
+        printf("Failed to get the exit code of the process: %lu\n", GetLastError());
+        CloseHandle(pi.hProcess);
+        CloseHandle(pi.hThread);
+        return 1;
+    }
+
     CloseHandle(pi.hProcess);
     CloseHandle(pi.hThread);
 
-    return 0;
+    return exitCode;
 }
