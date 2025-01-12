@@ -37,15 +37,6 @@
 // Undefine an address
 #define UNDEFADDRESS(address) __pragma(comment(user, "undefaddress;" __FILE__ ";" STR(__LINE__) ";" #address))
 
-// Usercall trampoline generator
-#define USERCALL(return, ...) __pragma(comment(user, "usercall;" __FILE__ ";" STR(__LINE__) ";" __FUNCSIG__ ";" __FUNCDNAME__ ";" #return ";" #__VA_ARGS__))
-
-// Userpurge trampoline generator
-#define USERPURGE(return, ...) __pragma(comment(user, "userpurge;" __FILE__ ";" STR(__LINE__) ";" __FUNCSIG__ ";" __FUNCDNAME__ ";" #return ";" #__VA_ARGS__))
-
-// Spoils trampoline generator
-#define SPOILS(...) __pragma(comment(user, "spoils;" __FILE__ ";" STR(__LINE__) ";" __FUNCSIG__ ";" __FUNCDNAME__ ";" #__VA_ARGS__))
-
 #define STATIC_ASSERT(expr, ...) enum { CAT(__STATIC_ASSERT_FAILED, __COUNTER__) = 1 / (int)(!!(expr)) }
 
 #define STATIC_ASSERT_SIZE(expr, size, ...) STATIC_ASSERT(sizeof(expr) == size, __VA_ARGS__)

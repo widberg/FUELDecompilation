@@ -44,7 +44,6 @@ set(DXSDK_DIR "$ENV{DXSDK_DIR}" CACHE STRING "Path to Microsoft DirectX SDK (Aug
 add_executable(FUEL WIN32
 	Resources/FUEL.rc
 	OffRoad/xcu.c
-    "${CMAKE_CURRENT_BINARY_DIR}/trampolines.asm"
 )
 
 target_link_options(FUEL BEFORE PRIVATE
@@ -333,9 +332,9 @@ target_link_libraries(defuel PUBLIC
 )
 
 add_custom_command(
-	COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/comments2objconv.py" --rename "${CMAKE_CURRENT_BINARY_DIR}/libfuelrename.txt" --undef "${CMAKE_CURRENT_BINARY_DIR}/libfuelundef.txt" --trampolines "${CMAKE_CURRENT_BINARY_DIR}/trampolines.asm" "$<TARGET_FILE:defuel>" "$<TARGET_FILE:Engine>" "$<TARGET_FILE:LIBPC_Common>" "$<TARGET_FILE:LIBPC_TNL>"
+	COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/comments2objconv.py" --rename "${CMAKE_CURRENT_BINARY_DIR}/libfuelrename.txt" --undef "${CMAKE_CURRENT_BINARY_DIR}/libfuelundef.txt" "$<TARGET_FILE:defuel>" "$<TARGET_FILE:Engine>" "$<TARGET_FILE:LIBPC_Common>" "$<TARGET_FILE:LIBPC_TNL>"
 	DEPENDS defuel Engine LIBPC_Common LIBPC_TNL "${CMAKE_CURRENT_SOURCE_DIR}/tools/comments2objconv.py"
-	OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/libfuelundef.txt" "${CMAKE_CURRENT_BINARY_DIR}/libfuelrename.txt" "${CMAKE_CURRENT_BINARY_DIR}/trampolines.asm"
+	OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/libfuelundef.txt" "${CMAKE_CURRENT_BINARY_DIR}/libfuelrename.txt"
 	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 

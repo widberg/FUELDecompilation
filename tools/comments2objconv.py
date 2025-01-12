@@ -152,7 +152,6 @@ def main():
     parser.add_argument("objs", type=str, nargs="+")
     parser.add_argument("--undef", type=argparse.FileType("a+"), required=True)
     parser.add_argument("--rename", type=argparse.FileType("a+"), required=True)
-    parser.add_argument("--trampolines", type=argparse.FileType("a+"), required=True)
     args = parser.parse_args()
 
     # Read comments from all objects
@@ -166,8 +165,6 @@ def main():
     # Parse comments
     undef = set()
     rename = {}
-    trampolines = set()
-    spoils = set()
     error_count = 0
 
     for comment in comments:
@@ -223,67 +220,6 @@ def main():
                 error_count += check_argument_count(tag, file, line, comment, parts, 1)
                 address = int(parts[0], 16)
                 undef.add(address)
-            elif tag == "usercall" or tag == "userpurge":
-                error_count += check_argument_count(tag, file, line, comment, parts, 4)
-                undname = parts[0]  # to check template parameters
-                dname = parts[1]
-                ret = parts[2].upper()
-                if ret == "" or ret == "VOID":
-                    ret = None
-                arguments = []
-                if parts[3] != "":
-                    for x in parts[3].split(", "):
-                        try:
-                            arguments.append(int(x))
-                        except ValueError:
-                            arguments.append(x.upper())
-                if ret is None or ret == "EAX" or ret == "AL":
-                    if len(arguments) == 0:
-                        error_count += fatal_error(
-                            file,
-                            line,
-                            f'Unnecessary {tag} comment. Use {"__stdcall" if tag == "usercall" else "__cdecl"} instead.',
-                        )
-                    additional_help = None
-                    if arguments == ["ECX"]:
-                        additional_help = "__fastcall with the second parameter ignored or use a non-static member function if ECX is the this pointer"
-                    elif arguments == ["EDX"]:
-                        additional_help = "__fastcall with the first parameter ignored"
-                    elif arguments == ["ECX", "EDX"]:
-                        additional_help = "__fastcall"
-                    elif arguments == ["EDX", "ECX"]:
-                        additional_help = (
-                            "__fastcall with the first and second parameter swapped"
-                        )
-                    if additional_help is not None:
-                        error_count += fatal_error(
-                            file,
-                            line,
-                            f"Unnecessary {tag} comment. Use {additional_help} instead.",
-                        )
-                cc, this_in_ecx = msvc_demangle(dname)
-                if cc is None:
-                    error_count += fatal_error(
-                        file, line, f'Unknown calling convention: "{undname}"'
-                    )
-                if cc != "__fastcall" and (arguments != ["ECX"] or cc != "__thiscall"):
-                    additional_help = ""
-                    if arguments == ["ECX"]:
-                        additional_help = " or a non-static member function"
-                    error_count += fatal_error(
-                        file,
-                        line,
-                        f'Incorrect calling convention: "{undname}". Found {cc}, should be __fastcall{additional_help}.',
-                    )
-                trampolines.add(dname)
-            elif tag == "spoils":
-                error_count += check_argument_count(tag, file, line, comment, parts, 3)
-                undname = parts[0]
-                dname = parts[1]
-                regs = parts[2].split(", ")
-                if regs == [""]:
-                    regs = []
-                spoils.add(dname)
             else:
                 error_count += fatal_error(file, line, f'Unknown tag: "{tag}"')
 
