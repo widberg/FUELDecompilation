@@ -27,6 +27,9 @@ jobs:
           curl.exe --location --create-dirs -oC:\TEMP\ninja.zip https://github.com/ninja-build/ninja/releases/download/v1.12.1/ninja-win.zip
           7z.exe x C:\TEMP\ninja.zip -aoa -oC:\Tools\ninja
 
+      - name: Install Frida
+        run: pip3 install frida
+
       - name: Build
         shell: cmd
         run: |
