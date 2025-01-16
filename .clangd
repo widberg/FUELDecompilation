@@ -1,3 +1,5 @@
 #.clangd
 CompileFlags:
   Add: [-D__usercall=, -D__userpurge=, -D__eax=, -D__ebx=, -D__ecx=, -D__edx=, -D__esi=, -D__edi=, -D_CRT_SECURE_NO_WARNINGS]
+Diagnostics:
+  Suppress: pragma_comment_malformed
