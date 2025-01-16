@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 
     if (argc != 4)
     {
-        printf("Usage: %s <address> <size> <commandLine>\n", argv[0]);
+        fprintf(stderr, "Usage: %s <address> <size> <commandLine>\n", argv[0]);
         return 1;
     }
 
@@ -23,20 +23,24 @@ int main(int argc, char *argv[])
 
     ZeroMemory(&si, sizeof(si));
     si.cb = sizeof(si);
+    si.dwFlags = STARTF_USESTDHANDLES;
+    si.hStdInput = GetStdHandle(STD_INPUT_HANDLE);
+    si.hStdOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+    si.hStdError = GetStdHandle(STD_ERROR_HANDLE);
 
     if (!CreateProcess(
             NULL,
             commandLine,
             NULL,
             NULL,
-            FALSE,
+            TRUE,
             CREATE_SUSPENDED,
             NULL,
             NULL,
             &si,
             &pi))
     {
-        printf("Failed to create the process: %lu\n", GetLastError());
+        fprintf(stderr, "Failed to create the process: %lu\n", GetLastError());
         return 1;
     }
 
@@ -49,7 +53,7 @@ int main(int argc, char *argv[])
 
     if (allocatedMemory == NULL)
     {
-        printf("Failed to allocate memory in the target process: %lu\n", GetLastError());
+        fprintf(stderr, "Failed to allocate memory in the target process: %lu\n", GetLastError());
         TerminateProcess(pi.hProcess, 1);
         CloseHandle(pi.hProcess);
         CloseHandle(pi.hThread);
@@ -58,7 +62,7 @@ int main(int argc, char *argv[])
 
     if (ResumeThread(pi.hThread) == -1)
     {
-        printf("Failed to resume the process: %lu\n", GetLastError());
+        fprintf(stderr, "Failed to resume the process: %lu\n", GetLastError());
         TerminateProcess(pi.hProcess, 1);
         CloseHandle(pi.hProcess);
         CloseHandle(pi.hThread);
@@ -69,7 +73,7 @@ int main(int argc, char *argv[])
 
     if (!GetExitCodeProcess(pi.hProcess, &exitCode))
     {
-        printf("Failed to get the exit code of the process: %lu\n", GetLastError());
+        fprintf(stderr, "Failed to get the exit code of the process: %lu\n", GetLastError());
         CloseHandle(pi.hProcess);
         CloseHandle(pi.hThread);
         return 1;
