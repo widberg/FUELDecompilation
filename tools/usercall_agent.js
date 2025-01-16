@@ -1,6 +1,7 @@
 // NOTES:
 // * for some reason reg args are treated as "used" aka overwritten even if they aren't used
 //   - this means functions with reg args other than eax, ecx, and edx will not match yet
+// * The 0xC member of Type_t in the front-end is being used for typedef stuff, so we can't use it
 // * figure out if the compiler ever passes floats in st regs
 // * figure out if we need spoils?
 // * force storing base pointer

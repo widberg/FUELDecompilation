@@ -105,3 +105,13 @@ extern "C" U32 Crc32Tab[] = {
 	0xAFB010B1, 0xAB710D06, 0xA6322BDF, 0xA2F33668,
 	0xBCB4666D, 0xB8757BDA, 0xB5365D03, 0xB1F740B4
 };
+
+U32 __usercall __eax __edx Name_Z::GetIDFromString(U32 hash, const U8 *data)
+{
+    DELINKFUNCTION(0x00669160);
+    for (U32 i = 0; data[i]; ++i)
+    {
+        hash = (hash >> 8) ^ Crc32Tab[(g_ChartoLower[data[i]] ^ hash) & 0xff];
+    }
+    return hash;
+}
