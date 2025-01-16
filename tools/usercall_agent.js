@@ -44,65 +44,6 @@ function patch_jumps(jumps) {
   }
 }
 
-function handle_cl(base) {
-  Module.ensureInitialized("cl.exe");
-
-  let PREP_START = base.add(0x00005aad);
-  let PREP_END = base.add(0x00005ab5);
-  let DEFINE_STUFF = base.add(0x000051c2);
-  let FIX_OVERFLOW = base.add(0x00007151);
-
-  global.USERCALL_CL_MODULE ??= new CModule(
-    `asm("
-          pd0:
-          .word '-', 'D', '_', '_', 'e', 'a', 'x', '=', '0', 0
-          pd1:
-          .word '-', 'D', '_', '_', 'e', 'b', 'x', '=', '1', 0
-          pd2:
-          .word '-', 'D', '_', '_', 'e', 'c', 'x', '=', '2', 0
-          pd3:
-          .word '-', 'D', '_', '_', 'e', 'd', 'x', '=', '3', 0
-          pd4:
-          .word '-', 'D', '_', '_', 'e', 's', 'i', '=', '4', 0
-          pd5:
-          .word '-', 'D', '_', '_', 'e', 'd', 'i', '=', '5', 0
-          pd6:
-          .word '-', 'D', '_', '_', 'u', 's', 'e', 'r', 'c', 'a', 'l', 'l', '=', '_', '_', 'f', 'a', 's', 't', 'c', 'a', 'l', 'l', ' ', '2', '5', '5', 0
-          pd7:
-          .word '-', 'D', '_', '_', 'u', 's', 'e', 'r', 'p', 'u', 'r', 'g', 'e', '=', '_', '_', 'f', 'a', 's', 't', 'c', 'a', 'l', 'l', ' ', '2', '5', '4', 0
-          defines:
-          .long pd0
-          .long pd1
-          .long pd2
-          .long pd3
-          .long pd4
-          .long pd5
-          .long pd6
-          .long pd7
-          .global prep
-          prep:
-          call DEFINE_STUFF
-          push $8
-          mov $defines, %ebx
-          call DEFINE_STUFF
-          add $0x10, %esp
-          jmp PREP_END
-      ");`,
-    {
-      DEFINE_STUFF: DEFINE_STUFF,
-      PREP_END: PREP_END,
-    }
-  );
-
-  patch_jumps([[PREP_START, global.USERCALL_CL_MODULE.prep]]);
-
-  // Need to add space for the double quotes inserted around the defines with spaces.
-  // cl.exe doesn't expect the predefines to have spaces so adding the quotes leads to a buffer
-  // overflow and crash.
-  Memory.protect(FIX_OVERFLOW, 1, "rw-");
-  FIX_OVERFLOW.writeU8(3 + 4);
-}
-
 function setup_usercall_parser(
   tok_fastcall,
   tok_int,
@@ -167,133 +108,6 @@ function setup_usercall_parser(
   });
 }
 
-function handle_c1(base) {
-  Module.ensureInitialized("c1.dll");
-
-  let TOKEN_INPUT_STACK = base.add(0x000ba508);
-  let TOKEN_INPUT_STACK_PEAK_TOKEN = base.add(0x0000f8e0);
-  let TOKEN_INPUT_STACK_GET_TOKEN = base.add(0x0000f6e0);
-  let PARSER_OPTYPE_START = base.add(0x0001e417);
-  let PARSER_OPTYPE_END = base.add(0x0001e41d);
-  let YYVAL = base.add(0x000a38a8);
-  let WRITE_EXTRA_START = base.add(0x00038528);
-  let WRITE_EXTRA_END = base.add(0x00038562);
-  let WRITE_ATTR2 = base.add(0x000377a0);
-  let LOWRITE = base.add(0x0001c0d0);
-  let ADD_FUNC_START = base.add(0x00043b46);
-  let ADD_FUNC_END = base.add(0x00043b4c);
-  let SAVE_EXTRA_START = base.add(0x00038083);
-  let SAVE_EXTRA_END = base.add(0x0003808a);
-  let YYLEX = base.add(0x000037e0);
-  let TOKSTRINGS_SIZE = base.add(0x00076008);
-  let TOK_FASTCALL = 205;
-  let TOK_INT = 33;
-  let VAARGS_START = base.add(0x00043e10);
-  let VAARGS_GOOD_END = base.add(0x00043e49);
-  let VAARGS_BAD_END = base.add(0x00043e44);
-  let VAARGS_UGLY_END = base.add(0x00043e21);
-
-  global.USERCALL_C1_MODULE ??= new CModule(
-    `asm("
-          .global peak_token
-          peak_token:
-          mov TOKEN_INPUT_STACK, %eax
-          call TOKEN_INPUT_STACK_PEAK_TOKEN
-          ret
-          .global get_token
-          get_token:
-          mov TOKEN_INPUT_STACK, %ecx
-          call TOKEN_INPUT_STACK_GET_TOKEN
-          ret
-          .global parser_optype
-          parser_optype:
-          cmp $2, %ax
-          je PARSER_OPTYPE_END
-          mov YYVAL, %ebx
-          movl $0, 4(%ebx)
-          mov $0, %ebx
-          jmp PARSER_OPTYPE_END
-          .global write_extra
-          write_extra:
-          call WRITE_ATTR2
-          and $0x1C, %edi
-          cmp $4, %edi
-          jne WRITE_EXTRA_END
-          mov 0x10(%esp), %eax
-          mov 0x68(%esp), %ebx
-          call LOWRITE
-          jmp WRITE_EXTRA_END
-          .global add_func
-          add_func:
-          andw $0xFFF8, 0xC(%edi)
-          cmp $2, %ax
-          jne ADD_FUNC_END
-          mov 0x10(%edi), %eax
-          mov %eax, 0xC(%esi)
-          jmp ADD_FUNC_END
-          .global save_extra
-          save_extra:
-          movzbl 2(%eax), %edx
-          and $7, %edx
-          cmp $2, %edx
-          jne skip_save_extra
-          mov 0xC(%eax), %edx
-          mov %edx, 0x68(%esp)
-          skip_save_extra:
-          movzbl 2(%eax), %edx
-          and $0x1F, %edx
-          jmp SAVE_EXTRA_END
-          .global vaargs
-          vaargs:
-          mov %eax, %edx
-          mov %ebx, %eax
-          and $7, %eax
-          cmp $3, %ax
-          jz VAARGS_BAD_END
-          cmp $2, %ax
-          jne VAARGS_UGLY_END
-          mov 0xC(%edx), %edx
-          test %edx, %edx
-          jz VAARGS_BAD_END
-          mov (%edx), %edx
-          test $1, %edx
-          jz VAARGS_BAD_END
-          jmp VAARGS_GOOD_END
-      ");`,
-    {
-      TOKEN_INPUT_STACK: TOKEN_INPUT_STACK,
-      TOKEN_INPUT_STACK_PEAK_TOKEN: TOKEN_INPUT_STACK_PEAK_TOKEN,
-      TOKEN_INPUT_STACK_GET_TOKEN: TOKEN_INPUT_STACK_GET_TOKEN,
-      PARSER_OPTYPE_END: PARSER_OPTYPE_END,
-      YYVAL: YYVAL,
-      WRITE_EXTRA_END: WRITE_EXTRA_END,
-      WRITE_ATTR2: WRITE_ATTR2,
-      LOWRITE: LOWRITE,
-      ADD_FUNC_END: ADD_FUNC_END,
-      SAVE_EXTRA_END: SAVE_EXTRA_END,
-      VAARGS_GOOD_END: VAARGS_GOOD_END,
-      VAARGS_BAD_END: VAARGS_BAD_END,
-      VAARGS_UGLY_END: VAARGS_UGLY_END,
-    }
-  );
-
-  patch_jumps([
-    [SAVE_EXTRA_START, global.USERCALL_C1_MODULE.save_extra],
-    [PARSER_OPTYPE_START, global.USERCALL_C1_MODULE.parser_optype],
-    [WRITE_EXTRA_START, global.USERCALL_C1_MODULE.write_extra],
-    [ADD_FUNC_START, global.USERCALL_C1_MODULE.add_func],
-    [VAARGS_START, global.USERCALL_C1_MODULE.vaargs],
-  ]);
-
-  setup_usercall_parser(
-    TOK_FASTCALL,
-    TOK_INT,
-    TOKSTRINGS_SIZE,
-    YYLEX,
-    global.USERCALL_C1_MODULE
-  );
-}
-
 function handle_c1xx(base) {
   Module.ensureInitialized("c1xx.dll");
 
@@ -327,6 +141,10 @@ function handle_c1xx(base) {
   let VAARGS2_GOOD_END = base.add(0x00033f27);
   let VAARGS2_BAD_END = base.add(0x00034192);
   let VAARGS2_UGLY_END = base.add(0x000db802);
+  let PREP_START = base.add(0x0000f495);
+  let PREP_END = base.add(0x0000f49a);
+  let INSTALL_DEFINE = base.add(0x0007d7d0);
+  let COMMAND_DEF = base.add(0x0000f890);
 
   global.USERCALL_C1XX_MODULE ??= new CModule(
     `asm("
@@ -413,6 +231,43 @@ function handle_c1xx(base) {
           test $1, %eax
           jz VAARGS2_BAD_END
           jmp VAARGS2_GOOD_END
+          pd0:
+          .asciz \\"__eax=0\\"
+          pd1:
+          .asciz \\"__ebx=1\\"
+          pd2:
+          .asciz \\"__ecx=2\\"
+          pd3:
+          .asciz \\"__edx=3\\"
+          pd4:
+          .asciz \\"__esi=4\\"
+          pd5:
+          .asciz \\"__edi=5\\"
+          pd6:
+          .asciz \\"__usercall=__fastcall 255\\"
+          pd7:
+          .asciz \\"__userpurge=__fastcall 254\\"
+          defines:
+          .long pd0
+          .long pd1
+          .long pd2
+          .long pd3
+          .long pd4
+          .long pd5
+          .long pd6
+          .long pd7
+          .long 0
+          .global prep
+          prep:
+          call INSTALL_DEFINE
+          mov $defines, %edi
+          prep_loop:
+          mov (%edi), %eax
+          test %eax, %eax
+          jz PREP_END
+          call COMMAND_DEF
+          add $4, %edi
+          jmp prep_loop
       ");`,
     {
       TOKEN_INPUT_STACK: TOKEN_INPUT_STACK,
@@ -431,6 +286,9 @@ function handle_c1xx(base) {
       VAARGS2_GOOD_END: VAARGS2_GOOD_END,
       VAARGS2_BAD_END: VAARGS2_BAD_END,
       VAARGS2_UGLY_END: VAARGS2_UGLY_END,
+      PREP_END: PREP_END,
+      INSTALL_DEFINE: INSTALL_DEFINE,
+      COMMAND_DEF: COMMAND_DEF,
     }
   );
 
@@ -445,6 +303,7 @@ function handle_c1xx(base) {
     [ADD_FUNC2_START, global.USERCALL_C1XX_MODULE.add_func2],
     [VAARGS_START, global.USERCALL_C1XX_MODULE.vaargs],
     [VAARGS2_START, global.USERCALL_C1XX_MODULE.vaargs2],
+    [PREP_START, global.USERCALL_C1XX_MODULE.prep],
   ]);
 
   setup_usercall_parser(
@@ -543,39 +402,23 @@ function handle_c2(base) {
     [READ_EXTRA_START_PTR, global.USERCALL_C2_MODULE.read_extra],
     [CALLEE_CLEAN_START, global.USERCALL_C2_MODULE.callee_clean],
   ]);
-
-  // Uncomment to disable the  shrink-wrap optimization while testing
-  // TODO: Remove this
-  //   Interceptor.attach(base.add(0x0014fe50), {
-  //     onLeave: function (retval) {
-  //       retval.replace(0);
-  //     },
-  //   });
 }
 
 function main() {
   global.cc_data = [];
-
-  let cl_base = Module.findBaseAddress("cl.exe");
-  check_checksum("cl.exe", cl_base, 0x0001e247);
-  handle_cl(cl_base);
 
   let LoadLibraryW = Module.findExportByName("Kernel32.dll", "LoadLibraryW");
 
   Interceptor.attach(LoadLibraryW, {
     onEnter: function (args) {
       this.dllName = Memory.readUtf16String(args[0]);
-      // console.log("LoadLibraryW(" + this.dllName + ")");
     },
     onLeave: function (retval) {
       if (retval.isNull()) {
         return;
       }
 
-      if (this.dllName.endsWith("\\c1.dll")) {
-        check_checksum("c1.dll", retval, 0x000a4657);
-        handle_c1(retval);
-      } else if (this.dllName.endsWith("\\c1xx.dll")) {
+      if (this.dllName.endsWith("\\c1xx.dll")) {
         check_checksum("c1xx.dll", retval, 0x00232f62);
         handle_c1xx(retval);
       } else if (this.dllName.endsWith("\\c2.dll")) {

@@ -12,7 +12,9 @@ def main():
     source = open(usercall_agent_path, "r").read()
     pid = frida.spawn(sys.argv[1:])
     session = frida.attach(pid)
-    script = session.create_script(source=source, name="usercall_agent.js", runtime="qjs")
+    script = session.create_script(
+        source=source, name="usercall_agent.js", runtime="qjs"
+    )
 
     def log(level: str, text: str) -> None:
         print(f"[{level}] {text}")
@@ -30,10 +32,9 @@ def main():
     try:
         process = psutil.Process(pid)
         exit_code = process.wait()
-        # print(f"Process exited with code {exit_code}.")
         exit(exit_code)
     except psutil.NoSuchProcess:
-        print("Process not found. Likely killed.")
+        print("Process not found. Likely killed.", file=sys.stderr)
         exit(1)
 
 
