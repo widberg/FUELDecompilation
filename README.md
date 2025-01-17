@@ -65,4 +65,4 @@ cmake --build build --target debug
 
 ## Acknowledgements
 
-* [boricj](https://github.com/boricj) and his amazing [ghidra-delinker-extension](https://github.com/boricj/ghidra-delinker-extension) without which the black magic surrounding `libfuel.obj` would not have been possible.
+* [boricj](https://github.com/boricj) and his amazing [ghidra-delinker-extension](https://github.com/boricj/ghidra-delinker-extension) without which the black magic surrounding `libfuel.obj` would not have been possible. He also provided insightful input on the design of `coffdrop`, speeding the build up immensely.
