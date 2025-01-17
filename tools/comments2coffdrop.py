@@ -2,7 +2,6 @@
 
 import argparse
 import struct
-import re
 
 OBJ_MAGIC = 0x14C
 MSIL_MAGIC = b"\x00\x00\xFF\xFF\x01\x00\x4C\x01"
@@ -106,29 +105,6 @@ def process_file(f):
     exit(1)
 
 
-def msvc_demangle(symbol):
-    conventions = {
-        "__cdecl": r"^\?[\w@]+@@YA[X0-9]",
-        "__stdcall": r"^\?[\w@]+@@YG[X0-9]",
-        "__fastcall": r"^\?[\w@]+@@YI[X0-9]",
-        "__thiscall": r"^\?[\w@]+@@Q[A-Z0-9]",
-        "__vectorcall": r"^\?[\w@]+@@YH[X0-9]",
-        "__clrcall": r"^\?[\w@]+@@YZ[X0-9]",
-    }
-
-    cc = None
-    for convention, pattern in conventions.items():
-        if re.match(pattern, symbol):
-            cc = convention
-
-    member_function_pattern = re.compile(r"\?\w+@.+@@")
-    this_in_ecx = re.match(member_function_pattern, symbol) and cc in [
-        "__thiscall",
-        "__fastcall",
-    ]
-    return cc, this_in_ecx
-
-
 def fatal_error(file, line, message):
     print(f"FATAL: {file}:{line} : {message}")
     return 1
@@ -145,13 +121,36 @@ def check_argument_count(tag, file, line, comment, parts, count):
     return 0
 
 
+def rename_symbol(symbols, address, dname, file, line):
+    error_count = 0
+    if address in symbols:
+        if symbols[address][1] is not None and symbols[address][1] != dname:
+            error_count += fatal_error(
+                file,
+                line,
+                "Symbol address collision: address: 0x%08X, old: %s, new: %s"
+                % (address, symbols[address][1], dname),
+            )
+        symbols[address][1] = dname
+    else:
+        symbols[address] = [False, dname]
+    return error_count
+
+
+def undef_symbol(symbols, address):
+    if address in symbols:
+        symbols[address][0] = True
+    else:
+        symbols[address] = [True, None]
+    return 0
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Generate list of defined symbols in libraries and objects."
     )
+    parser.add_argument("out", type=argparse.FileType("a+b"))
     parser.add_argument("objs", type=str, nargs="+")
-    parser.add_argument("--undef", type=argparse.FileType("a+"), required=True)
-    parser.add_argument("--rename", type=argparse.FileType("a+"), required=True)
     args = parser.parse_args()
 
     # Read comments from all objects
@@ -163,8 +162,7 @@ def main():
     comments = set(comments)
 
     # Parse comments
-    undef = set()
-    rename = {}
+    symbols = {}
     error_count = 0
 
     for comment in comments:
@@ -184,42 +182,35 @@ def main():
                         file, line, "Template parameters are not supported yet."
                     )
                 template_params = parts[3].split(", ")
-                if address in rename:
-                    if rename[address] != dname:
-                        error_count += fatal_error(
-                            file,
-                            line,
-                            "Symbol address collision: address: 0x%08X, old: %s, new: %s"
-                            % (address, rename[address], dname),
-                        )
-                else:
-                    undef.add(address)
-                    rename[address] = dname
+                error_count += rename_symbol(symbols, address, dname, file, line)
+                undef_symbol(symbols, address)
             elif tag == "addresssymbol":
                 error_count += check_argument_count(tag, file, line, comment, parts, 2)
                 address = int(parts[0], 16)
                 dname = parts[1]
-                rename[address] = dname
+                error_count += rename_symbol(symbols, address, dname, file, line)
             elif tag == "symbolsymbol":
                 error_count += check_argument_count(tag, file, line, comment, parts, 2)
                 old = parts[0]
                 new = parts[1]
-                rename[old] = new
+                error_count += rename_symbol(symbols, old, new, file, line)
             elif tag == "addressvftable":
                 error_count += check_argument_count(tag, file, line, comment, parts, 2)
                 address = int(parts[0], 16)
                 klass = parts[1]
-                rename[address] = f"??_7{klass}@@6B@"
+                dname = f"??_7{klass}@@6B@"
+                error_count += rename_symbol(symbols, address, dname, file, line)
             elif tag == "addressvf":
                 error_count += check_argument_count(tag, file, line, comment, parts, 3)
                 address = int(parts[0], 16)
                 klass = parts[1]
                 function = parts[2]
-                rename[address] = f"?{function}@{klass}@@UAEXXZ"
+                dname = f"?{function}@{klass}@@UAEXXZ"
+                error_count += rename_symbol(symbols, address, dname, file, line)
             elif tag == "undefaddress":
                 error_count += check_argument_count(tag, file, line, comment, parts, 1)
                 address = int(parts[0], 16)
-                undef.add(address)
+                undef_symbol(symbols, address)
             else:
                 error_count += fatal_error(file, line, f'Unknown tag: "{tag}"')
 
@@ -227,33 +218,31 @@ def main():
         print(f"{error_count} errors found.")
         exit(1)
 
-    # Handle undefs
-    args.undef.seek(0)
-    undef_contents = args.undef.read()
+    args.out.seek(0)
+    out_contents = args.out.read()
 
-    undef_result = ""
+    out_result = b""
+    reserved_size = 0
 
-    for address in sorted(undef, key=lambda x: (isinstance(x, str), x)):
+    for address, (undef, dname) in sorted(
+        symbols.items(), key=lambda x: (isinstance(x[0], str), x[0])
+    ):
+        flags = (1 if undef else 0) | (2 if dname is not None else 0)
         old_symbol = address if isinstance(address, str) else f"__0x{address:08X}"
-        undef_result += f"-ne:{old_symbol}\n"
+        out_result += flags.to_bytes(1, "little")
+        out_result += old_symbol.encode("latin-1") + b"\x00"
+        if dname is not None:
+            new_symbol = dname.encode("latin-1") + b"\x00"
+            new_symbol_size = len(new_symbol)
+            if new_symbol_size > 8:
+                reserved_size += new_symbol_size
+            out_result += new_symbol
 
-    if undef_contents != undef_result:
-        args.undef.truncate(0)
-        args.undef.write(undef_result)
-
-    # Handle renames
-    args.rename.seek(0)
-    rename_contents = args.rename.read()
-
-    rename_result = ""
-
-    for address, dname in sorted(rename.items(), key=lambda x: (isinstance(x[0], str), x[0])):
-        old_symbol = address if isinstance(address, str) else f"__0x{address:08X}"
-        rename_result += f"-nr:{old_symbol}:{dname}\n"
-
-    if rename_contents != rename_result:
-        args.rename.truncate(0)
-        args.rename.write(rename_result)
+    if out_contents != out_result:
+        args.out.truncate(0)
+        args.out.write(reserved_size.to_bytes(4, "little"))
+        args.out.write(out_result)
+        args.out.write((0).to_bytes(1, "little"))
 
 
 if __name__ == "__main__":

@@ -347,46 +347,18 @@ target_link_libraries(defuel PUBLIC
 )
 
 add_custom_command(
-	COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/comments2objconv.py" --rename "${CMAKE_CURRENT_BINARY_DIR}/libfuelrename.txt" --undef "${CMAKE_CURRENT_BINARY_DIR}/libfuelundef.txt" "$<TARGET_FILE:defuel>" "$<TARGET_FILE:Engine>" "$<TARGET_FILE:LIBPC_Common>" "$<TARGET_FILE:LIBPC_TNL>"
-	DEPENDS defuel Engine LIBPC_Common LIBPC_TNL "${CMAKE_CURRENT_SOURCE_DIR}/tools/comments2objconv.py"
-	OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/libfuelundef.txt" "${CMAKE_CURRENT_BINARY_DIR}/libfuelrename.txt"
+	COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tools/comments2coffdrop.py" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.drop" "$<TARGET_FILE:defuel>" "$<TARGET_FILE:Engine>" "$<TARGET_FILE:LIBPC_Common>" "$<TARGET_FILE:LIBPC_TNL>"
+	DEPENDS defuel Engine LIBPC_Common LIBPC_TNL "${CMAKE_CURRENT_SOURCE_DIR}/tools/comments2coffdrop.py"
+	OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/libfuel.drop"
 	WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
-add_executable(objconv
-    tools/objconv/cmdline.cpp
-    tools/objconv/cof2asm.cpp
-    tools/objconv/cof2cof.cpp
-    tools/objconv/cof2elf.cpp
-    tools/objconv/cof2omf.cpp
-    tools/objconv/coff.cpp
-    tools/objconv/containers.cpp
-    tools/objconv/disasm1.cpp
-    tools/objconv/disasm2.cpp
-    tools/objconv/elf.cpp
-    tools/objconv/elf2asm.cpp
-    tools/objconv/elf2cof.cpp
-    tools/objconv/elf2elf.cpp
-    tools/objconv/elf2mac.cpp
-    tools/objconv/error.cpp
-    tools/objconv/library.cpp
-    tools/objconv/mac2asm.cpp
-    tools/objconv/mac2elf.cpp
-    tools/objconv/mac2mac.cpp
-    tools/objconv/macho.cpp
-    tools/objconv/main.cpp
-    tools/objconv/omf.cpp
-    tools/objconv/omf2asm.cpp
-    tools/objconv/omf2cof.cpp
-    tools/objconv/omfhash.cpp
-    tools/objconv/opcodes.cpp
-)
+add_executable(coffdrop tools/coffdrop.c)
 
 add_custom_command(
-    COMMAND "$<TARGET_FILE:objconv>" -wex "@${CMAKE_CURRENT_BINARY_DIR}/libfuelundef.txt" "${CMAKE_CURRENT_SOURCE_DIR}/libs/libfuel.obj" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.intermediate.obj"
-    COMMAND "$<TARGET_FILE:objconv>" -wex "@${CMAKE_CURRENT_BINARY_DIR}/libfuelrename.txt" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.intermediate.obj" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj"
+    COMMAND "$<TARGET_FILE:coffdrop>" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.drop" "${CMAKE_CURRENT_SOURCE_DIR}/libs/libfuel.obj" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj"
     COMMAND lib "/OUT:${CMAKE_CURRENT_BINARY_DIR}/libfuel.lib" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj"
-    DEPENDS objconv "${CMAKE_CURRENT_BINARY_DIR}/libfuelundef.txt" "${CMAKE_CURRENT_BINARY_DIR}/libfuelrename.txt" "${CMAKE_CURRENT_SOURCE_DIR}/libs/libfuel.obj"
+    DEPENDS coffdrop "${CMAKE_CURRENT_BINARY_DIR}/libfuel.drop" "${CMAKE_CURRENT_SOURCE_DIR}/libs/libfuel.obj"
     BYPRODUCTS "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj"
     OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/libfuel.lib"
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
