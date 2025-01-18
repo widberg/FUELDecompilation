@@ -6,3 +6,4 @@ IndentCaseLabels: false
 ColumnLimit: 0
 IndentAccessModifiers: false
 AccessModifierOffset: -4
+InsertNewlineAtEOF: true
