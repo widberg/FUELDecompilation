@@ -4,3 +4,5 @@ BreakBeforeBraces: Allman
 AllowShortIfStatementsOnASingleLine: false
 IndentCaseLabels: false
 ColumnLimit: 0
+IndentAccessModifiers: false
+AccessModifierOffset: -4
