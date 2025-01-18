@@ -7,7 +7,7 @@ cmake_policy(SET CMP0091 NEW) # Enable MSVC runtime library selection
 set(CMAKE_MSVC_RUNTIME_LIBRARY "") # Manually set runtime library to avoid warning
 add_compile_options("/MT$<$<CONFIG:Debug>:d>" $<$<COMPILE_LANGUAGE:CXX>:/GR> /GS- /fp:fast) # Use static runtime libraries
 add_link_options("/MANIFEST:NO") # Disable manifest generation
-add_compile_definitions("-D_CRT_SECURE_NO_DEPRECATE") # Disable CRT deprecation warnings
+add_compile_definitions("_CRT_SECURE_NO_DEPRECATE") # Disable CRT deprecation warnings
 
 project(FUEL C CXX)
 
@@ -70,7 +70,6 @@ endif()
 # This is incredibly slow, in the future we should patch the compiler files directly
 function(use_instrumented_compiler target)
     set_target_properties(${target} PROPERTIES
-        C_COMPILER_LAUNCHER "${Python3_EXECUTABLE};${CMAKE_CURRENT_SOURCE_DIR}/tools/frida_launcher.py"
         CXX_COMPILER_LAUNCHER "${Python3_EXECUTABLE};${CMAKE_CURRENT_SOURCE_DIR}/tools/frida_launcher.py"
     )
     get_target_property(TARGET_SOURCES ${target} SOURCES)

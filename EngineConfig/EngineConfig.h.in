@@ -2,13 +2,15 @@
 
 #pragma once
 
-#ifndef CONFIG_H
-#define CONFIG_H
+#ifndef _ENGINE_CONFIG_H_
+#define _ENGINE_CONFIG_H_
 
 #ifdef __cplusplus
 #include <cstddef> // offsetof
+#define EXTERN_C extern "C"
 #else
 #include <stddef.h> // offsetof
+#define EXTERN_C
 #endif
 
 #cmakedefine01 USE_SECUROM
@@ -29,6 +31,9 @@
 // Temporarily make __FUNCSIG__ a string to avoid crash in instrumented compiler
 #define DELINKFUNCTION(address, ...) __pragma(comment(user, "delinkfunction;" __FILE__ ";" STR(__LINE__) ";" "__FUNCSIG__" ";" __FUNCDNAME__ ";" #address ";" #__VA_ARGS__))
 
+// Rename a cdecl and undefine the original
+#define DELINKCDECL(address, name) __pragma(comment(user, "delinkcdecl;" __FILE__ ";" STR(__LINE__) ";" #address ";" #name))
+
 // Rename a vftable and undefine the original
 #define ADDRESSVFTABLE(address, class) __pragma(comment(user, "addressvftable;" __FILE__ ";" STR(__LINE__) ";" #address ";" #class))
 
@@ -44,4 +49,4 @@
 
 #define STATIC_ASSERT_OFFSET(type, member, offset, ...) STATIC_ASSERT(offsetof(type, member) == offset, __VA_ARGS__)
 
-#endif // CONFIG_H
+#endif // _ENGINE_CONFIG_H_

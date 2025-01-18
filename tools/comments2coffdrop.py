@@ -173,44 +173,65 @@ def main():
             line = parts[2]
             parts = parts[3:]
             if tag == "delinkfunction":
-                error_count += check_argument_count(tag, file, line, comment, parts, 4)
-                undname = parts[0]  # to check template parameters
-                dname = parts[1]
-                address = int(parts[2], 16)
-                if parts[3] != "":
-                    error_count += fatal_error(
-                        file, line, "Template parameters are not supported yet."
-                    )
-                template_params = parts[3].split(", ")
-                error_count += rename_symbol(symbols, address, dname, file, line)
-                undef_symbol(symbols, address)
+                ec = check_argument_count(tag, file, line, comment, parts, 4)
+                error_count += ec
+                if not ec:
+                    undname = parts[0]  # to check template parameters
+                    dname = parts[1]
+                    address = int(parts[2], 16)
+                    if parts[3] != "":
+                        error_count += fatal_error(
+                            file, line, "Template parameters are not supported yet."
+                        )
+                    template_params = parts[3].split(", ")
+                    undef_symbol(symbols, address)
+                    error_count += rename_symbol(symbols, address, dname, file, line)
             elif tag == "addresssymbol":
-                error_count += check_argument_count(tag, file, line, comment, parts, 2)
-                address = int(parts[0], 16)
-                dname = parts[1]
-                error_count += rename_symbol(symbols, address, dname, file, line)
+                ec = check_argument_count(tag, file, line, comment, parts, 2)
+                error_count += ec
+                if not ec:
+                    address = int(parts[0], 16)
+                    dname = parts[1]
+                    error_count += rename_symbol(symbols, address, dname, file, line)
             elif tag == "symbolsymbol":
-                error_count += check_argument_count(tag, file, line, comment, parts, 2)
-                old = parts[0]
-                new = parts[1]
-                error_count += rename_symbol(symbols, old, new, file, line)
+                ec = check_argument_count(tag, file, line, comment, parts, 2)
+                error_count += ec
+                if not ec:
+                    old = parts[0]
+                    new = parts[1]
+                    error_count += rename_symbol(symbols, old, new, file, line)
+            elif tag == "delinkcdecl":
+                ec = check_argument_count(tag, file, line, comment, parts, 2)
+                error_count += ec
+                if not ec:
+                    address = int(parts[0], 16)
+                    name = parts[1]
+                    dname = f"_{name}"
+                    undef_symbol(symbols, address)
+                    error_count += rename_symbol(symbols, address, dname, file, line)
             elif tag == "addressvftable":
-                error_count += check_argument_count(tag, file, line, comment, parts, 2)
-                address = int(parts[0], 16)
-                klass = parts[1]
-                dname = f"??_7{klass}@@6B@"
-                error_count += rename_symbol(symbols, address, dname, file, line)
+                ec = check_argument_count(tag, file, line, comment, parts, 2)
+                error_count += ec
+                if not ec:
+                    address = int(parts[0], 16)
+                    klass = parts[1]
+                    dname = f"??_7{klass}@@6B@"
+                    error_count += rename_symbol(symbols, address, dname, file, line)
             elif tag == "addressvf":
-                error_count += check_argument_count(tag, file, line, comment, parts, 3)
-                address = int(parts[0], 16)
-                klass = parts[1]
-                function = parts[2]
-                dname = f"?{function}@{klass}@@UAEXXZ"
-                error_count += rename_symbol(symbols, address, dname, file, line)
+                ec = check_argument_count(tag, file, line, comment, parts, 3)
+                error_count += ec
+                if not ec:
+                    address = int(parts[0], 16)
+                    klass = parts[1]
+                    function = parts[2]
+                    dname = f"?{function}@{klass}@@UAEXXZ"
+                    error_count += rename_symbol(symbols, address, dname, file, line)
             elif tag == "undefaddress":
-                error_count += check_argument_count(tag, file, line, comment, parts, 1)
-                address = int(parts[0], 16)
-                undef_symbol(symbols, address)
+                ec = check_argument_count(tag, file, line, comment, parts, 1)
+                error_count += ec
+                if not ec:
+                    address = int(parts[0], 16)
+                    undef_symbol(symbols, address)
             else:
                 error_count += fatal_error(file, line, f'Unknown tag: "{tag}"')
 
