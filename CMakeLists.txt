@@ -376,6 +376,8 @@ function(create_import_library basename)
 	)
 	add_custom_target(${basename}_generate DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/${basename}.lib")
 	add_library(${basename} STATIC IMPORTED GLOBAL)
+    target_include_directories(${basename} INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/libs/include")
+    add_dependencies(${basename} ${basename}_generate)
 	set_target_properties(${basename} PROPERTIES IMPORTED_LOCATION "${CMAKE_CURRENT_BINARY_DIR}/${basename}.lib")
 endfunction(create_import_library)
 
@@ -677,8 +679,6 @@ target_link_libraries(LIBPC_Common INTERFACE
 target_link_libraries(LIBPC_Common PUBLIC
 	EngineConfig
 )
-
-add_dependencies(LIBPC_Common AVIFIL32_generate binkw32_generate MSVFW32_generate xlive_generate)
 
 add_library(LIBPC_TNL STATIC
 	LIBPC_TNL/D3DTnL_RendererAvi_Z.cpp
