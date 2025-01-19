@@ -43,10 +43,16 @@
 // Undefine an address
 #define UNDEFADDRESS(address) __pragma(comment(user, "undefaddress;" __FILE__ ";" STR(__LINE__) ";" #address))
 
-#define STATIC_ASSERT(expr, ...) enum { CAT(__STATIC_ASSERT_FAILED, __COUNTER__) = 1 / (int)(!!(expr)) }
+#define STATIC_ASSERT(expr, ...) enum { CAT(_STATIC_ASSERT_FAILED_, __COUNTER__) = 1 / (int)(!!(expr)) }
 
 #define STATIC_ASSERT_SIZE(expr, size, ...) STATIC_ASSERT(sizeof(expr) == size, __VA_ARGS__)
 
 #define STATIC_ASSERT_OFFSET(type, member, offset, ...) STATIC_ASSERT(offsetof(type, member) == offset, __VA_ARGS__)
+
+#define PAD(size) char CAT(_PADDING_MEMBER_, __COUNTER__)[size]
+
+#define PACK_PUSH __pragma(pack(push, 1))
+
+#define PACK_POP __pragma(pack(pop))
 
 #endif // _ENGINE_CONFIG_H_
