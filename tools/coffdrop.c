@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 typedef unsigned long long uint64_t;
 typedef unsigned int uint32_t;
@@ -452,6 +453,28 @@ void hashmap_free(PHASHMAP map)
 }
 #pragma endregion HASHMAP_C
 
+// msvcrt strncpy or strncpy_s doesn't do what you think it does
+errno_t copy_short_sym_name(char *dest, size_t dmax, const char *src, size_t slen)
+{
+    size_t i;
+    if (slen > dmax)
+    {
+        return ERANGE;
+    }
+
+    for (i = 0; i < slen && i < dmax && src[i] != '\0'; ++i)
+    {
+        dest[i] = src[i];
+    }
+
+    if (i < dmax)
+    {
+        dest[i] = '\0';
+    }
+
+    return 0;
+}
+
 #define FLAG_UNDEFINE (1 << 0)
 #define FLAG_RENAME (1 << 1)
 
@@ -595,7 +618,7 @@ int main(int argc, char *argv[])
             }
             else
             {
-                err = strncpy_s(sym->name, sizeof(sym->name), str, length);
+                err = copy_short_sym_name(sym->name, sizeof(sym->name), str, length);
                 if (err != 0)
                 {
                     fprintf(stderr, "Failed to copy the string: %d\n", err);
