@@ -15,3 +15,9 @@ unsigned int __cdecl RunningCheck(void)
     return 0;
 }
 #endif
+
+#if USE_DMALLOC_ALLOCATOR
+SYMBOLSYMBOL("_malloc", "_my_dmalloc_malloc")
+SYMBOLSYMBOL("_realloc", "_my_dmalloc_realloc")
+SYMBOLSYMBOL("_free", "_my_dmalloc_free")
+#endif

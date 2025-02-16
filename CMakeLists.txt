@@ -35,6 +35,7 @@ set(FUEL_DECOMPILATION_NAME "FUELDecompilation" CACHE STRING "Name to use for th
 set(FUEL_DECOMPILATION_BASENAME "${FUEL_DECOMPILATION_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
 set(FUEL_ARGS "-W" CACHE STRING "Arguments to pass FUEL in the run and debug targets.")
 
+set(USE_ALLOCATOR "msvcrt" CACHE STRING "Memory allocator to use. Options are 'msvcrt' and 'dmalloc'.")
 option(USE_SECUROM "Use original SecuROM copy protection." OFF)
 option(USE_RUNNING_CHECK "Use original game already running check." OFF)
 
@@ -653,6 +654,30 @@ use_instrumented_compiler(LIBPC_Common)
 target_include_directories(LIBPC_Common INTERFACE
 	LIBPC_Common/Includes
 )
+
+if (USE_ALLOCATOR STREQUAL "dmalloc")
+    add_library(dmalloc STATIC
+        libs/dmalloc/append.c
+        libs/dmalloc/arg_check.c
+        libs/dmalloc/chunk.c
+        libs/dmalloc/compat.c
+        libs/dmalloc/dmalloc_rand.c
+        libs/dmalloc/dmalloc_tab.c
+        libs/dmalloc/env.c
+        libs/dmalloc/error.c
+        libs/dmalloc/heap.c
+        libs/dmalloc/user_malloc.c
+    )
+    target_compile_definitions(dmalloc PUBLIC HAVE_STDARG_H=1 HAVE_STDIO_H=1 HAVE_STDLIB_H=1 HAVE_STRING_H=1 HAVE_STRINGS_H=0 HAVE_UNISTD_H=0 HAVE_SYS_MMAN_H=0 HAVE_SYS_TYPES_H=0 HAVE_W32API_WINBASE_H=0 HAVE_W32API_WINDEF_H=0 HAVE_SYS_CYGWIN_H=0 HAVE_SIGNAL_H=0 LOCK_THREADS=1)
+    target_link_libraries(LIBPC_Common INTERFACE
+        dmalloc
+    )
+    target_compile_definitions(LIBPC_Common INTERFACE USE_DMALLOC_ALLOCATOR=1)
+elseif(USE_ALLOCATOR STREQUAL "msvcrt")
+    target_compile_definitions(LIBPC_Common INTERFACE USE_MSVCRT_ALLOCATOR=1)
+else()
+    message(FATAL_ERROR "Invalid memory allocator specified. Options are 'msvcrt' and 'dmalloc'.")
+endif()
 
 target_link_libraries(LIBPC_Common INTERFACE
 	AdvAPI32.Lib
