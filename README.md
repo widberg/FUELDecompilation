@@ -15,7 +15,7 @@ This is a decompilation of the game FUEL (PC, US Retail), which was released in 
 * [CMake](https://cmake.org/)
 * [Ninja](https://github.com/ninja-build/ninja)
 * [Python 3](https://www.python.org/downloads/)
-* [msvc8.0](https://github.com/widberg/msvc8.0)
+* [msvc8.0p](https://github.com/widberg/msvc8.0/tree/msvc8.0p) (the patched version of the compiler)
 * [Microsoft DirectX SDK (August 2008)](https://archive.org/details/dxsdk_aug08)
 * FUEL (PC, US Retail) - FUEL.exe SHA-256: `ac1b2077137b7c6299c344111857b032635fe3d4794bc5135dad7c35feeda856`
 

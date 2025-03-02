@@ -29,6 +29,21 @@ if (NOT "${CMAKE_C_COMPILER_VERSION}" STREQUAL "14.0.50727")
     message(FATAL_ERROR "MSVC 14.0.50727 from MSVC 8.0 is required for C. Found ${CMAKE_C_COMPILER_VERSION}. Please read the README for more information.")
 endif()
 
+# Verify that the extensions are present
+include(CheckCSourceCompiles)
+set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
+check_c_source_compiles(
+    "
+    #if _WSC_VER != 100
+        #error Not patched compiler
+    #endif
+    void __usercall __eax x(int y) {}
+    "
+    HAS_USERCALL
+)
+if (NOT HAS_USERCALL)
+    message(FATAL_ERROR "wrong version of patched compiler or __usercall not supported. Make sure you are using the correct version of the patched compiler.")
+endif()
 find_package (Python3 COMPONENTS Interpreter REQUIRED)
 
 set(FUEL_DECOMPILATION_NAME "FUELDecompilation" CACHE STRING "Name to use for the FUEL decompilation executable.")
@@ -67,18 +82,6 @@ if(FUEL_INSTALL_DIR)
         COMMAND "${CMAKE_COMMAND}" -E copy "$<TARGET_FILE:FUEL>" "${FUEL_INSTALL_DIR}/${FUEL_DECOMPILATION_BASENAME}"
     )
 endif()
-
-# This is incredibly slow, in the future we should patch the compiler files directly
-function(use_instrumented_compiler target)
-    set_target_properties(${target} PROPERTIES
-        CXX_COMPILER_LAUNCHER "${Python3_EXECUTABLE};${CMAKE_CURRENT_SOURCE_DIR}/tools/frida_launcher.py"
-    )
-    get_target_property(TARGET_SOURCES ${target} SOURCES)
-    set_source_files_properties(${TARGET_SOURCES}
-        PROPERTIES
-        OBJECT_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/tools/frida_launcher.py;${CMAKE_CURRENT_SOURCE_DIR}/tools/usercall_agent.js"
-    )
-endfunction(use_instrumented_compiler target)
 
 add_library(defuel STATIC
 	OffRoad/BaseInGameDatas_G.cpp
@@ -330,7 +333,6 @@ add_library(defuel STATIC
     OffRoad/strings_utf8.cpp
 	OffRoad/trivial.cpp
 )
-use_instrumented_compiler(defuel)
 
 target_include_directories(defuel PRIVATE
 	OffRoad/Includes
@@ -616,7 +618,6 @@ add_library(Engine STATIC
 	Engine/VoiceManager_Z.cpp
 	Engine/VolatileMem_Z.cpp
 )
-use_instrumented_compiler(Engine)
 
 target_include_directories(Engine PUBLIC
 	Engine/Includes
@@ -649,7 +650,6 @@ add_library(LIBPC_Common STATIC
 	LIBPC_Common/WinTrophyManager_Z.cpp
 	LIBPC_Common/WinXRamManager_Z.cpp
 )
-use_instrumented_compiler(LIBPC_Common)
 
 target_include_directories(LIBPC_Common INTERFACE
 	LIBPC_Common/Includes
@@ -708,7 +708,6 @@ target_link_libraries(LIBPC_Common PUBLIC
 add_library(LIBPC_TNL STATIC
 	LIBPC_TNL/D3DTnL_RendererAvi_Z.cpp
 )
-use_instrumented_compiler(LIBPC_TNL)
 
 target_include_directories(LIBPC_TNL INTERFACE
 	LIBPC_TNL/Includes

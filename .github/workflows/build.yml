@@ -20,26 +20,16 @@ jobs:
       - if: ${{ steps.cache-tools.outputs.cache-hit != 'true' }}
         name: Setup Tools
         run: |
-          curl.exe --location --create-dirs -oC:\TEMP\msvc8.0.zip https://github.com/widberg/msvc8.0/archive/refs/heads/main.zip
-          7z.exe x C:\TEMP\msvc8.0.zip -aoa -oC:\Tools\msvc8.0
+          curl.exe --location --create-dirs -oC:\TEMP\msvc8.0p.zip https://github.com/widberg/msvc8.0/archive/refs/heads/msvc8.0p.zip
+          7z.exe x C:\TEMP\msvc8.0p.zip -aoa -oC:\Tools\msvc8.0p
           curl.exe --location --create-dirs -oC:\TEMP\DXSDK_Aug08.exe https://archive.org/download/dxsdk_aug08/DXSDK_Aug08.exe
           7z.exe x C:\TEMP\DXSDK_Aug08.exe -aoa -oC:\Tools\DXSDK_Aug08 DXSDK/Include DXSDK/Lib
           curl.exe --location --create-dirs -oC:\TEMP\ninja.zip https://github.com/ninja-build/ninja/releases/download/v1.12.1/ninja-win.zip
           7z.exe x C:\TEMP\ninja.zip -aoa -oC:\Tools\ninja
 
-      - name: Setup Python
-        id: setup-python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.13"
-          cache: "pip"
-
-      - name: Install Python Requirements
-        run: pip install -r tools\requirements.txt
-
       - name: Build
         shell: cmd
         run: |
-          call C:\Tools\msvc8.0\msvc8.0-main\bin\vcvars32.bat
-          cmake -B build -G Ninja -DCMAKE_MAKE_PROGRAM=C:\Tools\ninja\ninja.exe -DDXSDK_DIR=C:\Tools\DXSDK_Aug08\DXSDK "-DPython3_EXECUTABLE=${{ steps.setup-python.outputs.python-path }}"
+          call C:\Tools\msvc8.0p\msvc8.0-msvc8.0p\bin\vcvars32.bat
+          cmake -B build -G Ninja -DCMAKE_MAKE_PROGRAM=C:\Tools\ninja\ninja.exe -DDXSDK_DIR=C:\Tools\DXSDK_Aug08\DXSDK
           cmake --build build
