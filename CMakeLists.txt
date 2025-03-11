@@ -68,6 +68,7 @@ target_link_options(FUEL BEFORE PRIVATE
 	"/SUBSYSTEM:WINDOWS,4.0"
 	"/NODEFAULTLIB"
 	"/RELEASE"
+    "/INCLUDE:__fltused"
 )
 
 target_link_libraries(FUEL PRIVATE
@@ -332,6 +333,7 @@ add_library(defuel STATIC
     OffRoad/strings.cpp
     OffRoad/strings_utf8.cpp
 	OffRoad/trivial.cpp
+	OffRoad/floats.cpp
 )
 
 target_include_directories(defuel PRIVATE
