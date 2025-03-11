@@ -480,26 +480,32 @@ errno_t copy_short_sym_name(char *dest, size_t dmax, const char *src, size_t sle
 
 int main(int argc, char *argv[])
 {
-    HANDLE hFile_configuration, hMap_configuration, hFile_out, hMap_out;
-    LPBYTE lpBaseAddress_configuration, lpBaseAddress_out;
+    HANDLE hFile_configuration, hMap_configuration, hFile_out, hMap_out, hFile_objdiff, hMap_objdiff;
+    LPBYTE lpBaseAddress_configuration, lpBaseAddress_out, lpBaseAddress_objdiff;
     BYTE flags;
     size_t length;
     errno_t err;
     PFILE_HEADER file_header;
-    PSYMBOL sym, sym_tab;
+    PSYMBOL sym, sym_tab, sym_objdiff;
     long i;
     char *str, *str_tab, *str_tab_end, *file_end;
     DWORD file_size, reserved_size;
     int return_value = 1;
     PHASHMAP hashmap;
 
-    if (argc != 4)
+    if (argc != 5)
     {
-        fprintf(stderr, "Usage: %s <configuration> <in> <out>\n", argv[0]);
+        fprintf(stderr, "Usage: %s <configuration> <in> <out> <objdiff>\n", argv[0]);
         return 1;
     }
 
     if (!CopyFile(argv[2], argv[3], FALSE))
+    {
+        fprintf(stderr, "Failed to copy the file: %lu\n", GetLastError());
+        return 1;
+    }
+
+    if (!CopyFile(argv[2], argv[4], FALSE))
     {
         fprintf(stderr, "Failed to copy the file: %lu\n", GetLastError());
         return 1;
@@ -557,6 +563,27 @@ int main(int argc, char *argv[])
         goto defer_4;
     }
 
+    hFile_objdiff = CreateFile(argv[4], GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+    if (hFile_objdiff == INVALID_HANDLE_VALUE)
+    {
+        fprintf(stderr, "Failed to open the file: %lu\n", GetLastError());
+        goto defer_5;
+    }
+
+    hMap_objdiff = CreateFileMapping(hFile_objdiff, NULL, PAGE_READWRITE, 0, file_size + reserved_size, NULL);
+    if (hMap_objdiff == NULL)
+    {
+        fprintf(stderr, "Failed to create the file mapping: %lu\n", GetLastError());
+        goto defer_6;
+    }
+
+    lpBaseAddress_objdiff = (LPBYTE)MapViewOfFile(hMap_objdiff, FILE_MAP_ALL_ACCESS, 0, 0, 0);
+    if (lpBaseAddress_objdiff == NULL)
+    {
+        fprintf(stderr, "Failed to map the view of the file: %lu\n", GetLastError());
+        goto defer_7;
+    }
+
     file_end = (char *)lpBaseAddress_out + file_size + reserved_size;
     str_tab_end = (char *)lpBaseAddress_out + file_size;
     file_header = (PFILE_HEADER)lpBaseAddress_out;
@@ -567,7 +594,7 @@ int main(int argc, char *argv[])
     if (!hashmap)
     {
         fprintf(stderr, "Failed to create the hashmap\n");
-        goto defer_5;
+        goto defer_8;
     }
 
     for (i = 0; i < file_header->f_nsyms; ++i)
@@ -576,7 +603,7 @@ int main(int argc, char *argv[])
         if (!hashmap_set(hashmap, sym))
         {
             fprintf(stderr, "Failed to set the symbol\n");
-            goto defer_6;
+            goto defer_9;
         }
     }
 
@@ -587,10 +614,11 @@ int main(int argc, char *argv[])
         length = strlen(str);
         lpBaseAddress_configuration += length + 1;
         sym = hashmap_get_with_str(hashmap, str);
+        sym_objdiff = (PSYMBOL)(lpBaseAddress_objdiff + ((LPBYTE)sym - lpBaseAddress_out));
         if (!sym)
         {
             fprintf(stderr, "Symbol not found: %s\n", str);
-            goto defer_6;
+            goto defer_9;
         }
         if (flags & FLAG_UNDEFINE)
         {
@@ -612,8 +640,18 @@ int main(int argc, char *argv[])
                 if (err != 0)
                 {
                     fprintf(stderr, "Failed to copy the string: %d\n", err);
-                    goto defer_6;
+                    goto defer_9;
                 }
+                
+                sym_objdiff->zeroes = 0;
+                sym_objdiff->offset = str_tab_end - str_tab;
+                err = strcpy_s((char*)(lpBaseAddress_objdiff + ((LPBYTE)str_tab_end - lpBaseAddress_out)), file_end - str_tab_end, str);
+                if (err != 0)
+                {
+                    fprintf(stderr, "Failed to copy the string: %d\n", err);
+                    goto defer_9;
+                }
+
                 str_tab_end += length + 1;
             }
             else
@@ -622,18 +660,32 @@ int main(int argc, char *argv[])
                 if (err != 0)
                 {
                     fprintf(stderr, "Failed to copy the string: %d\n", err);
-                    goto defer_6;
+                    goto defer_9;
+                }
+
+                err = copy_short_sym_name(sym_objdiff->name, sizeof(sym_objdiff->name), str, length);
+                if (err != 0)
+                {
+                    fprintf(stderr, "Failed to copy the string: %d\n", err);
+                    goto defer_9;
                 }
             }
         }
     }
 
     *(DWORD *)str_tab = str_tab_end - str_tab;
+    *(DWORD *)(lpBaseAddress_objdiff + ((LPBYTE)str_tab - lpBaseAddress_out)) = str_tab_end - str_tab;
 
     return_value = 0;
 
-defer_6:
+defer_9:
     hashmap_free(hashmap);
+defer_8:
+    UnmapViewOfFile(lpBaseAddress_objdiff);
+defer_7:
+    CloseHandle(hMap_objdiff);
+defer_6:
+    CloseHandle(hFile_objdiff);
 defer_5:
     UnmapViewOfFile(lpBaseAddress_out);
 defer_4:

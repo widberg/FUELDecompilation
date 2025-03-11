@@ -358,10 +358,10 @@ add_custom_command(
 add_executable(coffdrop tools/coffdrop.c)
 
 add_custom_command(
-    COMMAND "$<TARGET_FILE:coffdrop>" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.drop" "${CMAKE_CURRENT_SOURCE_DIR}/libs/libfuel.obj" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj"
+    COMMAND "$<TARGET_FILE:coffdrop>" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.drop" "${CMAKE_CURRENT_SOURCE_DIR}/libs/libfuel.obj" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.objdiff.obj"
     COMMAND lib "/OUT:${CMAKE_CURRENT_BINARY_DIR}/libfuel.lib" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj"
     DEPENDS coffdrop "${CMAKE_CURRENT_BINARY_DIR}/libfuel.drop" "${CMAKE_CURRENT_SOURCE_DIR}/libs/libfuel.obj"
-    BYPRODUCTS "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj"
+    BYPRODUCTS "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.objdiff.obj"
     OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/libfuel.lib"
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 )
