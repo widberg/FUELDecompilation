@@ -1,0 +1,12 @@
+{
+  "build_base": false,
+  "build_target": false,
+  "units": [
+    {
+      "name": "name",
+      "target_path": "build/libfuel.objdiff.obj",
+      "base_path": "build/CMakeFiles/Engine.dir/Engine/Name_Z.cpp.obj",
+      "metadata": {}
+    }
+  ]
+}

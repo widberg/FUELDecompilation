@@ -55,4 +55,10 @@
 
 #define PACK_POP __pragma(pack(pop))
 
+#ifdef __widberg__
+#define _W(w, m) w
+#else
+#define _W(w, m) m
+#endif
+
 #endif // _ENGINE_CONFIG_H_

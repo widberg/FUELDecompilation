@@ -3,6 +3,8 @@
 #ifndef _VFTABLES_H_
 #define _VFTABLES_H_
 
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
 #include <WinSock2.h>
 
 ADDRESSVFTABLE(0x009C2498, NetPlayModule_Z);

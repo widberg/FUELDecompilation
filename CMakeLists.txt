@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.25)
 
 set(CMAKE_BUILD_TYPE RelWithDebInfo) # Override build type for correct optimization flags
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # Generate compile_commands.json for clangd
@@ -12,45 +12,61 @@ add_compile_definitions("_CRT_SECURE_NO_DEPRECATE" "_CRT_SECURE_NO_WARNINGS") # 
 project(FUEL C CXX)
 
 # Verify that the correct compiler is being used
-if (NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+if (NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC" AND NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     message(FATAL_ERROR "Only MSVC is supported for C++. Found ${CMAKE_CXX_COMPILER_ID}. Please read the README for more information.")
 endif()
 
-if (NOT "${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
+if (NOT "${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC" AND NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     message(FATAL_ERROR "Only MSVC is supported for C. Found ${CMAKE_C_COMPILER_ID}. Please read the README for more information.")
 endif()
 
 # Verify that the correct compiler version is being used
-if (NOT "${CMAKE_CXX_COMPILER_VERSION}" STREQUAL "14.0.50727")
+if ("${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC" AND NOT "${CMAKE_CXX_COMPILER_VERSION}" STREQUAL "14.0.50727")
     message(FATAL_ERROR "MSVC 14.0.50727 from MSVC 8.0 is required for C++. Found ${CMAKE_CXX_COMPILER_VERSION}. Please read the README for more information.")
 endif()
 
-if (NOT "${CMAKE_C_COMPILER_VERSION}" STREQUAL "14.0.50727")
+if ("${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC" AND NOT "${CMAKE_C_COMPILER_VERSION}" STREQUAL "14.0.50727")
     message(FATAL_ERROR "MSVC 14.0.50727 from MSVC 8.0 is required for C. Found ${CMAKE_C_COMPILER_VERSION}. Please read the README for more information.")
 endif()
 
 # Verify that the extensions are present
 include(CheckCSourceCompiles)
 set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
-check_c_source_compiles(
-    "
-    #if _WSC_VER != 100
-        #error Not patched compiler
-    #endif
-    void __usercall __eax x(int y) {}
-    "
-    HAS_USERCALL
-)
-if (NOT HAS_USERCALL)
-    message(FATAL_ERROR "wrong version of patched compiler or __usercall not supported. Make sure you are using the correct version of the patched compiler.")
+if ("${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
+	check_c_source_compiles(
+		"
+		#if _WSC_VER != 100
+			#error Not patched compiler
+		#endif
+		void __usercall __eax x(int y) {}
+		"
+		HAS_USERCALL
+	)
+	if (NOT HAS_USERCALL)
+		message(FATAL_ERROR "wrong version of patched compiler or __usercall not supported. Make sure you are using the correct version of the patched compiler.")
+	endif()
+else()
+	check_c_source_compiles(
+		"
+		#ifndef __widberg__
+			#error widberg extensions not present
+		#endif
+		void __usercall x(int y@<eax>) {}
+		"
+		HAS_WIDBERG
+	)
+	if (NOT HAS_WIDBERG)
+		message(FATAL_ERROR "widberg extensions not present. Make sure you are using llvm-project-widberg-extensions.")
+	endif()
 endif()
+
 find_package (Python3 COMPONENTS Interpreter REQUIRED)
 
 set(FUEL_DECOMPILATION_NAME "FUELDecompilation" CACHE STRING "Name to use for the FUEL decompilation executable.")
 set(FUEL_DECOMPILATION_BASENAME "${FUEL_DECOMPILATION_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
 set(FUEL_ARGS "-W" CACHE STRING "Arguments to pass FUEL in the run and debug targets.")
 
-set(USE_ALLOCATOR "msvcrt" CACHE STRING "Memory allocator to use. Options are 'msvcrt' and 'dmalloc'.")
+set(USE_ALLOCATOR "msvcrt" CACHE STRING "Memory allocator to use. Options are 'msvcrt', 'dmalloc', and 'mimalloc'.")
 option(USE_SECUROM "Use original SecuROM copy protection." OFF)
 option(USE_RUNNING_CHECK "Use original game already running check." OFF)
 
@@ -64,12 +80,25 @@ add_executable(FUEL WIN32
 )
 
 target_link_options(FUEL BEFORE PRIVATE
-	"/BASE:0x01000000"
-	"/SUBSYSTEM:WINDOWS,4.0"
-	"/NODEFAULTLIB"
 	"/RELEASE"
     "/INCLUDE:__fltused"
+	"/INCREMENTAL:NO"
 )
+
+if ("${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
+	target_link_options(FUEL BEFORE PRIVATE
+		"/BASE:0x01000000"
+		"/SUBSYSTEM:WINDOWS,4.0"
+		"/NODEFAULTLIB"
+	)
+endif()
+
+if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
+	target_link_options(FUEL BEFORE PRIVATE
+		"/SAFESEH:NO"
+		"/SUBSYSTEM:WINDOWS,4.0"
+	)
+endif()
 
 target_link_libraries(FUEL PRIVATE
 	defuel
@@ -334,7 +363,19 @@ add_library(defuel STATIC
     OffRoad/strings_utf8.cpp
 	OffRoad/trivial.cpp
 	OffRoad/floats.cpp
+	OffRoad/vftables.cpp
 )
+
+if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
+	# Keep clang from optimizing out all the float and string symbols
+	set_source_files_properties(
+		OffRoad/strings.cpp
+		OffRoad/strings_utf8.cpp
+		OffRoad/floats.cpp
+		PROPERTIES
+			COMPILE_FLAGS "-Xclang -fno-jump-tables"
+	)
+endif()
 
 target_include_directories(defuel PRIVATE
 	OffRoad/Includes
@@ -363,8 +404,8 @@ add_custom_command(
     COMMAND "$<TARGET_FILE:coffdrop>" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.drop" "${CMAKE_CURRENT_SOURCE_DIR}/libs/libfuel.obj" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.objdiff.obj"
     COMMAND lib "/OUT:${CMAKE_CURRENT_BINARY_DIR}/libfuel.lib" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj"
     DEPENDS coffdrop "${CMAKE_CURRENT_BINARY_DIR}/libfuel.drop" "${CMAKE_CURRENT_SOURCE_DIR}/libs/libfuel.obj"
-    BYPRODUCTS "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.objdiff.obj"
-    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/libfuel.lib"
+    BYPRODUCTS "${CMAKE_CURRENT_BINARY_DIR}/libfuel.obj"
+    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/libfuel.lib" "${CMAKE_CURRENT_BINARY_DIR}/libfuel.objdiff.obj"
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 add_custom_target(libfuel_generate DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/libfuel.lib")
@@ -657,7 +698,34 @@ target_include_directories(LIBPC_Common INTERFACE
 	LIBPC_Common/Includes
 )
 
-if (USE_ALLOCATOR STREQUAL "dmalloc")
+if (USE_ALLOCATOR STREQUAL "mimalloc")
+	set(MI_BUILD_SHARED OFF CACHE BOOL "" FORCE)
+	set(MI_BUILD_STATIC OFF CACHE BOOL "" FORCE)
+	set(MI_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+	add_subdirectory(libs/mimalloc EXCLUDE_FROM_ALL SYSTEM)
+
+	target_link_libraries(FUEL PUBLIC mimalloc-obj)
+elseif (USE_ALLOCATOR STREQUAL "dmalloc")
+	find_library(LIBCMT_PATH libcmt.lib)
+	if (LIBCMT_PATH STREQUAL "LIBCMT_PATH-NOTFOUND")
+		message(FATAL_ERROR "libcmt.lib not found in the toolchain's library paths.")
+	endif()
+
+	add_custom_command(
+		COMMAND lib "/OUT:${CMAKE_CURRENT_BINARY_DIR}/libcmt_noalloc.lib" "/REMOVE:build\\intel\\mt_obj\\malloc.obj" "/REMOVE:build\\intel\\mt_obj\\calloc.obj" "/REMOVE:build\\intel\\mt_obj\\realloc.obj" "/REMOVE:build\\intel\\mt_obj\\free.obj" "/REMOVE:build\\intel\\mt_obj\\crtheap.obj" "${LIBCMT_PATH}"
+		OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/libcmt_noalloc.lib"
+		WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+	)
+	add_custom_target(libcmt_noalloc_generate DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/libcmt_noalloc.lib")
+	add_library(libcmt_noalloc STATIC IMPORTED GLOBAL)
+	add_dependencies(libcmt_noalloc libcmt_noalloc_generate)
+	set_target_properties(libcmt_noalloc PROPERTIES IMPORTED_LOCATION "${CMAKE_CURRENT_BINARY_DIR}/libcmt_noalloc.lib")
+
+	add_library(crtheap STATIC
+		libs/crtheap.c
+	)
+	target_link_libraries(libcmt_noalloc INTERFACE crtheap)
+
     add_library(dmalloc STATIC
         libs/dmalloc/append.c
         libs/dmalloc/arg_check.c
@@ -671,37 +739,48 @@ if (USE_ALLOCATOR STREQUAL "dmalloc")
         libs/dmalloc/user_malloc.c
     )
     target_compile_definitions(dmalloc PUBLIC HAVE_STDARG_H=1 HAVE_STDIO_H=1 HAVE_STDLIB_H=1 HAVE_STRING_H=1 HAVE_STRINGS_H=0 HAVE_UNISTD_H=0 HAVE_SYS_MMAN_H=0 HAVE_SYS_TYPES_H=0 HAVE_W32API_WINBASE_H=0 HAVE_W32API_WINDEF_H=0 HAVE_SYS_CYGWIN_H=0 HAVE_SIGNAL_H=0 LOCK_THREADS=1)
-    target_link_libraries(LIBPC_Common INTERFACE
-        dmalloc
-    )
-    target_compile_definitions(LIBPC_Common INTERFACE USE_DMALLOC_ALLOCATOR=1)
+    target_link_libraries(FUEL PUBLIC dmalloc libcmt_noalloc)
 elseif(USE_ALLOCATOR STREQUAL "msvcrt")
-    target_compile_definitions(LIBPC_Common INTERFACE USE_MSVCRT_ALLOCATOR=1)
+    target_link_libraries(FUEL PUBLIC libcmt.lib)
 else()
-    message(FATAL_ERROR "Invalid memory allocator specified. Options are 'msvcrt' and 'dmalloc'.")
+    message(FATAL_ERROR "Invalid memory allocator specified. Options are 'msvcrt', 'dmalloc', and 'mimalloc'.")
 endif()
 
 target_link_libraries(LIBPC_Common INTERFACE
-	AdvAPI32.Lib
 	COMCTL32.lib
-	GDI32.lib
-	Kernel32.lib
-	KERNEL32.lib
-	libcmt.lib
-	ODBC32.lib
-	ole32.lib
-	OLEAUT32.lib
-	SHELL32.lib
-	SHLWAPI.lib
-	USER32.lib
-	WINMM.lib
 	WS2_32.lib
+	ODBC32.lib
+	SHLWAPI.lib
+	WINMM.lib
 	AVIFIL32
 	binkw32
 	MSVFW32
 	xlive
 	DXSDK
 )
+
+if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
+	add_library(iob STATIC
+		libs/iob.cpp
+	)
+	target_link_libraries(LIBPC_Common INTERFACE
+		legacy_stdio_definitions.lib
+		iob
+	)
+endif()
+
+if ("${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
+	target_link_libraries(LIBPC_Common INTERFACE
+		AdvAPI32.Lib
+		GDI32.lib
+		Kernel32.lib
+		KERNEL32.lib
+		ole32.lib
+		OLEAUT32.lib
+		SHELL32.lib
+		USER32.lib
+	)
+endif()
 
 target_link_libraries(LIBPC_Common PUBLIC
 	EngineConfig

@@ -1,5 +1,6 @@
-/.cache
-/.vscode
-/build
-/FUEL
-/zouna
+/.cache/
+/.vscode/
+/build/
+/build_widberg/
+/FUEL/
+/zouna/

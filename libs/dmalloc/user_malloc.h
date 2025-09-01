@@ -159,7 +159,7 @@ char	*dmalloc_strndup(const char *file, const int line,
  * size -> Number of bytes requested.
  */
 extern
-DMALLOC_PNT	my_dmalloc_malloc(DMALLOC_SIZE size);
+DMALLOC_PNT	malloc(DMALLOC_SIZE size);
 
 /*
  * DMALLOC_PNT calloc
@@ -175,7 +175,7 @@ DMALLOC_PNT	my_dmalloc_malloc(DMALLOC_SIZE size);
  * size -> The number of bytes in each element.
  */
 extern
-DMALLOC_PNT	my_dmalloc_calloc(DMALLOC_SIZE num_elements, DMALLOC_SIZE size);
+DMALLOC_PNT	calloc(DMALLOC_SIZE num_elements, DMALLOC_SIZE size);
 
 /*
  * DMALLOC_PNT realloc
@@ -192,7 +192,7 @@ DMALLOC_PNT	my_dmalloc_calloc(DMALLOC_SIZE num_elements, DMALLOC_SIZE size);
  * new_size -> New number of bytes requested for the old pointer.
  */
 extern
-DMALLOC_PNT	my_dmalloc_realloc(DMALLOC_PNT old_pnt, DMALLOC_SIZE new_size);
+DMALLOC_PNT	realloc(DMALLOC_PNT old_pnt, DMALLOC_SIZE new_size);
 
 /*
  * DMALLOC_PNT recalloc
@@ -210,7 +210,7 @@ DMALLOC_PNT	my_dmalloc_realloc(DMALLOC_PNT old_pnt, DMALLOC_SIZE new_size);
  * new_size -> New number of bytes requested for the old pointer.
  */
 extern
-DMALLOC_PNT	my_dmalloc_recalloc(DMALLOC_PNT old_pnt, DMALLOC_SIZE new_size);
+DMALLOC_PNT	recalloc(DMALLOC_PNT old_pnt, DMALLOC_SIZE new_size);
 
 /*
  * DMALLOC_PNT memalign
@@ -297,7 +297,7 @@ char	*strndup(const char *string, const DMALLOC_SIZE max_len);
  * pnt -> Existing pointer we are freeing.
  */
 extern
-DMALLOC_FREE_RET	my_dmalloc_free(DMALLOC_PNT pnt);
+DMALLOC_FREE_RET	free(DMALLOC_PNT pnt);
 
 /*
  * DMALLOC_FREE_RET cfree

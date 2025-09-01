@@ -102,7 +102,8 @@ EXTERN_C U32 Crc32Tab[] = {
     0xAFB010B1, 0xAB710D06, 0xA6322BDF, 0xA2F33668,
     0xBCB4666D, 0xB8757BDA, 0xB5365D03, 0xB1F740B4};
 
-U32 __usercall __eax __edx Name_Z::GetID(U32 ContinueCRC, const U8 *_Name)
+_W(U32 __usercall Name_Z::GetID@<eax>(U32 ContinueCRC@<eax>, const U8 *_Name@<edx>),
+U32 __usercall __eax __edx Name_Z::GetID(U32 ContinueCRC, const U8 *_Name))
 {
     DELINKFUNCTION(0x00669160);
     for (U32 i = 0; _Name[i]; ++i)
