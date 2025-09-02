@@ -15,6 +15,8 @@
 
 #cmakedefine01 USE_SECUROM
 #cmakedefine01 USE_RUNNING_CHECK
+#cmakedefine01 USE_NON_MATCHING
+#cmakedefine01 USE_FMTK
 
 #define CAT2(x, y) x ## y
 #define CAT(x, y) CAT2(x, y)

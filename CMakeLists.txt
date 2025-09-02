@@ -69,6 +69,8 @@ set(FUEL_ARGS "-W" CACHE STRING "Arguments to pass FUEL in the run and debug tar
 set(USE_ALLOCATOR "msvcrt" CACHE STRING "Memory allocator to use. Options are 'msvcrt', 'dmalloc', and 'mimalloc'.")
 option(USE_SECUROM "Use original SecuROM copy protection." OFF)
 option(USE_RUNNING_CHECK "Use original game already running check." OFF)
+option(USE_NON_MATCHING "Use non-matching game code." OFF)
+option(USE_FMTK "Use FMTK extension points." OFF)
 
 set(FUEL_INSTALL_DIR "$ENV{FUEL_INSTALL_DIR}" CACHE STRING "Path to FUEL install directory.")
 set(X64DBG_INSTALL_DIR "$ENV{X64DBG_INSTALL_DIR}" CACHE STRING "Path to x64dbg install directory.")
@@ -92,12 +94,12 @@ target_link_options(FUEL BEFORE PRIVATE
 	"/RELEASE"
     "/INCLUDE:__fltused"
 	"/INCREMENTAL:NO"
+	"/SUBSYSTEM:WINDOWS,4.0"
 )
 
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
 	target_link_options(FUEL BEFORE PRIVATE
 		"/BASE:0x01000000"
-		"/SUBSYSTEM:WINDOWS,4.0"
 		"/NODEFAULTLIB"
 	)
 endif()
@@ -105,7 +107,6 @@ endif()
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
 	target_link_options(FUEL BEFORE PRIVATE
 		"/SAFESEH:NO"
-		"/SUBSYSTEM:WINDOWS"
 	)
 endif()
 
@@ -675,12 +676,17 @@ target_include_directories(Engine PUBLIC
 	Engine/Includes
 )
 
+target_link_libraries(Engine PRIVATE
+	LIBPC_Common
+)
+
 target_link_libraries(Engine PUBLIC
 	EngineConfig
 )
 
 add_library(LIBPC_Common STATIC
 	LIBPC_Common/D3D_RendererHelpers_Z.cpp
+	LIBPC_Common/Includes/HW/Memory_Z.h
 	LIBPC_Common/Includes/FlarePc_Z.h
 	LIBPC_Common/Includes/HFieldPc_Z.h
 	LIBPC_Common/Includes/InGameObjectsPc_Z.h
@@ -749,8 +755,10 @@ elseif (USE_ALLOCATOR STREQUAL "dmalloc")
     )
     target_compile_definitions(dmalloc PUBLIC HAVE_STDARG_H=1 HAVE_STDIO_H=1 HAVE_STDLIB_H=1 HAVE_STRING_H=1 HAVE_STRINGS_H=0 HAVE_UNISTD_H=0 HAVE_SYS_MMAN_H=0 HAVE_SYS_TYPES_H=0 HAVE_W32API_WINBASE_H=0 HAVE_W32API_WINDEF_H=0 HAVE_SYS_CYGWIN_H=0 HAVE_SIGNAL_H=0 LOCK_THREADS=1)
     target_link_libraries(FUEL PUBLIC dmalloc libcmt_noalloc)
-elseif(USE_ALLOCATOR STREQUAL "msvcrt" AND "${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
-    target_link_libraries(FUEL PUBLIC libcmt.lib)
+elseif(USE_ALLOCATOR STREQUAL "msvcrt")
+	if("${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
+        target_link_libraries(FUEL PUBLIC libcmt.lib)
+	endif()
 else()
     message(FATAL_ERROR "Invalid memory allocator specified. Options are 'msvcrt', 'dmalloc', and 'mimalloc'.")
 endif()
