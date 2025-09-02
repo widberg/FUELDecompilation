@@ -28,8 +28,12 @@
 #define ADDRESSSYMBOL(address, symbol) __pragma(comment(user, "addresssymbol;" __FILE__ ";" STR(__LINE__) ";" #address ";" symbol))
 
 // Rename a symbol and undefine the original
+#ifdef __widberg__
+#define DELINKFUNCTION(address, ...) __pragma(comment(user, "delinkfunction;" __FILE__ ";" STR(__LINE__) ";" __FUNCSIG__ ";" __FUNCDNAME__ ";" #address ";" #__VA_ARGS__))
+#else
 // Temporarily make __FUNCSIG__ a string to avoid crash in instrumented compiler
 #define DELINKFUNCTION(address, ...) __pragma(comment(user, "delinkfunction;" __FILE__ ";" STR(__LINE__) ";" "__FUNCSIG__" ";" __FUNCDNAME__ ";" #address ";" #__VA_ARGS__))
+#endif
 
 // Rename a cdecl and undefine the original
 #define DELINKCDECL(address, name) __pragma(comment(user, "delinkcdecl;" __FILE__ ";" STR(__LINE__) ";" #address ";" #name))

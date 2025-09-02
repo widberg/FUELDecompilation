@@ -7,7 +7,7 @@ cmake_policy(SET CMP0091 NEW) # Enable MSVC runtime library selection
 set(CMAKE_MSVC_RUNTIME_LIBRARY "") # Manually set runtime library to avoid warning
 add_compile_options("/MT$<$<CONFIG:Debug>:d>" $<$<COMPILE_LANGUAGE:CXX>:/GR> /GS- /fp:fast) # Use static runtime libraries
 add_link_options("/MANIFEST:NO") # Disable manifest generation
-add_compile_definitions("_CRT_SECURE_NO_DEPRECATE" "_CRT_SECURE_NO_WARNINGS") # Disable CRT warnings
+add_compile_definitions("_CRT_SECURE_NO_DEPRECATE" "_CRT_SECURE_NO_WARNINGS" "_WINSOCK_DEPRECATED_NO_WARNINGS") # Disable CRT/Winsock warnings
 
 project(FUEL C CXX)
 
@@ -74,9 +74,18 @@ set(FUEL_INSTALL_DIR "$ENV{FUEL_INSTALL_DIR}" CACHE STRING "Path to FUEL install
 set(X64DBG_INSTALL_DIR "$ENV{X64DBG_INSTALL_DIR}" CACHE STRING "Path to x64dbg install directory.")
 set(DXSDK_DIR "$ENV{DXSDK_DIR}" CACHE STRING "Path to Microsoft DirectX SDK (August 2008) install directory.")
 
+if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
+	add_compile_options("-Xclang" "-Wno-microsoft") # I know what I'm doing
+endif()
+
 add_executable(FUEL WIN32
 	Resources/FUEL.rc
 	OffRoad/xcu.c
+)
+set_source_files_properties("Resources/FUEL.rc"
+    PROPERTIES
+    OBJECT_DEPENDS
+		"${CMAKE_CURRENT_SOURCE_DIR}/Resources/__GDF_THUMBNAIL.bin;${CMAKE_CURRENT_SOURCE_DIR}/Resources/__GDF_XML.txt;${CMAKE_CURRENT_SOURCE_DIR}/Resources/ICON101_1.ico;${CMAKE_CURRENT_SOURCE_DIR}/Resources/ICON142_1.ico;${CMAKE_CURRENT_SOURCE_DIR}/Resources/MANIFEST1_1.txt;${CMAKE_CURRENT_SOURCE_DIR}/Resources/SPAFILE.bin"
 )
 
 target_link_options(FUEL BEFORE PRIVATE
@@ -96,7 +105,7 @@ endif()
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
 	target_link_options(FUEL BEFORE PRIVATE
 		"/SAFESEH:NO"
-		"/SUBSYSTEM:WINDOWS,4.0"
+		"/SUBSYSTEM:WINDOWS"
 	)
 endif()
 
@@ -740,7 +749,7 @@ elseif (USE_ALLOCATOR STREQUAL "dmalloc")
     )
     target_compile_definitions(dmalloc PUBLIC HAVE_STDARG_H=1 HAVE_STDIO_H=1 HAVE_STDLIB_H=1 HAVE_STRING_H=1 HAVE_STRINGS_H=0 HAVE_UNISTD_H=0 HAVE_SYS_MMAN_H=0 HAVE_SYS_TYPES_H=0 HAVE_W32API_WINBASE_H=0 HAVE_W32API_WINDEF_H=0 HAVE_SYS_CYGWIN_H=0 HAVE_SIGNAL_H=0 LOCK_THREADS=1)
     target_link_libraries(FUEL PUBLIC dmalloc libcmt_noalloc)
-elseif(USE_ALLOCATOR STREQUAL "msvcrt")
+elseif(USE_ALLOCATOR STREQUAL "msvcrt" AND "${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
     target_link_libraries(FUEL PUBLIC libcmt.lib)
 else()
     message(FATAL_ERROR "Invalid memory allocator specified. Options are 'msvcrt', 'dmalloc', and 'mimalloc'.")
