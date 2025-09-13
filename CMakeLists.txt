@@ -77,7 +77,7 @@ set(X64DBG_INSTALL_DIR "$ENV{X64DBG_INSTALL_DIR}" CACHE STRING "Path to x64dbg i
 set(DXSDK_DIR "$ENV{DXSDK_DIR}" CACHE STRING "Path to Microsoft DirectX SDK (August 2008) install directory.")
 
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
-	add_compile_options("-Xclang" "-Wno-microsoft" "-Xclang" "-Wno-invalid-offsetof") # I know what I'm doing
+	add_compile_options("-Wno-microsoft" "-Wno-invalid-offsetof") # I know what I'm doing
 endif()
 
 add_executable(FUEL WIN32
@@ -457,7 +457,7 @@ if(FUEL_INSTALL_DIR)
 
     if(NOT X64DBG_INSTALL_DIR STREQUAL "")
         add_custom_target(debug
-            COMMAND "${X64DBG_INSTALL_DIR}/release/x32/x32dbg.exe" "${FUEL_INSTALL_DIR}/${FUEL_DECOMPILATION_BASENAME}" "${FUEL_ARGS}" "${FUEL_INSTALL_DIR}"
+            COMMAND "${X64DBG_INSTALL_DIR}/release/x32/x32dbg.exe" -workingDir "${FUEL_INSTALL_DIR}" "${FUEL_INSTALL_DIR}/${FUEL_DECOMPILATION_BASENAME}" -- ${FUEL_ARGS}
             DEPENDS FUEL
             WORKING_DIRECTORY "${FUEL_INSTALL_DIR}"
         )
@@ -808,7 +808,7 @@ if ("${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
 endif()
 
 target_link_libraries(LIBPC_Common PUBLIC
-	EngineConfig
+	Engine
 )
 
 add_library(LIBPC_TNL STATIC
@@ -821,10 +821,6 @@ target_include_directories(LIBPC_TNL INTERFACE
 
 target_link_libraries(LIBPC_TNL INTERFACE
 	LIBPC_Common
-)
-
-target_link_libraries(LIBPC_TNL PUBLIC
-	EngineConfig
 )
 
 add_library(DXSDK INTERFACE)
