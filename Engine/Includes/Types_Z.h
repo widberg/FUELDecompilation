@@ -5,7 +5,7 @@
 
 typedef unsigned __int64 U64;
 typedef __int64 S64;
-typedef char Bool;
+typedef bool Bool;
 typedef unsigned int U32;
 typedef signed int S32;
 typedef unsigned short U16;

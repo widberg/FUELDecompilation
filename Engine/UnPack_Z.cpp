@@ -2,6 +2,13 @@
 
 #include <HW/Memory_Z.h>
 
+STATIC_ASSERT_SIZE(UnPack_Z, 0x10);
+STATIC_ASSERT_OFFSET(UnPack_Z, unpacked, 0x0);
+STATIC_ASSERT_OFFSET(UnPack_Z, unpackedsize, 0x4);
+STATIC_ASSERT_OFFSET(UnPack_Z, packedsize, 0x8);
+STATIC_ASSERT_OFFSET(UnPack_Z, own_unpacked, 0xC);
+STATIC_ASSERT_OFFSET(UnPack_Z, d, 0xD);
+
 #if USE_NON_MATCHING
 #ifdef __widberg__
 void __usercall UnPack_Z_UnPack_Z_dtor(UnPack_Z *this_@<esi>)

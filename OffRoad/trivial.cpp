@@ -5,6 +5,8 @@
 #include <cstring>
 #include "vftables.hpp"
 
+#include "String_Z.h"
+
 int CameraAgent_Z::CameraAgent_Z_vftable_39() { DELINKFUNCTION(0x004010A0); return 0x0; }
 int Agent_Z::Agent_Z_vftable_38(int, int) { DELINKFUNCTION(0x00401690); return 0xFFFF; }
 void Agent_Z::Agent_Z_vftable_37(int) { DELINKFUNCTION(0x004016A0); }
@@ -2076,8 +2078,14 @@ void InGamePlayer_G::BaseInGameDatas_G_vftable_23() { DELINKFUNCTION(0x00443FD0)
 EXTERN_C void __cdecl _0x004453B0(void);
 void __cdecl _0x00445270() { DELINKFUNCTION(0x00445270); _0x004453B0(); }
 void ChatHUD::ViewportHUD_vftable_1() { DELINKFUNCTION(0x00449F40); ViewportHUD::ViewportHUD_vftable_1(); }
+#if USE_NON_MATCHING
+#ifdef __widberg__
+Bool __usercall _0x00450390@<al>(const char* s1@<eax>, const char* s2@<ecx>) { DELINKFUNCTION(0x00450390); return Str_Z::CmpNoCase(s1, s2); }
+#endif // __widberg__
+#else
 EXTERN_C void __cdecl _0x00696D60(void);
 void __cdecl _0x00450390() { DELINKFUNCTION(0x00450390); _0x00696D60(); }
+#endif // USE_NON_MATCHING
 void DebugHUD::ViewportHUD_vftable_1() { DELINKFUNCTION(0x00454500); ViewportHUD::ViewportHUD_vftable_1(); }
 EXTERN_C void __cdecl _0x0046F080(void);
 void __cdecl _0x0046EF00() { DELINKFUNCTION(0x0046EF00); _0x0046F080(); }
@@ -2342,8 +2350,14 @@ EXTERN_C void __cdecl _0x0052F620(void);
 void __cdecl _0x00544F20() { DELINKFUNCTION(0x00544F20); _0x0052F620(); }
 EXTERN_C void __cdecl _0x0055B070(void);
 void __cdecl _0x00555DF0() { DELINKFUNCTION(0x00555DF0); _0x0055B070(); }
+#if USE_NON_MATCHING
+#ifdef __widberg__
+Bool __usercall _0x0055B140@<al>(const char* s1@<eax>, const char* s2@<ecx>) { DELINKFUNCTION(0x0055B140); return Str_Z::CmpNoCase(s1, s2); }
+#endif // __widberg__
+#else
 EXTERN_C void __cdecl _0x00696D60(void);
 void __cdecl _0x0055B140() { DELINKFUNCTION(0x0055B140); _0x00696D60(); }
+#endif // USE_NON_MATCHING
 EXTERN_C void __cdecl _0x005506F0(void);
 void __cdecl _0x0055B820() { DELINKFUNCTION(0x0055B820); _0x005506F0(); }
 EXTERN_C void __cdecl _0x0055B840(void);
@@ -2497,10 +2511,22 @@ EXTERN_C void __cdecl _0x005C6390(void);
 void __cdecl _0x005C62A0() { DELINKFUNCTION(0x005C62A0); _0x005C6390(); }
 EXTERN_C void __cdecl _0x005D1FD0(void);
 void __cdecl _0x005D1980() { DELINKFUNCTION(0x005D1980); _0x005D1FD0(); }
+#if USE_NON_MATCHING
+#ifdef __widberg__
+Bool __usercall _0x005D67E0@<al>(const char* s1@<eax>, const char* s2@<ecx>) { DELINKFUNCTION(0x005D67E0); return Str_Z::CmpNoCase(s1, s2); }
+#endif // __widberg__
+#else
 EXTERN_C void __cdecl _0x00696D60(void);
 void __cdecl _0x005D67E0() { DELINKFUNCTION(0x005D67E0); _0x00696D60(); }
+#endif // USE_NON_MATCHING
+#if USE_NON_MATCHING
+#ifdef __widberg__
+Bool __usercall _0x005D6840@<al>(const char* s1@<eax>, const char* s2@<ecx>) { DELINKFUNCTION(0x005D6840); return Str_Z::CmpNoCase(s1, s2); }
+#endif // __widberg__
+#else
 EXTERN_C void __cdecl _0x00696D60(void);
 void __cdecl _0x005D6840() { DELINKFUNCTION(0x005D6840); _0x00696D60(); }
+#endif // USE_NON_MATCHING
 void IT_TornadoDebrisManipulator::BaseObject_Z_vftable_0() { DELINKFUNCTION(0x005EA080); LodMove_Z::BaseObject_Z_vftable_0(); }
 void IT_TornadoDebrisManipulator::Manipulator_Z_vftable_14() { DELINKFUNCTION(0x005EA090); LodMove_Z::Manipulator_Z_vftable_14(); }
 EXTERN_C void __cdecl _0x005F3B90(void);
@@ -2572,8 +2598,14 @@ void ABC_ScriptManager::ABC_ScriptManager_vftable_2() { DELINKFUNCTION(0x00691FE
 EXTERN_C void __cdecl _0x006935D0(void);
 void __cdecl _0x006935C0() { DELINKFUNCTION(0x006935C0); _0x006935D0(); }
 int __cdecl _0x00696E80(char const* _String1, char const* _String2) { DELINKFUNCTION(0x00696E80); return _stricmp(_String1, _String2); }
+#if USE_NON_MATCHING
+#ifdef __widberg__
+Bool __usercall _0x0069AEC0@<al>(const char* s1@<eax>, const char* s2@<ecx>) { DELINKFUNCTION(0x0069AEC0); return Str_Z::CmpNoCase(s1, s2); }
+#endif // __widberg__
+#else
 EXTERN_C void __cdecl _0x00696D60(void);
 void __cdecl _0x0069AEC0() { DELINKFUNCTION(0x0069AEC0); _0x00696D60(); }
+#endif // USE_NON_MATCHING
 EXTERN_C void __cdecl _0x006C2AA0(void);
 void __cdecl _0x006C2B60() { DELINKFUNCTION(0x006C2B60); _0x006C2AA0(); }
 EXTERN_C void __cdecl _0x006CF910(void);

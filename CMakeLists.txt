@@ -77,7 +77,7 @@ set(X64DBG_INSTALL_DIR "$ENV{X64DBG_INSTALL_DIR}" CACHE STRING "Path to x64dbg i
 set(DXSDK_DIR "$ENV{DXSDK_DIR}" CACHE STRING "Path to Microsoft DirectX SDK (August 2008) install directory.")
 
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
-	add_compile_options("-Xclang" "-Wno-microsoft") # I know what I'm doing
+	add_compile_options("-Xclang" "-Wno-microsoft" "-Xclang" "-Wno-invalid-offsetof") # I know what I'm doing
 endif()
 
 add_executable(FUEL WIN32
@@ -207,6 +207,8 @@ add_library(defuel STATIC
 	OffRoad/Includes/ImpactVolumeAgent_G.h
 	OffRoad/Includes/InGameCreatures_G.h
 	OffRoad/Includes/InGameFx_G.h
+	OffRoad/Includes/InGameMenuHUD.h
+	OffRoad/Includes/InGamePauseHUD.h
 	OffRoad/Includes/InGamePlayer_G.h
 	OffRoad/Includes/ItemMgr_G.h
 	OffRoad/Includes/IT_ANIMATED.h
@@ -296,13 +298,17 @@ add_library(defuel STATIC
 	OffRoad/Includes/TornadoEventVolumeAgent_G.h
 	OffRoad/Includes/TornadoManipulator_G.h
 	OffRoad/Includes/TrafficManipulator_G.h
+	OffRoad/Includes/VehiclesDataMgr_G.h
 	OffRoad/Includes/VibrationManager_G.h
+	OffRoad/Includes/ViewportHUD.h
 	OffRoad/Includes/VolumeDelayedStartMove_G.h
 	OffRoad/Includes/VolumeDelayedStart_G.h
 	OffRoad/Includes/VolumeRTCMove_G.h
 	OffRoad/Includes/VolumeRTC_G.h
 	OffRoad/Includes/WeatherManager_G.h
 	OffRoad/Includes/ZoneVolumeAgent_G.h
+	OffRoad/InGameMenuHUD.cpp
+	OffRoad/InGamePauseHUD.cpp
 	OffRoad/InGamePausePageEditor_G.cpp
 	OffRoad/InGamePausePageMap_G.cpp
 	OffRoad/LiquidFlow_G.cpp
@@ -619,6 +625,7 @@ add_library(Engine STATIC
 	Engine/Includes/SplineZone_Z.h
 	Engine/Includes/Spline_Z.h
 	Engine/Includes/StreamFile_Z.h
+	Engine/Includes/String_Z.h
 	Engine/Includes/StyleStatus.h
 	Engine/Includes/SubLevelVolumeAgent_Z.h
 	Engine/Includes/SubWorld_Z.h
@@ -665,6 +672,7 @@ add_library(Engine STATIC
 	Engine/Private/SurfaceLoad_Z.cpp
 	Engine/Private/SystemObject_Z.cpp
 	Engine/Skel_Z.cpp
+	Engine/String_Z.cpp
 	Engine/SubAlloc.cpp
 	Engine/UnPack_Z.cpp
 	Engine/UserDefineCmd_Z.cpp

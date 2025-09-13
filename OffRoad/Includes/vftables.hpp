@@ -3056,50 +3056,7 @@ public:
     virtual void *LiveOverlappedCommand_Z_vftable_2() override;
 };
 
-ADDRESSVFTABLE(0x009AC21C, ViewportHUD);
-class __declspec(dllexport) ViewportHUD
-{
-public:
-    ADDRESSSYMBOL(0x004C89E0, "?ViewportHUD_vftable_0@ViewportHUD@@UAEXH@Z");
-    virtual void ViewportHUD_vftable_0(int);
-    ADDRESSSYMBOL(0x004C8AE0, "?ViewportHUD_vftable_1@ViewportHUD@@UAEXXZ");
-    virtual void ViewportHUD_vftable_1();
-    ADDRESSSYMBOL(0x004C8BC0, "?ViewportHUD_vftable_2@ViewportHUD@@UAEXH@Z");
-    virtual void ViewportHUD_vftable_2(int);
-    ADDRESSVF(0x004C8BB0, ViewportHUD, ViewportHUD_vftable_3);
-    virtual void ViewportHUD_vftable_3();
-    ADDRESSVF(0x004454B0, ViewportHUD, ViewportHUD_vftable_4);
-    virtual void ViewportHUD_vftable_4();
-    virtual void ViewportHUD_vftable_5(int);
-    ADDRESSVF(0x004C8CC0, ViewportHUD, ViewportHUD_vftable_6);
-    virtual void ViewportHUD_vftable_6();
-    ADDRESSVF(0x004C8CE0, ViewportHUD, ViewportHUD_vftable_7);
-    virtual void ViewportHUD_vftable_7();
-    ADDRESSVF(0x004C8D80, ViewportHUD, ViewportHUD_vftable_8);
-    virtual void ViewportHUD_vftable_8();
-    ADDRESSSYMBOL(0x004CAC60, "?ViewportHUD_vftable_9@ViewportHUD@@UAEHXZ");
-    virtual int ViewportHUD_vftable_9();
-    ADDRESSVF(0x004C8C50, ViewportHUD, ViewportHUD_vftable_10);
-    virtual void ViewportHUD_vftable_10();
-    ADDRESSVF(0x004CA290, ViewportHUD, ViewportHUD_vftable_11);
-    virtual void ViewportHUD_vftable_11();
-    ADDRESSVF(0x004CA220, ViewportHUD, ViewportHUD_vftable_12);
-    virtual void ViewportHUD_vftable_12();
-    ADDRESSVF(0x004C9EC0, ViewportHUD, ViewportHUD_vftable_13);
-    virtual void ViewportHUD_vftable_13();
-    ADDRESSVF(0x004C9DB0, ViewportHUD, ViewportHUD_vftable_14);
-    virtual void ViewportHUD_vftable_14();
-    ADDRESSVF(0x004CA640, ViewportHUD, ViewportHUD_vftable_15);
-    virtual void ViewportHUD_vftable_15();
-    ADDRESSVF(0x004CA520, ViewportHUD, ViewportHUD_vftable_16);
-    virtual void ViewportHUD_vftable_16();
-    ADDRESSVF(0x004CA4C0, ViewportHUD, ViewportHUD_vftable_17);
-    virtual void ViewportHUD_vftable_17();
-    ADDRESSVF(0x004CA5B0, ViewportHUD, ViewportHUD_vftable_18);
-    virtual void ViewportHUD_vftable_18();
-    ADDRESSVF(0x004C8F60, ViewportHUD, ViewportHUD_vftable_19);
-    virtual void ViewportHUD_vftable_19();
-};
+#include "ViewportHUD.h"
 
 ADDRESSVFTABLE(0x009D4C0C, ComDB_Z);
 class __declspec(dllexport) ComDB_Z
@@ -5494,29 +5451,7 @@ public:
     virtual void ViewportHUD_vftable_7() override;
 };
 
-ADDRESSVFTABLE(0x009A71A4, InGameMenuHUD);
-class __declspec(dllexport) InGameMenuHUD : public ViewportHUD
-{
-public:
-    ADDRESSSYMBOL(0x0046AA50, "?ViewportHUD_vftable_0@InGameMenuHUD@@UAEXH@Z");
-    virtual void ViewportHUD_vftable_0(int) override;
-    ADDRESSSYMBOL(0x0046AAA0, "?ViewportHUD_vftable_1@InGameMenuHUD@@UAEXXZ");
-    virtual void ViewportHUD_vftable_1() override;
-    ADDRESSSYMBOL(0x0046AE80, "?ViewportHUD_vftable_2@InGameMenuHUD@@UAEXH@Z");
-    virtual void ViewportHUD_vftable_2(int) override;
-    ADDRESSSYMBOL(0x0046B040, "?ViewportHUD_vftable_5@InGameMenuHUD@@UAEXH@Z");
-    virtual void ViewportHUD_vftable_5(int) override;
-    ADDRESSVF(0x0046ACA0, InGameMenuHUD, ViewportHUD_vftable_7);
-    virtual void ViewportHUD_vftable_7() override;
-    ADDRESSVF(0x0046ADE0, InGameMenuHUD, ViewportHUD_vftable_8);
-    virtual void ViewportHUD_vftable_8() override;
-    ADDRESSVF(0x0046AED0, InGameMenuHUD, ViewportHUD_vftable_10);
-    virtual void ViewportHUD_vftable_10() override;
-    ADDRESSVF(0x0046AE60, InGameMenuHUD, InGameMenuHUD_vftable_20);
-    virtual void InGameMenuHUD_vftable_20();
-    ADDRESSVF(0x0046AAC0, InGameMenuHUD, InGameMenuHUD_vftable_21);
-    virtual void InGameMenuHUD_vftable_21();
-};
+#include "InGameMenuHUD.h"
 
 ADDRESSVFTABLE(0x009C40A4, SpecialEffectsWindTank_G);
 class __declspec(dllexport) SpecialEffectsWindTank_G : public SpecialEffectsTank_G
@@ -10335,29 +10270,7 @@ public:
     virtual void VolumeAgent_Z_vftable_44(int) override;
 };
 
-ADDRESSVFTABLE(0x009A7554, InGamePauseHUD);
-class __declspec(dllexport) InGamePauseHUD : public InGameMenuHUD
-{
-public:
-    ADDRESSSYMBOL(0x0046E460, "?ViewportHUD_vftable_0@InGamePauseHUD@@UAEXH@Z");
-    virtual void ViewportHUD_vftable_0(int) override;
-    ADDRESSSYMBOL(0x0046E4D0, "?ViewportHUD_vftable_1@InGamePauseHUD@@UAEXXZ");
-    virtual void ViewportHUD_vftable_1() override;
-    ADDRESSSYMBOL(0x0046EA50, "?ViewportHUD_vftable_2@InGamePauseHUD@@UAEXH@Z");
-    virtual void ViewportHUD_vftable_2(int) override;
-    ADDRESSSYMBOL(0x0046ECE0, "?ViewportHUD_vftable_5@InGamePauseHUD@@UAEXH@Z");
-    virtual void ViewportHUD_vftable_5(int) override;
-    ADDRESSVF(0x0046E9B0, InGamePauseHUD, ViewportHUD_vftable_8);
-    virtual void ViewportHUD_vftable_8() override;
-    ADDRESSVF(0x0046E960, InGamePauseHUD, ViewportHUD_vftable_10);
-    virtual void ViewportHUD_vftable_10() override;
-    ADDRESSVF(0x0046E6B0, InGamePauseHUD, ViewportHUD_vftable_19);
-    virtual void ViewportHUD_vftable_19() override;
-    ADDRESSVF(0x00482B00, InGamePauseHUD, InGameMenuHUD_vftable_20);
-    virtual void InGameMenuHUD_vftable_20() override;
-    ADDRESSVF(0x0046E750, InGamePauseHUD, InGamePauseHUD_vftable_22);
-    virtual void InGamePauseHUD_vftable_22();
-};
+#include "InGamePauseHUD.h"
 
 ADDRESSVFTABLE(0x009C06DC, CButtonBase_G);
 class __declspec(dllexport) CButtonBase_G : public CWindow_G

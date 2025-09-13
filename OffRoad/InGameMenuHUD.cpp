@@ -1,0 +1,5 @@
+#include "InGameMenuHUD.h"
+
+STATIC_ASSERT_OFFSET(MenuItem, name, 0xDA);
+STATIC_ASSERT_OFFSET(InGameMenuHUD, a, 0xE4);
+STATIC_ASSERT_OFFSET(InGameMenuHUD, b, 0xE8);
