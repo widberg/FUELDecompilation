@@ -63,14 +63,26 @@ endif()
 find_package (Python3 COMPONENTS Interpreter REQUIRED)
 
 set(FUEL_DECOMPILATION_NAME "FUELDecompilation" CACHE STRING "Name to use for the FUEL decompilation executable.")
-set(FUEL_DECOMPILATION_BASENAME "${FUEL_DECOMPILATION_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
 set(FUEL_ARGS "-W" CACHE STRING "Arguments to pass FUEL in the run and debug targets.")
 
 set(USE_ALLOCATOR "msvcrt" CACHE STRING "Memory allocator to use. Options are 'msvcrt', 'dmalloc', and 'mimalloc'.")
 option(USE_SECUROM "Use original SecuROM copy protection." OFF)
 option(USE_RUNNING_CHECK "Use original game already running check." OFF)
 option(USE_NON_MATCHING "Use non-matching game code." OFF)
+option(USE_BUGFIXES "Use bugfixes." OFF)
+option(USE_LARGEADDRESSAWARE "Use /LARGEADDRESSAWARE." OFF)
 option(USE_FMTK "Use FMTK extension points." OFF)
+
+if(USE_FMTK)
+	set(FUEL_DECOMPILATION_NAME "fmtk" CACHE STRING "" FORCE)
+	set(USE_SECUROM OFF CACHE BOOL "" FORCE)
+	set(USE_RUNNING_CHECK OFF CACHE BOOL "" FORCE)
+    set(USE_NON_MATCHING ON CACHE BOOL "" FORCE)
+    set(USE_BUGFIXES ON CACHE BOOL "" FORCE)
+    set(USE_LARGEADDRESSAWARE ON CACHE BOOL "" FORCE)
+endif()
+
+set(FUEL_DECOMPILATION_BASENAME "${FUEL_DECOMPILATION_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
 
 set(FUEL_INSTALL_DIR "$ENV{FUEL_INSTALL_DIR}" CACHE STRING "Path to FUEL install directory.")
 set(X64DBG_INSTALL_DIR "$ENV{X64DBG_INSTALL_DIR}" CACHE STRING "Path to x64dbg install directory.")
@@ -102,11 +114,15 @@ if ("${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
 		"/BASE:0x01000000"
 		"/NODEFAULTLIB"
 	)
-endif()
-
-if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
+else()
 	target_link_options(FUEL BEFORE PRIVATE
 		"/SAFESEH:NO"
+	)
+endif()
+
+if (USE_LARGEADDRESSAWARE)
+	target_link_options(FUEL BEFORE PRIVATE
+		"/LARGEADDRESSAWARE"
 	)
 endif()
 
@@ -308,6 +324,7 @@ add_library(defuel STATIC
 	OffRoad/Includes/VolumeRTC_G.h
 	OffRoad/Includes/WeatherManager_G.h
 	OffRoad/Includes/ZoneVolumeAgent_G.h
+	OffRoad/IT_Dyn_VehicleMove_G.cpp
 	OffRoad/InGameMenuHUD.cpp
 	OffRoad/InGamePauseHUD.cpp
 	OffRoad/InGamePausePageEditor_G.cpp
