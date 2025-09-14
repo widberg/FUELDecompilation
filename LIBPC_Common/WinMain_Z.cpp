@@ -17,8 +17,8 @@ EXTERN_C int __thiscall _0x008316B0(U8 *, int, int);
 EXTERN_C int __cdecl _0x00843DF0(void);
 EXTERN_C int __cdecl _0x0081E060(void);
 EXTERN_C const char *__usercall _0x0073A450@<eax>(int@<eax>, int@<ecx>);
-EXTERN_C int __usercall _0x006DC6A0@<eax>(int@<eax>, LPCCH, char *, ...); // FIXME: Verify usercall vaargs.
-EXTERN_C int __usercall _0x0069A400@<eax>(const char *@<edi>, int, int) asm("__0x0069A400"); // FIXME: What happened here?
+EXTERN_C int __usercall _0x006DC6A0@<eax>(int@<eax>, LPCCH, char *, ...); // TODO: Verify usercall vaargs.
+EXTERN_C int __userpurge _0x0069A400@<eax>(const char *@<edi>, int, int) asm("__0x0069A400"); // FIXME: What happened here?
 EXTERN_C char __cdecl _0x006891E0(void);
 EXTERN_C bool __cdecl _0x00843D90(void);
 char __stdcall _0x0081CBD0();
@@ -40,7 +40,7 @@ EXTERN_C WCHAR _0x00A65DD0[264];
 
 EXTERN_C HANDLE _0x00A659A8;
 
-int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
     DELINKFUNCTION(0x0081E340);
     DWORD v4;                      // eax

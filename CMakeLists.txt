@@ -262,6 +262,7 @@ add_library(defuel STATIC
 	OffRoad/Includes/LiquidFlow_G.h
 	OffRoad/Includes/LoadingDraw_G.h
 	OffRoad/Includes/LogicAgent_G.h
+	OffRoad/Includes/MapHUD.h
 	OffRoad/Includes/MapVolumeAgent_G.h
 	OffRoad/Includes/MemoryCardMgr_G.h
 	OffRoad/Includes/MenuLogicAgent_G.h
