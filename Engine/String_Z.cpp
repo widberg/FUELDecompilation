@@ -2,12 +2,10 @@
 
 #include <cstring>
 
-#if USE_NON_MATCHING
-#ifdef __widberg__
+#if USE_NON_MATCHING && __widberg__
 Bool __usercall Str_Z::CmpNoCase@<al>(const char* s1@<eax>, const char* s2@<ecx>)
 {
     DELINKFUNCTION(0x00696D60);
     return _stricmp(s1, s2);
 }
-#endif // __widberg__
-#endif // USE_NON_MATCHING
+#endif // USE_NON_MATCHING && __widberg__

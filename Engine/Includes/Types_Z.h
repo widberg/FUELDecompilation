@@ -16,4 +16,10 @@ typedef float F32;
 typedef char Char;
 typedef float Float;
 
+#undef FALSE
+#define FALSE false
+
+#undef TRUE
+#define TRUE true
+
 #endif

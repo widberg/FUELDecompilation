@@ -1,29 +1,28 @@
 #include "MapHUD.h"
 
-#include "Types_Z.h"
 #include "Name_Z.h"
+#include "Types_Z.h"
 
-#if USE_NON_MATCHING
-#ifdef __widberg__
+#if USE_NON_MATCHING && __widberg__
 EXTERN_C int __stdcall _0x00559EC0(int a1) asm("__0x00559EC0");
 EXTERN_C bool __cdecl _0x004A53E0();
-EXTERN_C char __usercall _0x00421F60@<al>(int *a1@<edi>) asm("__0x00421F60");
+EXTERN_C char __usercall _0x00421F60@<al>(float *a1@<edi>) asm("__0x00421F60");
 EXTERN_C int __cdecl _0x0049E980();
-EXTERN_C int __cdecl _0x004A7F40();
+EXTERN_C int __usercall _0x004A7F40@<eax>(float *a1@<edi>) asm("__0x004A7F40");
 EXTERN_C int __usercall _0x00577500@<eax>(int a1@<esi>) asm("__0x00577500");
 EXTERN_C int __cdecl _0x00422230();
-EXTERN_C int __usercall _0x00528160@<eax>(int a1@<eax>) asm("__0x00528160");
+EXTERN_C char __usercall _0x00528160@<al>(int a1@<eax>) asm("__0x00528160");
 EXTERN_C char __usercall _0x00677CB0@<al>(unsigned int a1@<edi>, unsigned int *a2@<esi>) asm("__0x00677CB0");
 EXTERN_C int __usercall _0x00579140@<eax>(int a1@<eax>) asm("__0x00579140");
 EXTERN_C const char *__usercall _0x00677D20@<eax>(signed int a1@<eax>) asm("__0x00677D20");
 EXTERN_C int __usercall _0x00441760@<eax>(char *a1@<edx>, const char *Format, ...) asm("__0x00441760");
-EXTERN_C void __cdecl __spoils<eax,ecx> _0x0052B490();
+EXTERN_C void __cdecl _0x0052B490();
 EXTERN_C void __usercall _0x0052B4B0(int a1@<eax>) asm("__0x0052B4B0");
-EXTERN_C int __userpurge _0x0046CDB0@<eax>(int a1@<esi>, int *a2, int a3, char a4) asm("__0x0046CDB0");
+EXTERN_C char *__userpurge _0x0046CDB0@<eax>(int a1@<esi>, int *a2, int a3, char a4) asm("__0x0046CDB0");
 EXTERN_C int __userpurge _0x0060F260@<eax>(int *a1@<eax>, int a2@<edi>, U32 *a3) asm("__0x0060F260");
 EXTERN_C int __cdecl _0x0062ABD0();
-EXTERN_C bool __usercall __spoils<> _0x00633170@<al>(int a1@<eax>) asm("__0x00633170");
-EXTERN_C int __cdecl _0x00577D70();
+EXTERN_C bool __usercall _0x00633170@<al>(int a1@<eax>) asm("__0x00633170");
+EXTERN_C int __usercall _0x00577D70@<eax>(int al@<eax>) asm("__0x00577D70");
 EXTERN_C int __usercall _0x00613B50@<eax>(int *a1@<ecx>, int a2@<edi>) asm("__0x00613B50");
 EXTERN_C int __userpurge _0x0060FA30@<eax>(int a1@<edx>, U32 *a2@<ebx>, float a3) asm("__0x0060FA30");
 
@@ -70,7 +69,7 @@ void __stdcall _0x004A54B0(int a1, float a2)
     char v30;         // [esp+17h] [ebp-95h]
     unsigned int v31; // [esp+18h] [ebp-94h] BYREF
     int v32;          // [esp+1Ch] [ebp-90h]
-    int v33[3];       // [esp+20h] [ebp-8Ch] BYREF
+    float v33[3];     // [esp+20h] [ebp-8Ch] BYREF
     char v34[128];    // [esp+2Ch] [ebp-80h] BYREF
 
     v2 = _0x00559EC0(0);
@@ -95,7 +94,7 @@ void __stdcall _0x004A54B0(int a1, float a2)
                     v34[0] = 0;
                     if (_0x0049E980())
                     {
-                        v7 = _0x004A7F40();
+                        v7 = _0x004A7F40(v33);
                         v6 = _0x00577500(v7);
                     }
                     else
@@ -103,7 +102,7 @@ void __stdcall _0x004A54B0(int a1, float a2)
                         v6 = 0;
                     }
                     v8 = *(U32 *)(_0x00A7C094 + 12988);
-                    if (v8 && v8 == 2 && (v9 = _0x00422230()) != 0 && (unsigned __int8)_0x00528160(v9) || !v6)
+                    if (v8 && v8 == 2 && (v9 = _0x00422230()) != 0 && _0x00528160(v9) || !v6)
                     {
                         v10 = -1;
                         if (_0x00A019F8 == -1 || !_0x00677CB0(0x3E6u, &v31))
@@ -168,7 +167,7 @@ void __stdcall _0x004A54B0(int a1, float a2)
                                     v20 = *(U32 *)(v17 + 72);
                                     if (v20 == 5 || v20 == 4)
                                     {
-                                        v21 = _0x00577D70();
+                                        v21 = _0x00577D70(*(U32 *)(v17 + 660));
                                         if (v21 == 1)
                                             v19 = 0;
                                         else
@@ -235,5 +234,4 @@ void __stdcall _0x004A54B0(int a1, float a2)
         }
     }
 }
-#endif // __widberg__
-#endif // USE_NON_MATCHING
+#endif // USE_NON_MATCHING && __widberg__

@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.25)
 
+if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
+  message(FATAL_ERROR "Prevented in-tree built. Please create a build directory outside of the FUELDecompilation source code and call cmake from there")
+endif()
+
 set(CMAKE_BUILD_TYPE RelWithDebInfo) # Override build type for correct optimization flags
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # Generate compile_commands.json for clangd
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION OFF) # Disable LTO
@@ -601,6 +605,7 @@ add_library(Engine STATIC
 	Engine/Includes/LodDynAgent_Z.h
 	Engine/Includes/LodMove_Z.h
 	Engine/Includes/Lod_Z.h
+	Engine/Includes/Main_Z.h
 	Engine/Includes/MaterialAnim_Z.h
 	Engine/Includes/MaterialObj_Z.h
 	Engine/Includes/Material_Z.h

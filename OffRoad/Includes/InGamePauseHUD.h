@@ -30,10 +30,8 @@ public:
     virtual void InGamePauseHUD_vftable_22();
 };
 
-#if USE_NON_MATCHING
-#ifdef __widberg__
+#if USE_NON_MATCHING && __widberg__
 int __usercall InGamePauseHUD_VehicleAllowed@<eax>(InGamePauseHUD *this_@<esi>, VehicleData *iVehicleData@<edi>);
-#endif // __widberg__
-#endif // USE_NON_MATCHING
+#endif // USE_NON_MATCHING && __widberg__
 
 #endif // _IN_GAME_PAUSE_HUD_H_

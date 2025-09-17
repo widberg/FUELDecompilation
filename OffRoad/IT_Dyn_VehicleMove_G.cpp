@@ -2,8 +2,7 @@
 
 #include "Types_Z.h"
 
-#if USE_NON_MATCHING
-#ifdef __widberg__
+#if USE_NON_MATCHING && __widberg__
 EXTERN_C char __stdcall _0x005280A0(float a1, float a2) asm("__0x005280A0");
 EXTERN_C bool __thiscall _0x0052E6D0(float *this_) asm("__0x0052E6D0");
 EXTERN_C char __userpurge _0x00527BF0@<al>(int *a1@<ecx>, int a2@<edi>, int a3@<esi>, int *a4) asm("__0x00527BF0");
@@ -88,5 +87,4 @@ LABEL_19:
     result = 1;
   return result;
 }
-#endif // __widberg__
-#endif // USE_NON_MATCHING
+#endif // USE_NON_MATCHING && __widberg__

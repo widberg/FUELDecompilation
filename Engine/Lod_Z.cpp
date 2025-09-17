@@ -2,8 +2,7 @@
 
 #include "Types_Z.h"
 
-#if USE_NON_MATCHING
-#ifdef __widberg__
+#if USE_NON_MATCHING && __widberg__
 EXTERN_C double __stdcall _0x0040ED20(float a1) asm("__0x0040ED20");
 
 EXTERN_C float _0x00A66214;
@@ -366,5 +365,4 @@ char __userpurge _0x00807900@<al>(U32 *a1@<ebx>, float *a2@<esi>, float *a3, int
   }
   return result;
 }
-#endif // __widberg__
-#endif // USE_NON_MATCHING
+#endif // USE_NON_MATCHING && __widberg__
