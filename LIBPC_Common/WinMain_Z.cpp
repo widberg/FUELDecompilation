@@ -1,11 +1,15 @@
-#include <float.h>
 #define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
 #include <Windows.h>
 #include <shellapi.h>
+#include <shlwapi.h>
 
+#include <cfloat>
 #include <cstdio>
 #include <cstdlib>
+#include <direct.h>
 #include <mbstring.h>
+#include <cassert>
 
 #include "Main_Z.h"
 #include "Types_Z.h"
@@ -364,6 +368,194 @@ LRESULT __stdcall _0x0081E550(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
         goto LABEL_59;
     }
     return result;
+}
+
+EXTERN_C BOOL __stdcall _0x00820530(HWND hWnd, LPARAM a2) asm("__0x00820530");
+EXTERN_C void __usercall _0x0041ED80(char *a1@<edx>, const char *Format, ...) asm("__0x0041ED80");
+EXTERN_C char __userpurge _0x0068B170@<al>(LPSTR a1@<eax>, int a2) asm("__0x0068B170");
+EXTERN_C int __cdecl _0x006DC870(const char *a1, ...);
+EXTERN_C char __thiscall _0x00830DD0(const char *this_) asm("__0x00830DD0");
+
+EXTERN_C char _0x00A7D490[128];
+EXTERN_C U32 _0x00A7C078;
+EXTERN_C char _0x00A7C118[2052];
+EXTERN_C char _0x00A7D390[256];
+EXTERN_C char _0x00A7CC39[256];
+EXTERN_C char _0x00A7CE39[256];
+EXTERN_C U32 _0x00A7D348;
+EXTERN_C char _0x00A7D039[256];
+
+void __stdcall _0x008205C0()
+{
+    DELINKFUNCTION(0x008205C0);
+    const char *v0;                                // eax
+    LPSTR v1;                                      // eax
+    int v2;                                        // eax
+    char v3;                                       // cl
+    char *v4;                                      // eax
+    const char *v5;                                // edi
+    char *v6;                                      // eax
+    int v7;                                        // esi
+    char *v8;                                      // eax
+    char v9;                                       // cl
+    int i;                                         // eax
+    CHAR *v11;                                     // esi
+    int v12;                                       // edi
+    char *v13;                                     // eax
+    char v14;                                      // cl
+    CHAR *v15;                                     // esi
+    CHAR v16;                                      // al
+    HMODULE v17;                                   // ebx
+    BOOL(__stdcall * v18)(HWND, LPSTR, int, BOOL); // ebp
+    char *v19;                                     // edi
+    unsigned int v21;                              // eax
+    char *v22;                                     // edi
+    int v24;                                       // eax
+    char v25;                                      // cl
+    char *v26;                                     // edi
+    char *v28;                                     // eax
+    unsigned int v30;                              // eax
+    char *v31;                                     // edi
+    int v33;                                       // eax
+    char v34;                                      // cl
+    char v35[265];                                 // [esp+20h] [ebp-48Ch] BYREF
+    char Dir[128];                                 // [esp+128h] [ebp-384h] BYREF
+    char Filename[128];                            // [esp+1A8h] [ebp-304h] BYREF
+    char Ext[128];                                 // [esp+228h] [ebp-284h] BYREF
+    CHAR Buffer[256];                              // [esp+2A8h] [ebp-204h] BYREF
+    CHAR RootPathName[260];                        // [esp+3A8h] [ebp-104h] BYREF
+
+    EnumWindows(_0x00820530, 0);
+    v0 = GetCommandLineA();
+    _splitpath(v0, 0, Dir, Filename, Ext);
+    _0x0041ED80((char *)_0x00A7D490, "%s%s", Filename, Ext);
+    v1 = GetCommandLineA();
+    _0x0068B170(v1, (int)&_0x00A7C078);
+    if (strlen(Dir))
+    {
+        if (!strlen(_0x00A7C118))
+            goto LABEL_17;
+        v4 = strstr(_0x00A7C118, "\"");
+        if (v4 && (v5 = v4 + 1, (v6 = strstr(v4 + 1, "\"")) != 0))
+        {
+            v7 = v6 - v5;
+            strncpy(_0x00A7D390, v5, v6 - v5);
+            _0x00A7D390[v7] = 0;
+        }
+        else
+        {
+            v8 = _0x00A7D390;
+            do
+            {
+                v9 = *(v8 - 4728);
+                *v8++ = v9;
+            } while (v9);
+        }
+        for (i = strlen(_0x00A7D390); i >= 0; --i)
+        {
+            if (_0x00A7D390[i] == 92)
+                break;
+        }
+        _0x00A7D390[i + 1] = 0;
+    }
+    else
+    {
+        Buffer[0] = 0;
+        GetCurrentDirectoryA(0x100u, Buffer);
+        v2 = 0;
+        do
+        {
+            v3 = Buffer[v2];
+            _0x00A7D390[v2++] = v3;
+        } while (v3);
+        *(U16 *)&_0x00A7D390[strlen(_0x00A7D390)] = 92;
+    }
+    if (PathFileExistsA(_0x00A7D390))
+    {
+#if !USE_BUGFIXES
+        // This is annoying and shouldn't be printed
+        _0x006DC870("AliasPath : %s", _0x00A7D390);
+#endif // !USE_BUGFIXES
+        _chdir(_0x00A7D390);
+    }
+LABEL_17:
+    RootPathName[0] = 0;
+    GetLogicalDriveStringsA(0x100u, RootPathName);
+    v11 = RootPathName;
+    v12 = 0;
+LABEL_18:
+    if (!*v11)
+        goto LABEL_23;
+    do
+    {
+        if (GetDriveTypeA(v11) == 5)
+        {
+            v13 = v11;
+            do
+            {
+                v14 = *v13;
+                _0x00A7CC39[v12 - (U32)v11 + (U32)v13] = *v13;
+                ++v13;
+            } while (v14);
+            v12 += strlen(v11) + 1;
+        }
+    LABEL_23:
+        v15 = &v11[strlen(v11)];
+        v16 = *v15;
+        v11 = v15 + 1;
+        if (v16)
+            goto LABEL_18;
+    } while (*v11);
+    _0x00A7CC39[v12] = 0;
+    v17 = LoadLibraryA("SHELL32.DLL");
+    v18 = (BOOL(__stdcall *)(HWND, LPSTR, int, BOOL))GetProcAddress(v17, "SHGetSpecialFolderPath");
+    if (v18 || (v18 = (BOOL(__stdcall *)(HWND, LPSTR, int, BOOL))GetProcAddress(v17, "SHGetSpecialFolderPathA")) != 0)
+    {
+        if (v18(0, &v35[1], 26, 1) >= 0)
+        {
+            v19 = v35;
+            while (*++v19)
+                ;
+            *(U16 *)v19 = 92;
+            v21 = strlen(_0x00A7D139) + 1;
+            v22 = v35;
+            while (*++v22)
+                ;
+            memcpy(v22, _0x00A7D139, v21);
+            _0x00830DD0(&v35[1]);
+            v24 = 0;
+            do
+            {
+                v25 = v35[v24 + 1];
+                _0x00A7CE39[v24++] = v25;
+            } while (v25);
+        }
+        if (v18(0, &v35[1], 5, 1) >= 0)
+        {
+            v26 = v35;
+            while (*++v26)
+                ;
+            *(U16 *)v26 = 92;
+            v28 = v35;
+            while (*++v28)
+                ;
+            strcpy(v28, "My Games\\");
+            v30 = strlen(_0x00A7D139) + 1;
+            v31 = v35;
+            while (*++v31)
+                ;
+            memcpy(v31, _0x00A7D139, v30);
+            if ((_0x00A7D348 & 0x80000) == 0)
+                _0x00830DD0(&v35[1]);
+            v33 = 0;
+            do
+            {
+                v34 = v35[v33 + 1];
+                _0x00A7D039[v33++] = v34;
+            } while (v34);
+        }
+        FreeLibrary(v17);
+    }
 }
 #else
 ADDRESSSYMBOL(0x0081E340, "_WinMain@16");

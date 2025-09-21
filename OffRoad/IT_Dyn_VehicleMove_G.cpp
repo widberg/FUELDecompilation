@@ -12,7 +12,7 @@ EXTERN_C bool __thiscall _0x00401800(int *this_) asm("__0x00401800");
 EXTERN_C int __thiscall _0x004103A0(int *this_) asm("__0x004103A0");
 EXTERN_C double __usercall _0x0040FD10@<fp0>(U8 *this_@<ecx>, float *a2@<eax>) asm("__0x0040FD10");
 EXTERN_C double __stdcall _0x0040ED20(float a1) asm("__0x0040ED20");
-EXTERN_C double __usercall _0x00445500@<fp0>(float *a1@<eax>, int a2@<ecx>) asm("__0x00445500");
+double __usercall _0x00445500@<fp0>(float *a1@<eax>, int a2@<ecx>);
 
 EXTERN_C int _0x00A7C0B0;
 EXTERN_C int _0x00A7C078;
