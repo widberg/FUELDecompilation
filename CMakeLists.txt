@@ -800,7 +800,7 @@ else()
     message(FATAL_ERROR "Invalid memory allocator specified. Options are 'msvcrt', 'dmalloc', and 'mimalloc'.")
 endif()
 
-target_link_libraries(LIBPC_Common INTERFACE
+target_link_libraries(LIBPC_Common PUBLIC
     COMCTL32.lib
     WS2_32.lib
     ODBC32.lib
@@ -841,20 +841,22 @@ target_link_libraries(LIBPC_Common PUBLIC
 )
 
 add_library(LIBPC_TNL STATIC
+    LIBPC_TNL/D3DTnL_Renderer_Z.cpp
     LIBPC_TNL/D3DTnL_RendererAvi_Z.cpp
+    LIBPC_TNL/Includes/D3DTnL_Renderer_Z.h
 )
 
-target_include_directories(LIBPC_TNL INTERFACE
+target_include_directories(LIBPC_TNL PUBLIC
     LIBPC_TNL/Includes
 )
 
-target_link_libraries(LIBPC_TNL INTERFACE
+target_link_libraries(LIBPC_TNL PUBLIC
     LIBPC_Common
 )
 
 add_library(DXSDK INTERFACE)
 
-target_include_directories(DXSDK INTERFACE
+target_include_directories(DXSDK SYSTEM INTERFACE
     "${DXSDK_DIR}/Include"
 )
 

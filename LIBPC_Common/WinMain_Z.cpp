@@ -9,7 +9,6 @@
 #include <cstdlib>
 #include <direct.h>
 #include <mbstring.h>
-#include <cassert>
 
 #include "Main_Z.h"
 #include "Types_Z.h"

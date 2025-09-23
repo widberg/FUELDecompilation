@@ -17,4 +17,7 @@ private:
     U32 m_ID;
 };
 
+EXTERN_C U8 g_ChartoLower[256];
+EXTERN_C U32 Crc32Tab[];
+
 #endif // _NAME_Z_H_
