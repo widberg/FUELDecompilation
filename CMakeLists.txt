@@ -9,7 +9,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # Generate compile_commands.json for clang
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION OFF) # Disable LTO
 cmake_policy(SET CMP0091 NEW) # Enable MSVC runtime library selection
 set(CMAKE_MSVC_RUNTIME_LIBRARY "") # Manually set runtime library to avoid warning
-add_compile_options("/MT$<$<CONFIG:Debug>:d>" $<$<COMPILE_LANGUAGE:CXX>:/GR> /GS- /fp:fast) # Use static runtime libraries
+add_compile_options("/MT$<$<CONFIG:Debug>:d>" "$<$<COMPILE_LANGUAGE:CXX>:/GR>" "/GS-" "/fp:fast") # Use static runtime libraries
 add_link_options("/MANIFEST:NO") # Disable manifest generation
 add_compile_definitions("_CRT_SECURE_NO_DEPRECATE" "_CRT_SECURE_NO_WARNINGS" "_WINSOCK_DEPRECATED_NO_WARNINGS") # Disable CRT/Winsock warnings
 
@@ -93,7 +93,7 @@ set(X64DBG_INSTALL_DIR "$ENV{X64DBG_INSTALL_DIR}" CACHE STRING "Path to x64dbg i
 set(DXSDK_DIR "$ENV{DXSDK_DIR}" CACHE STRING "Path to Microsoft DirectX SDK (August 2008) install directory.")
 
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
-    add_compile_options("-Wno-microsoft" "-Wno-invalid-offsetof") # I know what I'm doing
+    add_compile_options("-Wno-microsoft" "-Wno-invalid-offsetof" "-Wunused" "-Wuninitialized") # I know what I'm doing
 endif()
 
 add_executable(FUEL WIN32
@@ -636,6 +636,7 @@ add_library(Engine STATIC
     Engine/Includes/PlayBlendAnim_Z.h
     Engine/Includes/PlayerInfo_Z.h
     Engine/Includes/Points_Z.h
+    Engine/Includes/Renderer_Z.h
     Engine/Includes/ResIDBackGlobalInGameDef.h
     Engine/Includes/ResIDDef.h
     Engine/Includes/ResIDGlobalInGameDef.h

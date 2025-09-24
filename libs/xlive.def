@@ -87,7 +87,7 @@ EXPORTS
 	XGetOverlappedResult @1083 NONAME
 	XLiveInitialize @5000 NONAME
 	XLiveInput @5001 NONAME
-	XLiveRender @5002 NONAME
+	XLiveRender@0 @5002 NONAME
 	XLiveUninitialize@0 @5003 NONAME
 	XLiveOnCreateDevice @5005 NONAME
 	XLiveOnDestroyDevice @5006 NONAME

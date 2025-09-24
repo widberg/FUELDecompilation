@@ -5,6 +5,31 @@
 
 #include "Name_Z.h"
 
+STATIC_ASSERT_SIZE(D3D_Renderer_Z, 0x3EC24u);
+STATIC_ASSERT_OFFSET(D3D_Renderer_Z, field_4, 0x4);
+STATIC_ASSERT_OFFSET(D3D_Renderer_Z, field_D10, 0xD10);
+STATIC_ASSERT_OFFSET(D3D_Renderer_Z, field_D14, 0xD14);
+STATIC_ASSERT_OFFSET(D3D_Renderer_Z, field_E30, 0xE30);
+STATIC_ASSERT_OFFSET(D3D_Renderer_Z, field_E80, 0xE80);
+STATIC_ASSERT_OFFSET(D3D_Renderer_Z, field_10C8, 0x10C8);
+STATIC_ASSERT_OFFSET(D3D_Renderer_Z, field_110C, 0x110C);
+STATIC_ASSERT_OFFSET(D3D_Renderer_Z, pD3D, 0x3200);
+STATIC_ASSERT_OFFSET(D3D_Renderer_Z, pD3DDevice, 0x3204);
+STATIC_ASSERT_OFFSET(D3D_Renderer_Z, hDestWindowOverride, 0x3208);
+STATIC_ASSERT_OFFSET(D3D_Renderer_Z, field_37CC, 0x37CC);
+STATIC_ASSERT_OFFSET(D3D_Renderer_Z, field_3C4E0, 0x3C4E0);
+STATIC_ASSERT_OFFSET(D3D_Renderer_Z, field_3CBDA, 0x3CBDA);
+STATIC_ASSERT_OFFSET(D3D_Renderer_Z, field_3CBDC, 0x3CBDC);
+STATIC_ASSERT_OFFSET(D3D_Renderer_Z, field_3CBDD, 0x3CBDD);
+STATIC_ASSERT_OFFSET(D3D_Renderer_Z, field_3CBE5, 0x3CBE5);
+STATIC_ASSERT_OFFSET(D3D_Renderer_Z, field_3CC10, 0x3CC10);
+STATIC_ASSERT_OFFSET(D3D_Renderer_Z, field_3CC14, 0x3CC14);
+STATIC_ASSERT_OFFSET(D3D_Renderer_Z, field_3CC18, 0x3CC18);
+STATIC_ASSERT_OFFSET(D3D_Renderer_Z, field_3EB70, 0x3EB70);
+
+SYMBOLSYMBOL("_XLiveRender", "_XLiveRender@0");
+EXTERN_C void __stdcall XLiveRender(void);
+
 #if USE_NON_MATCHING && __widberg__
 EXTERN_C char __usercall _0x0086E4B0@<al>(void *a1@<ecx>, const char *a2@<eax>) asm("__0x0086E4B0");
 EXTERN_C bool __userpurge _0x0086E460@<al>(char *a1@<esi>, int a2) asm("__0x0086E460");
@@ -26,11 +51,11 @@ char __stdcall _0x00852EB0(int a3, int a4, char *lpBuffer, unsigned int *a6)
     unsigned __int8 *v8;      // edx
     int v9;                   // eax
     bool v10;                 // al
-    char *v11;          // eax MAPDST
+    char *v11;                // eax MAPDST
     int i;                    // ecx
     const char *v13;          // edi
     int v14;                  // esi
-    const char *v15;                // ebp
+    const char *v15;          // ebp
     bool v18;                 // zf
     int v19;                  // esi
     HRESULT v20;              // ebx
@@ -74,7 +99,7 @@ char __stdcall _0x00852EB0(int a3, int a4, char *lpBuffer, unsigned int *a6)
     int v61;                  // [esp+54h] [ebp-2208h]
     D3DXMACRO pDefines[32];   // [esp+58h] [ebp-2204h] BYREF
     CHAR pSrcFile[256];       // [esp+158h] [ebp-2104h] BYREF
-    char Str[8196];        // [esp+258h] [ebp-2004h] BYREF
+    char Str[8196];           // [esp+258h] [ebp-2004h] BYREF
 
     v4 = lpBuffer;
     v5 = _0x0086E4B0(lpBuffer, (const char *)(a4 + 272)) == 0;
@@ -276,5 +301,282 @@ LABEL_47:
     if (v36)
         v36->Release();
     return 0;
+}
+
+EXTERN_C int __thiscall _0x00644090(int this_) asm("__0x00644090");
+EXTERN_C int __usercall _0x008596F0@<eax>(U16 *a2@<edx>) asm("__0x008596F0");
+EXTERN_C char __stdcall _0x008562C0(int a1, int a2, char a3) asm("__0x008562C0");
+EXTERN_C int __usercall _0x0041ED80@<eax>(char *a1@<edx>, const char *Format, ...) asm("__0x0041ED80");
+EXTERN_C char __usercall _0x00830BC0@<al>(char *a1@<eax>) asm("__0x00830BC0");
+EXTERN_C void __userpurge _0x00728730(const CHAR *a1@<eax>, char *lpBuffer, int a3, int a4, int a5) asm("__0x00728730");
+EXTERN_C int __usercall _0x00842F20@<eax>(D3D_Renderer_Z *a1@<eax>) asm("__0x00842F20");
+EXTERN_C int __userpurge _0x0084D100@<eax>(int a1@<ecx>, D3D_Renderer_Z *a2@<esi>, UINT a3, UINT a4, D3DFORMAT a5) asm("__0x0084D100");
+EXTERN_C char __stdcall _0x00854D50(D3D_Renderer_Z *a1, int a2) asm("__0x00854D50");
+EXTERN_C HRESULT __usercall _0x00843010@<eax>(D3D_Renderer_Z *a1@<eax>) asm("__0x00843010");
+
+EXTERN_C U8 _0x00A7D7A6;
+EXTERN_C U8 _0x00A7D7A7;
+EXTERN_C U32 _0x00A7D340;
+EXTERN_C float _0x00A06608;
+EXTERN_C float _0x00A06604;
+EXTERN_C float _0x00A06600;
+EXTERN_C U32 _0x00A661F0;
+EXTERN_C U32 _0x00A7C078;
+
+void __thiscall _0x00858E60(D3D_Renderer_Z *this_)
+{
+    DELINKFUNCTION(0x00858E60);
+    int v2;                                                                                                // eax
+    LONG v5;                                                                                               // ecx
+    int v8;                                                                                                // eax
+    int v9;                                                                                                // ebx
+    char *v10;                                                                                             // edi
+    int v11;                                                                                               // edi
+    int *v12;                                                                                              // ebx
+    double v13;                                                                                            // st7
+    int v14;                                                                                               // eax
+    int v15;                                                                                               // ecx
+    bool v16;                                                                                              // cc
+    double v17;                                                                                            // st6
+    double v18;                                                                                            // st5
+    bool v19;                                                                                              // al
+    bool v20;                                                                                              // dl
+    int v21;                                                                                               // ebx
+    int v22;                                                                                               // eax
+    int v23;                                                                                               // ebx
+    int v24;                                                                                               // eax
+    int v25;                                                                                               // edx
+    int v26;                                                                                               // eax
+    int *v27;                                                                                              // ecx
+    int j;                                                                                                 // edx
+    char v29;                                                                                              // bl
+    __int16 v30;                                                                                           // ax
+    char v31;                                                                                              // al
+    int v32;                                                                                               // edx
+    unsigned __int16 v33;                                                                                  // bx
+    int v34;                                                                                               // edi
+    char v35;                                                                                              // al
+    bool v36;                                                                                              // zf
+    char v37;                                                                                              // dl
+    unsigned __int16 v38;                                                                                  // ax
+    int v39;                                                                                               // edi
+    int *v40;                                                                                              // eax
+    int v41;                                                                                               // eax
+    int v43;                                                                                               // [esp+34h] [ebp-44CF4h]
+    D3DCOLOR v44;                                                                                          // [esp+38h] [ebp-44CF0h]
+    float v45;                                                                                             // [esp+3Ch] [ebp-44CECh]
+    D3DFORMAT v46;                                                                                         // [esp+44h] [ebp-44CE4h] BYREF
+    char k;                                                                                                // [esp+4Bh] [ebp-44CDDh]
+    int v48;                                                                                               // [esp+4Ch] [ebp-44CDCh]
+    int i;                                                                                                 // [esp+50h] [ebp-44CD8h] SPLIT
+    void *v51;                                                                                             // [esp+50h] [ebp-44CD8h] SPLIT BYREF
+    int v52;                                                                                               // [esp+54h] [ebp-44CD4h]
+    char *v53;                                                                                             // [esp+58h] [ebp-44CD0h] BYREF
+    U8 v54[12];                                                                                            // [esp+60h] [ebp-44CC8h] BYREF
+    int v55;                                                                                               // [esp+6Ch] [ebp-44CBCh]
+    D3DRECT v56;                                                                                           // [esp+7Ch] [ebp-44CACh] BYREF
+    U8 v57[19364];                                                                                         // [esp+180h] [ebp-44BA8h] BYREF
+    int v58[65536];                                                                                        // [esp+4D28h] [ebp-40000h] BYREF
+    char FileName[4096];
+
+    if (_0x00A7D7A6 != 1)
+    {
+        v2 = this_->pD3DDevice->BeginScene();
+        _0x00A7D7A7 = v2 >= 0;
+        if (v2 >= 0)
+        {
+            if ((_0x00A7D340 & 2) != 0)
+                this_->pD3DDevice->SetRenderState(D3DRS_FILLMODE, 2);
+            else
+                this_->pD3DDevice->SetRenderState(D3DRS_FILLMODE, 3);
+            v5 = this_->field_D14;
+            v56.x2 = this_->field_D10;
+            v56.y2 = v5;
+            v56.x1 = 0;
+            v56.y1 = 0;
+            *(U64 *)&v54[4] = (__int64)(255.0 * _0x00A06608);
+            v45 = 1.0;
+            v44 = v54[4] | (((unsigned __int8)(__int64)(_0x00A06604 * 255.0) | (((unsigned __int8)(__int64)(_0x00A06600 * 255.0) | 0xFFFFFF00) << 8)) << 8);
+            if ((this_->field_110C & 1) != 0)
+                this_->pD3DDevice->Clear(1u, &v56, 7u, v44, v45, 0);
+            else
+                this_->pD3DDevice->Clear(1u, &v56, 6u, v44, v45, 0);
+            v55 = 0;
+            for (i = 0; i < 12; i += 2)
+            {
+                v8 = i - (unsigned __int8)this_->field_10C8 + 1193;
+                v9 = *(&this_->field_4 + 3 * v8);
+                v10 = (char *)this_ + 12 * v8;
+                v53 = v10;
+                v52 = v9;
+                if (v9)
+                {
+                    this_->field_3CC18 = -1;
+                    this_->field_3CC14 = -1;
+                    _0x00842F20(this_);
+                    if (v9 >= 0x8000)
+                        v52 = 0x8000;
+                    v11 = *((U32 *)v10 + 2);
+                    v12 = *(int **)(v11 + 216);
+                    _0x00644090((int)v57);
+                    v13 = (double)v12[30];
+                    v14 = v12[32];
+                    v15 = v55;
+                    v16 = v55 < 4;
+                    *(float *)&v57[264] = v13;
+                    v17 = (double)v12[31];
+                    *(U32 *)&v57[272] = v14;
+                    *(U32 *)&v57[216] = v55;
+                    *(float *)&v57[268] = v17;
+                    *(float *)&v57[256] = (float)v12[28];
+                    v18 = (double)v12[29];
+                    *(U32 *)this_->field_3C4E0 = 0x1010101;
+                    *(U32 *)&this_->field_3C4E0[4] = 0x1010101;
+                    *(U32 *)&this_->field_3C4E0[8] = 0x1010101;
+                    *(U32 *)&this_->field_3C4E0[12] = 0x1010101;
+                    *(float *)&v57[260] = v18;
+                    *(U32 *)&this_->field_3C4E0[16] = 0x1010101;
+                    *(U32 *)&this_->field_3C4E0[20] = 0x1010101;
+                    *(U16 *)&this_->field_3C4E0[24] = 0x101;
+                    this_->field_3C4E0[18] = 1;
+                    v19 = v16 && this_->field_3CBDA && (_0x00A7D340 & 2) == 0;
+                    this_->field_3C4E0[21] = v19;
+                    this_->field_3C4E0[22] = v19;
+                    this_->field_3C4E0[23] = v19;
+                    v20 = v15 < 4 && this_->field_3CBDC;
+                    this_->field_3C4E0[14] = v20;
+                    this_->field_3C4E0[20] = this_->field_3CBDD;
+                    if (v15 != 4)
+                    {
+                        if (this_->field_3CBE5 && v19)
+                            this_->field_3CC14 = this_->field_3CC10;
+                        if ((*(U32 *)&v57[272] & 0x2000000) != 0 && (v21 = v12[35]) != 0)
+                        {
+                            v22 = *(U32 *)(*(U32 *)((U8 *)&_0x00A7C078 + 16) + 16) + 16 * (*(int *)(v21 + 156) >> 8);
+                            if (*(U8 *)v22 == *(U8 *)(v21 + 156))
+                                v23 = *(U32 *)(v22 + 4);
+                            else
+                                v23 = 0;
+                            this_->field_3CC18 = *(__int16 *)(v23 + 16);
+                            if (*(U16 *)(v23 + 16) == 0xFFFF || (double)*(int *)(v23 + 20) != v13 || (double)*(int *)(v23 + 24) != v17)
+                            {
+                                this_->Renderer_Z_vftable_61(*(unsigned __int16 *)(v23 + 16));
+                                if (this_->field_3CBE5)
+                                    v46 = D3DFMT_A16B16G16R16F;
+                                else
+                                    v46 = this_->field_37CC;
+                                v48 = (int)*(float *)&v57[268];
+                                *(U32 *)v54 = (int)*(float *)&v57[264];
+                                v24 = _0x0084D100(v48, this_, *(UINT *)v54, v48, v46);
+                                this_->field_3CC18 = v24;
+                                *(U32 *)(this_->field_3EB70 + 12 * v24) = v23;
+                                v25 = *(U32 *)v54;
+                                v26 = v48;
+                                *(U16 *)(v23 + 16) = this_->field_3CC18;
+                                *(U32 *)(v23 + 20) = v25;
+                                *(U32 *)(v23 + 24) = v26;
+                            }
+                            *(float *)&v57[260] = 0.0;
+                            *(float *)&v57[256] = 0.0;
+                            _0x00842F20(this_);
+                        }
+                        else
+                        {
+                            _0x00842F20(this_);
+                        }
+                    }
+                    v27 = v58;
+                    v48 = v11;
+                    for (j = 1; v52; v11 += 272)
+                    {
+                        v29 = *(U8 *)(v11 + 4);
+                        --v52;
+                        if (v29 == 2)
+                        {
+                            v30 = 0;
+                        }
+                        else
+                        {
+                            *(U64 *)v54 = (__int64)(65535.0 / (*(float *)v11 + 1.0));
+                            v30 = *(U16 *)v54;
+                        }
+                        *(U16 *)v27 = v30;
+                        *((U8 *)v27 + 2) = *(U8 *)(v11 + 7);
+                        *((U8 *)v27 + 4) = *(U8 *)(v11 + 6);
+                        v31 = *(U8 *)(v11 + 5);
+                        *((U16 *)v27 + 3) = j;
+                        *((U8 *)v27 + 3) = v29;
+                        *((U8 *)v27 + 5) = v31;
+                        ++j;
+                        v27 += 2;
+                    }
+                    v32 = *(v27 - 2);
+                    *(v27 - 1) |= 0xFFFF0000;
+                    *(v27 - 2) = v32;
+                    v33 = _0x008596F0((U16 *)v58);
+                    *(U8 *)&v46 = 0;
+                    for (k = 0; v33 != 0xFFFF; v33 = HIWORD(v58[2 * *(U32 *)v54 + 1]))
+                    {
+                        *(U32 *)v54 = v33;
+                        v34 = v48 + 272 * v33;
+                        if (*(int *)(v34 + 264) < 0 && this_->field_3C4E0[*(unsigned __int8 *)(v34 + 4)])
+                        {
+                            v35 = *(U8 *)(v34 + 5);
+                            if ((U8)v46 != v35)
+                                k = *(U8 *)(v34 + 6);
+                            v36 = k == *(U8 *)(v34 + 6);
+                            *(U8 *)&v46 = v35;
+                            if (!v36)
+                                memset(this_->field_E80, 0, sizeof(this_->field_E80));
+                            v37 = *(U8 *)(v34 + 4);
+                            v36 = v37 == this_->field_E30;
+                            k = *(U8 *)(v34 + 6);
+                            if (!v36)
+                                _0x008562C0((int)this_, (int)v57, v37);
+                            v38 = v33;
+                            if (this_->field_3C4E0[*(unsigned __int8 *)(v34 + 4)])
+                            {
+                                do
+                                {
+                                    v39 = 272 * v38;
+                                    if (!_0x00854D50(this_, v39 + v48))
+                                        break;
+                                    v40 = (int *)(v39 + *((U32 *)v53 + 2) + 268);
+                                    if (*v40 < 0)
+                                        break;
+                                    v38 = *(U16 *)v40;
+                                } while (this_->field_3C4E0[*(unsigned __int8 *)(v39 + v48 + 4)]);
+                            }
+                        }
+                    }
+                }
+                D3DPERF_EndEvent();
+                ++v55;
+            }
+            this_->field_3CC18 = -1;
+            _0x00843010(this_);
+            XLiveRender();
+            this_->pD3DDevice->EndScene();
+            v41 = this_->field_110C;
+            if ((v41 & 0x800) != 0)
+            {
+                this_->field_110C = v41 & 0xFFFFF7FF;
+                FileName[0] = 0;
+                do
+                {
+                    v43 = _0x00A661F0++;
+                    _0x0041ED80(FileName, "CAPTURE\\CAPTURE_%05d.TGA", v43);
+                } while (_0x00830BC0(FileName));
+                v51 = 0;
+                if (this_->Renderer_Z_vftable_101((int)&v51, (int)(int *)v54, (int)(int *)&v53, (int)(int *)&v46, 0))
+                {
+                    _0x00728730(FileName, (char *)v51, *(int *)v54, (int)v53, (unsigned __int8)v46);
+                    free(v51);
+                }
+            }
+        }
+        if (this_->pD3DDevice->Present(0, 0, this_->hDestWindowOverride, 0) == 0x88760868)
+            _0x00A7D7A6 = 1;
+    }
 }
 #endif // USE_NON_MATCHING && __widberg__

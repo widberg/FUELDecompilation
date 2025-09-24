@@ -140,13 +140,15 @@ EXTERN_C char *_0x00A3ECEC;
 HWND __cdecl _0x008209A0()
 {
     DELINKFUNCTION(0x008209A0);
-    char *v0;                // eax
-    const CHAR *v1;          // eax
     HWND result;             // eax
     int v3;                  // eax
     const char *v4;          // eax
     WNDCLASSW WndClass;      // [esp+8h] [ebp-82Ch] BYREF
+#if !USE_FMTK
+    char *v0;                // eax
+    const CHAR *v1;          // eax
     WCHAR WideCharStr[1026]; // [esp+30h] [ebp-804h] BYREF
+#endif // !USE_FMTK
 
     WndClass.style = 0;
     WndClass.lpfnWndProc = _0x0081E550;
