@@ -17,27 +17,41 @@ EXTERN_C void *_0x00A7C080;
 EXTERN_C U32 _0x00A7D360;
 EXTERN_C Bool _0x00A65879;
 
+#if USE_FMTK
+void fmtk_extension_point_after_engine_init(void);
+void fmtk_extension_point_before_core_main_loop(void);
+void fmtk_extension_point_before_engine_shutdown(void);
+#endif // USE_FMTK
+
 Bool EngineMain()
 {
-  DELINKFUNCTION(0x006891E0);
-  _control87(0x100u, 0x300u);
-  _control87(0x10000u, 0x30000u);
-  _0x00689280();
-  if ( _0x00A7D370 )
-    _0x00830710(1);
-  _0x00A7D378 = _0x00830710(5);
-  _0x00A7D368 = 0.02;
-  _0x00A7D370 = 0;
-  _0x0069A590(_0x00A7C080, "BSource User.tsc", 0);
-  ++_0x00A7D360;
-  do
-  {
-    while ( _0x00A65879 )
-      ;
-    _0x00688BF0();
-  }
-  while ( !_0x00820420() );
-  _0x00689BA0();
-  return TRUE;
+    DELINKFUNCTION(0x006891E0);
+    _control87(0x100u, 0x300u);
+    _control87(0x10000u, 0x30000u);
+    _0x00689280();
+#if USE_FMTK
+    fmtk_extension_point_after_engine_init();
+#endif // USE_FMTK
+    if (_0x00A7D370)
+        _0x00830710(1);
+    _0x00A7D378 = _0x00830710(5);
+    _0x00A7D368 = 0.02;
+    _0x00A7D370 = 0;
+    _0x0069A590(_0x00A7C080, "BSource User.tsc", 0);
+    ++_0x00A7D360;
+    do
+    {
+        while (_0x00A65879)
+            ;
+#if USE_FMTK
+        fmtk_extension_point_before_core_main_loop();
+#endif // USE_FMTK
+        _0x00688BF0();
+    } while (!_0x00820420());
+#if USE_FMTK
+    fmtk_extension_point_before_engine_shutdown();
+#endif // USE_FMTK
+    _0x00689BA0();
+    return TRUE;
 }
 #endif // USE_NON_MATCHING && __widberg__

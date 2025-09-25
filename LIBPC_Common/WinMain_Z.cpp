@@ -206,6 +206,10 @@ EXTERN_C U8 _0x00A7D7FC;
 EXTERN_C U8 _0x00A7D7FE;
 EXTERN_C U8 _0x00A7D7FF;
 
+#if USE_FMTK
+    bool fmtk_extension_point_before_winproc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
+#endif // USE_FMTK
+
 LRESULT __stdcall _0x0081E550(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
     DELINKFUNCTION(0x0081E550);
@@ -219,6 +223,10 @@ LRESULT __stdcall _0x0081E550(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 
     _control87(0x100u, 0x300u);
     _control87(0x10000u, 0x30000u);
+#if USE_FMTK
+    if (fmtk_extension_point_before_winproc(hWnd, Msg, wParam, lParam))
+        return true;
+#endif // USE_FMTK
     if (Msg <= 0xF)
     {
         if (Msg == 15)

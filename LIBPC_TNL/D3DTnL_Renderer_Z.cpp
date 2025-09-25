@@ -323,6 +323,10 @@ EXTERN_C float _0x00A06600;
 EXTERN_C U32 _0x00A661F0;
 EXTERN_C U32 _0x00A7C078;
 
+#if USE_FMTK
+void fmtk_extension_point_before_d3d_end_scene(void);
+#endif // USE_FMTK
+
 void __thiscall _0x00858E60(D3D_Renderer_Z *this_)
 {
     DELINKFUNCTION(0x00858E60);
@@ -556,6 +560,9 @@ void __thiscall _0x00858E60(D3D_Renderer_Z *this_)
             this_->field_3CC18 = -1;
             _0x00843010(this_);
             XLiveRender();
+#if USE_FMTK
+            fmtk_extension_point_before_d3d_end_scene();
+#endif // USE_FMTK
             this_->pD3DDevice->EndScene();
             v41 = this_->field_110C;
             if ((v41 & 0x800) != 0)
@@ -575,7 +582,7 @@ void __thiscall _0x00858E60(D3D_Renderer_Z *this_)
                 }
             }
         }
-        if (this_->pD3DDevice->Present(0, 0, this_->hDestWindowOverride, 0) == 0x88760868)
+        if (this_->pD3DDevice->Present(0, 0, this_->hDestWindowOverride, 0) == D3DERR_DEVICELOST)
             _0x00A7D7A6 = 1;
     }
 }
