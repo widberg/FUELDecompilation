@@ -35,6 +35,10 @@ EXTERN_C U32 _0x00A67434;
 EXTERN_C U32 *_0x00A6538C;
 EXTERN_C char _0x009A16E0;
 
+#if USE_FMTK
+void fmtk_extension_point_map_hud_info(int hub);
+#endif // USE_FMTK
+
 void __stdcall _0x004A54B0(int a1, float a2)
 {
     DELINKFUNCTION(0x004A54B0);
@@ -118,6 +122,9 @@ void __stdcall _0x004A54B0(int a1, float a2)
                     }
                     _0x00441760(v34, "%s", v12);
                     v13 = *(U32 *)(a1 + 6876);
+#if USE_FMTK
+                    fmtk_extension_point_map_hud_info(v10);
+#endif // USE_FMTK
                     if (v10 != v13)
                     {
                         if (v13 == -1)

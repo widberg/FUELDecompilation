@@ -2523,54 +2523,7 @@ public:
     virtual void ComDBCommand_Z_vftable_0() override;
 };
 
-ADDRESSVFTABLE(0x009CCB64, NetPlayManager_Z);
-class __declspec(dllexport) NetPlayManager_Z
-{
-public:
-    ADDRESSVF(0x0072F020, NetPlayManager_Z, NetPlayManager_Z_vftable_0);
-    virtual void NetPlayManager_Z_vftable_0();
-    virtual void NetPlayManager_Z_vftable_1();
-    virtual int NetPlayManager_Z_vftable_2();
-    virtual int NetPlayManager_Z_vftable_3();
-    ADDRESSVF(0x0072EB90, NetPlayManager_Z, NetPlayManager_Z_vftable_4);
-    virtual void NetPlayManager_Z_vftable_4();
-    ADDRESSVF(0x0072E9B0, NetPlayManager_Z, NetPlayManager_Z_vftable_5);
-    virtual void NetPlayManager_Z_vftable_5();
-    virtual char NetPlayManager_Z_vftable_6(int, int);
-    virtual char NetPlayManager_Z_vftable_7(int);
-    virtual char NetPlayManager_Z_vftable_8(int);
-    virtual int NetPlayManager_Z_vftable_9();
-    virtual void NetPlayManager_Z_vftable_10(int, int, int, int, int);
-    ADDRESSVF(0x0072EA20, NetPlayManager_Z, NetPlayManager_Z_vftable_11);
-    virtual void NetPlayManager_Z_vftable_11();
-    virtual char NetPlayManager_Z_vftable_12();
-    virtual void NetPlayManager_Z_vftable_13();
-    virtual void NetPlayManager_Z_vftable_14();
-    virtual void NetPlayManager_Z_vftable_15(int);
-    virtual void NetPlayManager_Z_vftable_16(int);
-    virtual void NetPlayManager_Z_vftable_17(int);
-    virtual char NetPlayManager_Z_vftable_18(int);
-    virtual char NetPlayManager_Z_vftable_19(int);
-    virtual char NetPlayManager_Z_vftable_20();
-    virtual char NetPlayManager_Z_vftable_21();
-    ADDRESSVF(0x0072EC30, NetPlayManager_Z, NetPlayManager_Z_vftable_22);
-    virtual void NetPlayManager_Z_vftable_22();
-    ADDRESSVF(0x0072EC80, NetPlayManager_Z, NetPlayManager_Z_vftable_23);
-    virtual void NetPlayManager_Z_vftable_23();
-    virtual void NetPlayManager_Z_vftable_24(int);
-    virtual int NetPlayManager_Z_vftable_25();
-    virtual char NetPlayManager_Z_vftable_26(int);
-    virtual char NetPlayManager_Z_vftable_27(int);
-    virtual char NetPlayManager_Z_vftable_28(int);
-    virtual char NetPlayManager_Z_vftable_29();
-    virtual void NetPlayManager_Z_vftable_30(int, int);
-    ADDRESSVF(0x0072EB40, NetPlayManager_Z, NetPlayManager_Z_vftable_31);
-    virtual void NetPlayManager_Z_vftable_31();
-    virtual char NetPlayManager_Z_vftable_32();
-    virtual char NetPlayManager_Z_vftable_33(int);
-    virtual char NetPlayManager_Z_vftable_34();
-    virtual void NetPlayManager_Z_vftable_35(int);
-};
+#include "NetPlayManager_Z.h"
 
 ADDRESSVFTABLE(0x009C2C2C, GameMissions_G);
 class __declspec(dllexport) GameMissions_G : public GameMissionInfo_G
@@ -5725,68 +5678,7 @@ public:
     char data[28];
 };
 
-ADDRESSVFTABLE(0x009DA6F4, LiveNetPlayManager_Z);
-class __declspec(dllexport) LiveNetPlayManager_Z : public NetPlayManager_Z
-{
-public:
-    ADDRESSVF(0x008737E0, LiveNetPlayManager_Z, NetPlayManager_Z_vftable_4);
-    virtual void NetPlayManager_Z_vftable_4() override;
-    ADDRESSSYMBOL(0x00874410, "?NetPlayManager_Z_vftable_6@LiveNetPlayManager_Z@@UAEDHH@Z");
-    virtual char NetPlayManager_Z_vftable_6(int, int) override;
-    ADDRESSSYMBOL(0x00874430, "?NetPlayManager_Z_vftable_7@LiveNetPlayManager_Z@@UAEDH@Z");
-    virtual char NetPlayManager_Z_vftable_7(int) override;
-    ADDRESSSYMBOL(0x00874450, "?NetPlayManager_Z_vftable_8@LiveNetPlayManager_Z@@UAEDH@Z");
-    virtual char NetPlayManager_Z_vftable_8(int) override;
-    ADDRESSSYMBOL(0x00873DD0, "?NetPlayManager_Z_vftable_10@LiveNetPlayManager_Z@@UAEXHHHHH@Z");
-    virtual void NetPlayManager_Z_vftable_10(int, int, int, int, int) override;
-    ADDRESSSYMBOL(0x00849260, "?NetPlayManager_Z_vftable_12@LiveNetPlayManager_Z@@UAEDXZ");
-    virtual char NetPlayManager_Z_vftable_12() override;
-    ADDRESSSYMBOL(0x00849270, "?NetPlayManager_Z_vftable_13@LiveNetPlayManager_Z@@UAEXXZ");
-    virtual void NetPlayManager_Z_vftable_13() override;
-    ADDRESSSYMBOL(0x00873F50, "?NetPlayManager_Z_vftable_14@LiveNetPlayManager_Z@@UAEXXZ");
-    virtual void NetPlayManager_Z_vftable_14() override;
-    ADDRESSSYMBOL(0x00873ED0, "?NetPlayManager_Z_vftable_16@LiveNetPlayManager_Z@@UAEXH@Z");
-    virtual void NetPlayManager_Z_vftable_16(int) override;
-    ADDRESSSYMBOL(0x00873F00, "?NetPlayManager_Z_vftable_17@LiveNetPlayManager_Z@@UAEXH@Z");
-    virtual void NetPlayManager_Z_vftable_17(int) override;
-    ADDRESSVF(0x00874150, LiveNetPlayManager_Z, NetPlayManager_Z_vftable_22);
-    virtual void NetPlayManager_Z_vftable_22() override;
-    ADDRESSVF(0x008741F0, LiveNetPlayManager_Z, NetPlayManager_Z_vftable_23);
-    virtual void NetPlayManager_Z_vftable_23() override;
-    ADDRESSSYMBOL(0x008742D0, "?NetPlayManager_Z_vftable_24@LiveNetPlayManager_Z@@UAEXH@Z");
-    virtual void NetPlayManager_Z_vftable_24(int) override;
-    ADDRESSSYMBOL(0x008738A0, "?NetPlayManager_Z_vftable_25@LiveNetPlayManager_Z@@UAEHXZ");
-    virtual int NetPlayManager_Z_vftable_25() override;
-    ADDRESSSYMBOL(0x00874380, "?NetPlayManager_Z_vftable_26@LiveNetPlayManager_Z@@UAEDH@Z");
-    virtual char NetPlayManager_Z_vftable_26(int) override;
-    ADDRESSSYMBOL(0x008743B0, "?NetPlayManager_Z_vftable_27@LiveNetPlayManager_Z@@UAEDH@Z");
-    virtual char NetPlayManager_Z_vftable_27(int) override;
-    ADDRESSSYMBOL(0x008738D0, "?NetPlayManager_Z_vftable_28@LiveNetPlayManager_Z@@UAEDH@Z");
-    virtual char NetPlayManager_Z_vftable_28(int) override;
-    ADDRESSSYMBOL(0x00873930, "?NetPlayManager_Z_vftable_29@LiveNetPlayManager_Z@@UAEDXZ");
-    virtual char NetPlayManager_Z_vftable_29() override;
-    ADDRESSSYMBOL(0x00873E80, "?NetPlayManager_Z_vftable_30@LiveNetPlayManager_Z@@UAEXHH@Z");
-    virtual void NetPlayManager_Z_vftable_30(int, int) override;
-    ADDRESSVF(0x00849290, LiveNetPlayManager_Z, NetPlayManager_Z_vftable_31);
-    virtual void NetPlayManager_Z_vftable_31() override;
-    ADDRESSSYMBOL(0x008743E0, "?NetPlayManager_Z_vftable_34@LiveNetPlayManager_Z@@UAEDXZ");
-    virtual char NetPlayManager_Z_vftable_34() override;
-    ADDRESSSYMBOL(0x00873EB0, "?NetPlayManager_Z_vftable_35@LiveNetPlayManager_Z@@UAEXH@Z");
-    virtual void NetPlayManager_Z_vftable_35(int) override;
-    virtual void LiveNetPlayManager_Z_vftable_36() = 0;
-    virtual void LiveNetPlayManager_Z_vftable_37() = 0;
-    ADDRESSVF(0x00874140, LiveNetPlayManager_Z, LiveNetPlayManager_Z_vftable_38);
-    virtual void LiveNetPlayManager_Z_vftable_38();
-    ADDRESSVF(0x00849240, LiveNetPlayManager_Z, LiveNetPlayManager_Z_vftable_39);
-    virtual void LiveNetPlayManager_Z_vftable_39();
-    ADDRESSVF(0x00849250, LiveNetPlayManager_Z, LiveNetPlayManager_Z_vftable_40);
-    virtual void LiveNetPlayManager_Z_vftable_40();
-    virtual void LiveNetPlayManager_Z_vftable_41() = 0;
-    virtual void LiveNetPlayManager_Z_vftable_42() = 0;
-    virtual int LiveNetPlayManager_Z_vftable_43() = 0;
-    ADDRESSVF(0x00873940, LiveNetPlayManager_Z, LiveNetPlayManager_Z_vftable_44);
-    virtual void LiveNetPlayManager_Z_vftable_44();
-};
+#include "LiveNetPlayManager_Z.h"
 
 ADDRESSVFTABLE(0x009B3240, OnlineVisibleObject);
 class __declspec(dllexport) OnlineVisibleObject : public VisibleObjectContainer
@@ -11109,33 +11001,7 @@ public:
     virtual void CWindow_G_vftable_29() override;
 };
 
-ADDRESSVFTABLE(0x009D809C, WinLiveNetPlayManager_Z);
-class __declspec(dllexport) WinLiveNetPlayManager_Z : public LiveNetPlayManager_Z
-{
-public:
-    ADDRESSSYMBOL(0x00849560, "?NetPlayManager_Z_vftable_2@WinLiveNetPlayManager_Z@@UAEHXZ");
-    virtual int NetPlayManager_Z_vftable_2() override;
-    ADDRESSSYMBOL(0x008495B0, "?NetPlayManager_Z_vftable_3@WinLiveNetPlayManager_Z@@UAEHXZ");
-    virtual int NetPlayManager_Z_vftable_3() override;
-    ADDRESSVF(0x00849310, WinLiveNetPlayManager_Z, NetPlayManager_Z_vftable_4);
-    virtual void NetPlayManager_Z_vftable_4() override;
-    ADDRESSVF(0x008492B0, WinLiveNetPlayManager_Z, NetPlayManager_Z_vftable_5);
-    virtual void NetPlayManager_Z_vftable_5() override;
-    ADDRESSSYMBOL(0x00849450, "?NetPlayManager_Z_vftable_9@WinLiveNetPlayManager_Z@@UAEHXZ");
-    virtual int NetPlayManager_Z_vftable_9() override;
-    ADDRESSSYMBOL(0x008497E0, "?NetPlayManager_Z_vftable_14@WinLiveNetPlayManager_Z@@UAEXXZ");
-    virtual void NetPlayManager_Z_vftable_14() override;
-    ADDRESSVF(0x008495D0, WinLiveNetPlayManager_Z, NetPlayManager_Z_vftable_22);
-    virtual void NetPlayManager_Z_vftable_22() override;
-    ADDRESSVF(0x008497A0, WinLiveNetPlayManager_Z, LiveNetPlayManager_Z_vftable_36);
-    virtual void LiveNetPlayManager_Z_vftable_36() override;
-    ADDRESSVF(0x00849350, WinLiveNetPlayManager_Z, LiveNetPlayManager_Z_vftable_37);
-    virtual void LiveNetPlayManager_Z_vftable_37() override;
-    ADDRESSVF(0x00849660, WinLiveNetPlayManager_Z, LiveNetPlayManager_Z_vftable_41);
-    virtual void LiveNetPlayManager_Z_vftable_41() override;
-    virtual void LiveNetPlayManager_Z_vftable_42() override;
-    virtual int LiveNetPlayManager_Z_vftable_43() override;
-};
+#include "WinLiveNetPlayManager_Z.h"
 
 ADDRESSVFTABLE(0x009A50B4, Dialog_PADAlert);
 class __declspec(dllexport) Dialog_PADAlert : public Dialog_BaseAlert

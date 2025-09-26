@@ -608,6 +608,7 @@ add_library(Engine STATIC
     Engine/Includes/LightData_Z.h
     Engine/Includes/Light_Z.h
     Engine/Includes/List_Z.h
+    Engine/Includes/LiveNetPlayManager_Z.h
     Engine/Includes/LiveOverlapped_Z.h
     Engine/Includes/LodAgent_Z.h
     Engine/Includes/LodDynAgent_Z.h
@@ -620,6 +621,7 @@ add_library(Engine STATIC
     Engine/Includes/MemList_Z.h
     Engine/Includes/MovingAgent_Z.h
     Engine/Includes/Name_Z.h
+    Engine/Includes/NetPlayManager_Z.h
     Engine/Includes/Node_Z.h
     Engine/Includes/ObjectCache_Z.h
     Engine/Includes/ObjectMove_Z.h
@@ -673,6 +675,7 @@ add_library(Engine STATIC
     Engine/Includes/VolumeAgent_Z.h
     Engine/Includes/WaterHeightMap_Z.h
     Engine/Includes/WinLiveNetManager_Z.h
+    Engine/Includes/WinLiveNetPlayManager_Z.h
     Engine/Includes/WinMovieManipulator_Z.h
     Engine/Includes/WorldRef_Z.h
     Engine/Includes/World_Z.h

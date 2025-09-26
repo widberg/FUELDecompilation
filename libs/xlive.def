@@ -173,7 +173,7 @@ EXPORTS
 	XUserGetContext @5289 NONAME
 	XUserGetReputationStars @5290 NONAME
 	XUserResetStatsViewAllUsers @5291 NONAME
-	XUserSetContextEx @5292 NONAME
+	XUserSetContextEx@16 @5292 NONAME
 	XUserSetPropertyEx @5293 NONAME
 	XLivePBufferGetByteArray @5294 NONAME
 	XLivePBufferSetByteArray @5295 NONAME
