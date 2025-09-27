@@ -44,6 +44,11 @@ EXTERN_C WCHAR _0x00A65DD0[264];
 
 EXTERN_C HANDLE _0x00A659A8;
 
+#if USE_FMTK
+void fmtk_extension_point_before_win_main(void);
+void fmtk_extension_point_after_win_main(void);
+#endif // USE_FMTK
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
     DELINKFUNCTION(0x0081E340);
@@ -55,6 +60,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     unsigned __int8 v10;           // [esp+Fh] [ebp-141h]
     struct _MEMORYSTATUSEX Buffer; // [esp+10h] [ebp-140h] BYREF
     CHAR Caption[256];             // [esp+50h] [ebp-100h] BYREF
+    int result;
+
+#if USE_FMTK
+    fmtk_extension_point_before_win_main();
+#endif // USE_FMTK
 
 #if USE_BUGFIXES
     if (!SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS))
@@ -110,23 +120,29 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
                 _0x00843D90();
             if (_0x00A7D7AC)
                 ShellExecuteW(0, L"open", _0x00A65BC0, _0x00A65DD0, 0, 5);
-            return v10;
-        }
-
-        MessageBoxA(0, "You must enable Windows Virtual-Memory to play this game", "Fatal error", 0);
-        if (v9)
-            _0x00843D90();
+            result = v10;
+        } else {
+            MessageBoxA(0, "You must enable Windows Virtual-Memory to play this game", "Fatal error", 0);
+            if (v9)
+                _0x00843D90();
 #if USE_BUGFIXES
-        return 1; // Should give a bad exit code since something went wrong.
+            result = 1; // Should give a bad exit code since something went wrong.
 #else
-        return 0;
+            result = 0;
 #endif // USE_BUGFIXES
+        }
+    } else {
+        v4 = GetLastError();
+        sprintf(Caption, "ERROR [%d]", (int)v4);
+        MessageBoxA(0, "Please use the Games for Windows Live launcher", Caption, 0);
+        result = 1;
     }
 
-    v4 = GetLastError();
-    sprintf(Caption, "ERROR [%d]", (int)v4);
-    MessageBoxA(0, "Please use the Games for Windows Live launcher", Caption, 0);
-    return 1;
+#if USE_FMTK
+    fmtk_extension_point_after_win_main();
+#endif // USE_FMTK
+
+    return result;
 }
 
 EXTERN_C LRESULT __stdcall _0x0081E550(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam) asm("__0x0081E550");
