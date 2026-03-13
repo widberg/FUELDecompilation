@@ -4,6 +4,8 @@
 
 #include "Types_Z.h"
 
+#if USE_NON_MATCHING && __widberg__
+
 EXTERN_C double __usercall _0x00445570@<fp0>(float *a1@<eax>, float *a2@<ecx>) asm("__0x00445570");
 
 #if USE_BUGFIXES
@@ -40,3 +42,4 @@ double __usercall _0x00445500@<fp0>(float *a1@<eax>, int a2@<ecx>)
     v3[3] = 1.0;
     return _0x00445570(v3, (float *)(a2 + 377412));
 }
+#endif // USE_NON_MATCHING && __widberg__
