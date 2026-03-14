@@ -19,7 +19,7 @@ inline bool is_safe_to_cast_float_to_int(float x)
 }
 #endif // USE_BUGFIXES
 
-double __usercall _0x00445500@<fp0>(float *a1@<eax>, int a2@<ecx>)
+EXTERN_C double __usercall _0x00445500@<fp0>(float *a1@<eax>, int a2@<ecx>)
 {
     DELINKFUNCTION(0x00445500);
     float v3[4]; // [esp+0h] [ebp-10h] BYREF
